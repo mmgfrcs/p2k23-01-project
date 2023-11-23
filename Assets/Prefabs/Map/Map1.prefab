@@ -592,17 +592,49 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startPosition: {x: -6, y: -5}
-  spawnTimings:
-  - enemyPrefab: {fileID: 2430315875821969293, guid: a1e0653dff072b6409b6af4e076c3257, type: 3}
-    health: 100
-    delay: 0.96
-    amount: 8
+  spawnConfig: {fileID: 11400000, guid: 6ae800597b7e86c45a42bf71fa4fdf6d, type: 2}
+  expansionTimings:
+  - expandOnWave: 50
+    newCheckpoints: []
+    newTowerSpots: []
+  - expandOnWave: 100
+    newCheckpoints: []
+    newTowerSpots: []
+  - expandOnWave: 150
+    newCheckpoints: []
+    newTowerSpots: []
+  - expandOnWave: 200
+    newCheckpoints: []
+    newTowerSpots: []
+  - expandOnWave: 250
+    newCheckpoints: []
+    newTowerSpots: []
+  - expandOnWave: 300
+    newCheckpoints: []
+    newTowerSpots: []
+  - expandOnWave: 350
+    newCheckpoints: []
+    newTowerSpots: []
+  - expandOnWave: 400
+    newCheckpoints: []
+    newTowerSpots: []
+  - expandOnWave: 450
+    newCheckpoints: []
+    newTowerSpots: []
+  - expandOnWave: 500
+    newCheckpoints: []
+    newTowerSpots: []
   checkpoints:
   - {x: 2, y: -5}
   - {x: 2, y: -2}
   - {x: -3, y: -2}
   - {x: -3, y: 0}
   - {x: -1, y: 0}
+  towerSpots:
+  - {x: -4, y: -4}
+  - {x: -1, y: -4}
+  - {x: -4, y: -6}
+  - {x: -1, y: -6}
 --- !u!1 &8908426071660050499
 GameObject:
   m_ObjectHideFlags: 0
