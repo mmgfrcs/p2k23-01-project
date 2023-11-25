@@ -17,7 +17,7 @@ MonoBehaviour:
     health: 20
     delay: 1.1
     amount: 14
-  - enemyPrefab: {fileID: 2430315875821969293, guid: a1e0653dff072b6409b6af4e076c3257, type: 3}
+  - enemyPrefab: {fileID: 343485718013981799, guid: 1cb9f16063476704fbcf1148e3dfb5c0, type: 3}
     health: 22
     delay: 1.1
     amount: 17

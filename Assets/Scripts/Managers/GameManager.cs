@@ -109,8 +109,10 @@ public class GameManager : MonoBehaviour
 
     public void NextWave()
     {
+        if (Math.Abs(WaveTimer - (-2)) < 0.001f) return;
         if (_enemyCo != null) StopCoroutine(_enemyCo);
-        _enemyCo = StartCoroutine(StartEnemySpawn());
         Wave++;
+        _enemyCo = StartCoroutine(StartEnemySpawn());
+        
     }
 }

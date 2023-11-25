@@ -1,0 +1,91 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &2478407198873429658
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 571297837848776075, guid: 31a7e0ba89e5acb40ae2ebab8dd4522f, type: 3}
+      propertyPath: range
+      value: 10.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 571297837848776075, guid: 31a7e0ba89e5acb40ae2ebab8dd4522f, type: 3}
+      propertyPath: damage
+      value: 48
+      objectReference: {fileID: 0}
+    - target: {fileID: 571297837848776075, guid: 31a7e0ba89e5acb40ae2ebab8dd4522f, type: 3}
+      propertyPath: attackSpeed
+      value: 2.333
+      objectReference: {fileID: 0}
+    - target: {fileID: 571297837848776075, guid: 31a7e0ba89e5acb40ae2ebab8dd4522f, type: 3}
+      propertyPath: rotationSpeed
+      value: 72
+      objectReference: {fileID: 0}
+    - target: {fileID: 571297837848776075, guid: 31a7e0ba89e5acb40ae2ebab8dd4522f, type: 3}
+      propertyPath: projectileSpeed
+      value: 70
+      objectReference: {fileID: 0}
+    - target: {fileID: 571297837848776075, guid: 31a7e0ba89e5acb40ae2ebab8dd4522f, type: 3}
+      propertyPath: otherStats.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1784048824223630283, guid: 31a7e0ba89e5acb40ae2ebab8dd4522f, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1784048824223630283, guid: 31a7e0ba89e5acb40ae2ebab8dd4522f, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1784048824223630283, guid: 31a7e0ba89e5acb40ae2ebab8dd4522f, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1784048824223630283, guid: 31a7e0ba89e5acb40ae2ebab8dd4522f, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1784048824223630283, guid: 31a7e0ba89e5acb40ae2ebab8dd4522f, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1784048824223630283, guid: 31a7e0ba89e5acb40ae2ebab8dd4522f, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1784048824223630283, guid: 31a7e0ba89e5acb40ae2ebab8dd4522f, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1784048824223630283, guid: 31a7e0ba89e5acb40ae2ebab8dd4522f, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1784048824223630283, guid: 31a7e0ba89e5acb40ae2ebab8dd4522f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1784048824223630283, guid: 31a7e0ba89e5acb40ae2ebab8dd4522f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1784048824223630283, guid: 31a7e0ba89e5acb40ae2ebab8dd4522f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4759060425181084822, guid: 31a7e0ba89e5acb40ae2ebab8dd4522f, type: 3}
+      propertyPath: m_Name
+      value: Tower - Sniper
+      objectReference: {fileID: 0}
+    - target: {fileID: 5006988465736260262, guid: 31a7e0ba89e5acb40ae2ebab8dd4522f, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: dc824b22baaa61344b577c0d23b217fb, type: 3}
+    - target: {fileID: 9189959769931208942, guid: 31a7e0ba89e5acb40ae2ebab8dd4522f, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: ebc7d4d7927eeb54390b1273f1cab284, type: 3}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 31a7e0ba89e5acb40ae2ebab8dd4522f, type: 3}

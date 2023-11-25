@@ -1,0 +1,99 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &4032388682925154752
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 406013995280446652, guid: 8cd48f0baff9baa44a259a0910331ccd, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: e85bd32851835484aae8eb23b5a00edc, type: 3}
+    - target: {fileID: 4044421677007753412, guid: 8cd48f0baff9baa44a259a0910331ccd, type: 3}
+      propertyPath: m_Name
+      value: Tower - Missile
+      objectReference: {fileID: 0}
+    - target: {fileID: 4564219347804255988, guid: 8cd48f0baff9baa44a259a0910331ccd, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: a8a4c8e493bf2184c96f4be1af515de1, type: 3}
+    - target: {fileID: 7127244239278960537, guid: 8cd48f0baff9baa44a259a0910331ccd, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7127244239278960537, guid: 8cd48f0baff9baa44a259a0910331ccd, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7127244239278960537, guid: 8cd48f0baff9baa44a259a0910331ccd, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7127244239278960537, guid: 8cd48f0baff9baa44a259a0910331ccd, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7127244239278960537, guid: 8cd48f0baff9baa44a259a0910331ccd, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7127244239278960537, guid: 8cd48f0baff9baa44a259a0910331ccd, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7127244239278960537, guid: 8cd48f0baff9baa44a259a0910331ccd, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7127244239278960537, guid: 8cd48f0baff9baa44a259a0910331ccd, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7127244239278960537, guid: 8cd48f0baff9baa44a259a0910331ccd, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7127244239278960537, guid: 8cd48f0baff9baa44a259a0910331ccd, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7127244239278960537, guid: 8cd48f0baff9baa44a259a0910331ccd, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9063090114959942105, guid: 8cd48f0baff9baa44a259a0910331ccd, type: 3}
+      propertyPath: range
+      value: 32
+      objectReference: {fileID: 0}
+    - target: {fileID: 9063090114959942105, guid: 8cd48f0baff9baa44a259a0910331ccd, type: 3}
+      propertyPath: damage
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 9063090114959942105, guid: 8cd48f0baff9baa44a259a0910331ccd, type: 3}
+      propertyPath: attackSpeed
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 9063090114959942105, guid: 8cd48f0baff9baa44a259a0910331ccd, type: 3}
+      propertyPath: projectileSpeed
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 9063090114959942105, guid: 8cd48f0baff9baa44a259a0910331ccd, type: 3}
+      propertyPath: otherStats.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9063090114959942105, guid: 8cd48f0baff9baa44a259a0910331ccd, type: 3}
+      propertyPath: otherStats.Array.data[0].name
+      value: Splash Range
+      objectReference: {fileID: 0}
+    - target: {fileID: 9063090114959942105, guid: 8cd48f0baff9baa44a259a0910331ccd, type: 3}
+      propertyPath: otherStats.Array.data[0].value
+      value: 0.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 9063090114959942105, guid: 8cd48f0baff9baa44a259a0910331ccd, type: 3}
+      propertyPath: otherStats.Array.data[0].unitString
+      value: m
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 8cd48f0baff9baa44a259a0910331ccd, type: 3}
