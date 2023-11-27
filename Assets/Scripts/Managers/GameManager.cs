@@ -19,6 +19,8 @@ public class GameManager : MonoBehaviour
     public int EnemyAmount => enemyList.Count;
     public float WaveTimer { get; private set; } = -1;
 
+    public IReadOnlyList<Map> MapList { get; private set; }
+    public IReadOnlyList<Tower> TowerList { get; private set; }
     public IReadOnlyList<Enemy> EnemyList { get; private set; }
 
     private List<Enemy> enemyList = new();
@@ -39,6 +41,8 @@ public class GameManager : MonoBehaviour
         Score = 0;
         Wave = 0;
         EnemyList = enemyList;
+        MapList = new List<Map>(maps);
+        TowerList = new List<Tower>(towers);
         
         Enemy.Death += EnemyOnDeath;
         Enemy.ReachedBase += EnemyOnReachedBase;

@@ -592,38 +592,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startPosition: {x: -6, y: -5}
-  spawnConfig: {fileID: 11400000, guid: 6ae800597b7e86c45a42bf71fa4fdf6d, type: 2}
-  expansionTimings:
-  - expandOnWave: 50
-    newCheckpoints: []
-    newTowerSpots: []
-  - expandOnWave: 100
-    newCheckpoints: []
-    newTowerSpots: []
-  - expandOnWave: 150
-    newCheckpoints: []
-    newTowerSpots: []
-  - expandOnWave: 200
-    newCheckpoints: []
-    newTowerSpots: []
-  - expandOnWave: 250
-    newCheckpoints: []
-    newTowerSpots: []
-  - expandOnWave: 300
-    newCheckpoints: []
-    newTowerSpots: []
-  - expandOnWave: 350
-    newCheckpoints: []
-    newTowerSpots: []
-  - expandOnWave: 400
-    newCheckpoints: []
-    newTowerSpots: []
-  - expandOnWave: 450
-    newCheckpoints: []
-    newTowerSpots: []
-  - expandOnWave: 500
-    newCheckpoints: []
-    newTowerSpots: []
+  mapConfig: {fileID: 11400000, guid: 6ae800597b7e86c45a42bf71fa4fdf6d, type: 2}
   checkpoints:
   - {x: 2, y: -5}
   - {x: 2, y: -2}
@@ -635,6 +604,7 @@ MonoBehaviour:
   - {x: -1, y: -4}
   - {x: -4, y: -6}
   - {x: -1, y: -6}
+  selectionBox: {fileID: 21300000, guid: 0576b6976a8b15e44a35b1d4469df373, type: 3}
 --- !u!1 &8908426071660050499
 GameObject:
   m_ObjectHideFlags: 0

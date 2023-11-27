@@ -7,6 +7,58 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2704616549598358289, guid: 36a71ef0f8717244484e4a2f62082bb1, type: 3}
+      propertyPath: icon
+      value: 
+      objectReference: {fileID: 21300000, guid: 68f9b2f3b60b0a74f8d766a478001856, type: 3}
+    - target: {fileID: 2704616549598358289, guid: 36a71ef0f8717244484e4a2f62082bb1, type: 3}
+      propertyPath: type
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2704616549598358289, guid: 36a71ef0f8717244484e4a2f62082bb1, type: 3}
+      propertyPath: price
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 2704616549598358289, guid: 36a71ef0f8717244484e4a2f62082bb1, type: 3}
+      propertyPath: range
+      value: 2.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 2704616549598358289, guid: 36a71ef0f8717244484e4a2f62082bb1, type: 3}
+      propertyPath: damage
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 2704616549598358289, guid: 36a71ef0f8717244484e4a2f62082bb1, type: 3}
+      propertyPath: attackSpeed
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2704616549598358289, guid: 36a71ef0f8717244484e4a2f62082bb1, type: 3}
+      propertyPath: rotationSpeed
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 2704616549598358289, guid: 36a71ef0f8717244484e4a2f62082bb1, type: 3}
+      propertyPath: projectileSpeed
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2704616549598358289, guid: 36a71ef0f8717244484e4a2f62082bb1, type: 3}
+      propertyPath: otherStats.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2704616549598358289, guid: 36a71ef0f8717244484e4a2f62082bb1, type: 3}
+      propertyPath: otherStats.Array.data[0].icon
+      value: 
+      objectReference: {fileID: 21300000, guid: 8ef02d1ad57512547a9e2ab23f8a3530, type: 3}
+    - target: {fileID: 2704616549598358289, guid: 36a71ef0f8717244484e4a2f62082bb1, type: 3}
+      propertyPath: otherStats.Array.data[0].name
+      value: Splash Range
+      objectReference: {fileID: 0}
+    - target: {fileID: 2704616549598358289, guid: 36a71ef0f8717244484e4a2f62082bb1, type: 3}
+      propertyPath: otherStats.Array.data[0].value
+      value: 0.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 2704616549598358289, guid: 36a71ef0f8717244484e4a2f62082bb1, type: 3}
+      propertyPath: otherStats.Array.data[0].unitString
+      value: m
+      objectReference: {fileID: 0}
     - target: {fileID: 4226387196662424913, guid: 36a71ef0f8717244484e4a2f62082bb1, type: 3}
       propertyPath: m_RootOrder
       value: 0

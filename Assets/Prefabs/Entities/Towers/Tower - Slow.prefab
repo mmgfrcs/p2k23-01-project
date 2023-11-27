@@ -20,6 +20,22 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 21300000, guid: 06e3ea7dd39a1d64aa5a9a6a97a9c26b, type: 3}
     - target: {fileID: 5346753884843245593, guid: 4b24e271f9d98474293a805675f2b8ae, type: 3}
+      propertyPath: icon
+      value: 
+      objectReference: {fileID: 21300000, guid: 98bb1a641fb02d347b52020e463abef7, type: 3}
+    - target: {fileID: 5346753884843245593, guid: 4b24e271f9d98474293a805675f2b8ae, type: 3}
+      propertyPath: type
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5346753884843245593, guid: 4b24e271f9d98474293a805675f2b8ae, type: 3}
+      propertyPath: price
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 5346753884843245593, guid: 4b24e271f9d98474293a805675f2b8ae, type: 3}
+      propertyPath: range
+      value: 4.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 5346753884843245593, guid: 4b24e271f9d98474293a805675f2b8ae, type: 3}
       propertyPath: damage
       value: 0
       objectReference: {fileID: 0}
@@ -39,6 +55,10 @@ PrefabInstance:
       propertyPath: otherStats.Array.size
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5346753884843245593, guid: 4b24e271f9d98474293a805675f2b8ae, type: 3}
+      propertyPath: otherStats.Array.data[0].icon
+      value: 
+      objectReference: {fileID: 21300000, guid: 73f9f12f569b63041bfeead11c882559, type: 3}
     - target: {fileID: 5346753884843245593, guid: 4b24e271f9d98474293a805675f2b8ae, type: 3}
       propertyPath: otherStats.Array.data[0].name
       value: Slow

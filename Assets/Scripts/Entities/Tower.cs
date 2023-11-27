@@ -12,11 +12,14 @@ public class Tower : MonoBehaviour
     public struct Stat
     {
         public string name;
+        public Sprite icon;
         public float value;
         public string unitString;
     }
 
-    [Header("Statistics"), SerializeField] private float damage;
+    [Header("Statistics"), SerializeField] private TowerType type;
+    [SerializeField] private float price;
+    [SerializeField] private float damage;
     [SerializeField] private float projectileSpeed;
     [SerializeField] private float rotationSpeed;
     [SerializeField] private float attackSpeed;
@@ -29,6 +32,8 @@ public class Tower : MonoBehaviour
     
     [Header("Visual"), SerializeField] private Sprite icon;
 
+    public TowerType Type => type;
+    public float Price => price;
     public float Damage => damage;
     public float ProjectileSpeed => projectileSpeed;
     public float RotationSpeed => rotationSpeed;

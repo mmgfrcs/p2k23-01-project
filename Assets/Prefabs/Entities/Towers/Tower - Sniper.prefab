@@ -8,6 +8,18 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 571297837848776075, guid: 31a7e0ba89e5acb40ae2ebab8dd4522f, type: 3}
+      propertyPath: icon
+      value: 
+      objectReference: {fileID: 21300000, guid: 5d8f47bd12a867d4c8d8792d776dd329, type: 3}
+    - target: {fileID: 571297837848776075, guid: 31a7e0ba89e5acb40ae2ebab8dd4522f, type: 3}
+      propertyPath: type
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 571297837848776075, guid: 31a7e0ba89e5acb40ae2ebab8dd4522f, type: 3}
+      propertyPath: price
+      value: 70
+      objectReference: {fileID: 0}
+    - target: {fileID: 571297837848776075, guid: 31a7e0ba89e5acb40ae2ebab8dd4522f, type: 3}
       propertyPath: range
       value: 10.8
       objectReference: {fileID: 0}

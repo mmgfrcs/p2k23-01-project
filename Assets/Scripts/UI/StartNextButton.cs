@@ -11,7 +11,7 @@ public class StartNextButton : MonoBehaviour
     [SerializeField] private TextMeshProUGUI timerText;
     private Button _btn;
     
-    private void Start()
+    private void Awake()
     {
         _btn = GetComponent<Button>();
         _btn.onClick.RemoveAllListeners();
@@ -29,5 +29,8 @@ public class StartNextButton : MonoBehaviour
         if (GameManager.Instance.WaveTimer > 0) timerText.text = GameManager.Instance.WaveTimer.ToString("N1");
         else if (Math.Abs(GameManager.Instance.WaveTimer - (-1)) < 0.001f) timerText.text = "Start";
         else timerText.text = "";
+
+        _btn.interactable = GameManager.Instance.WaveTimer <= 0;
+
     }
 }

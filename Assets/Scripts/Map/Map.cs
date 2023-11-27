@@ -1,12 +1,11 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Pool;
-using Utilities;
+using UnityEngine.Serialization;
 
 /// <summary>
 /// Handles the Map coordinates and the actual spawning and tracking of enemies.
@@ -14,26 +13,42 @@ using Utilities;
 public class Map : MonoBehaviour
 {
     [SerializeField] private Vector2Int startPosition;
-    [SerializeField] private SpawnConfig spawnConfig;
-    [SerializeField] private ExpansionTiming[] expansionTimings;
+    [FormerlySerializedAs("spawnConfig")] [SerializeField] private MapConfig mapConfig;
     [SerializeField] private List<Vector2Int> checkpoints;
     [SerializeField] private List<Vector2Int> towerSpots;
+    [SerializeField] private Sprite selectionBox;
 
     private Dictionary<EnemyType, ObjectPool<Enemy>> _enemyPools = new();
     private Dictionary<Vector2Int, Tower> towerDict = new();
     private Camera mainCam;
     private Grid _grid;
+    private BuyPanel buyPanel;
+
+    private GameObject sBox;
+    //private DetailPanel detailPanel;
     
     // Start is called before the first frame update
-    private void Start()
+    private void Awake()
     {
         _grid = GetComponent<Grid>();
         mainCam = Camera.main;
-        for (int i = 0; i < spawnConfig.spawnTimings.Count; i++)
+        buyPanel = FindObjectOfType<BuyPanel>(true);
+    }
+
+    private void Start()
+    {
+        sBox = new GameObject("SelectionBox");
+        var sr = sBox.AddComponent<SpriteRenderer>();
+        sr.sprite = selectionBox;
+        sr.sortingOrder = 999;
+        sBox.transform.localScale = Vector3.one * 1.2f;
+        sBox.gameObject.SetActive(false);
+        
+        for (int i = 0; i < mapConfig.spawnTimings.Count; i++)
         {
             var idx = i;
-            _enemyPools.TryAdd(spawnConfig.spawnTimings[i].enemyPrefab.Type, new ObjectPool<Enemy>(
-                () => Instantiate(spawnConfig.spawnTimings[idx].enemyPrefab.gameObject, Vector3.zero, Quaternion.identity).GetComponent<Enemy>(), 
+            _enemyPools.TryAdd(mapConfig.spawnTimings[i].enemyPrefab.Type, new ObjectPool<Enemy>(
+                () => Instantiate(mapConfig.spawnTimings[idx].enemyPrefab.gameObject, Vector3.zero, Quaternion.identity).GetComponent<Enemy>(), 
                 enemy =>
                 {
                     enemy.gameObject.SetActive(true);
@@ -57,15 +72,15 @@ public class Map : MonoBehaviour
 
             if (towerSpots.Contains(cellLoc))
             {
-                if (towerDict.ContainsKey(cellLoc))
-                {
-                    Debug.Log("Contains tower");
-                }
+                if (towerDict.ContainsKey(cellLoc)) Debug.Log("Contains tower");
                 else
                 {
-                    Debug.Log("Does not contain tower");
+                    sBox.transform.position = _grid.GetCellCenterWorld(cellLoc.ToVector3Int());
+                    sBox.gameObject.SetActive(true);
+                    buyPanel.OpenPanel();
                 }
             }
+            else sBox.gameObject.SetActive(false);
         }
     }
 
@@ -76,13 +91,13 @@ public class Map : MonoBehaviour
     /// <returns>The enemy to spawn on that <paramref name="wave"/>, along with its amount and spawn delay</returns>
     public SpawnTiming GetSpawnTiming(uint wave)
     {
-        if (wave > spawnConfig.spawnTimings.Count) return spawnConfig.spawnTimings[^1];
+        if (wave > mapConfig.spawnTimings.Count) return mapConfig.spawnTimings[^1];
         if (wave == 0) { //Note that this is not possible and is a bug
             Debug.LogWarning("GetSpawnTiming called with wave 0. This is not possible!");
-            return spawnConfig.spawnTimings[0]; 
+            return mapConfig.spawnTimings[0]; 
         }
         
-        return spawnConfig.spawnTimings[(int) (wave - 1)];
+        return mapConfig.spawnTimings[(int) (wave - 1)];
     }
 
     public IEnumerator SpawnEnemy(uint wave, System.Action<Enemy> onSpawn)

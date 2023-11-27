@@ -64,6 +64,18 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9063090114959942105, guid: 8cd48f0baff9baa44a259a0910331ccd, type: 3}
+      propertyPath: icon
+      value: 
+      objectReference: {fileID: 21300000, guid: 38037718126e54f4bbfa1aa4cb070ca2, type: 3}
+    - target: {fileID: 9063090114959942105, guid: 8cd48f0baff9baa44a259a0910331ccd, type: 3}
+      propertyPath: type
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 9063090114959942105, guid: 8cd48f0baff9baa44a259a0910331ccd, type: 3}
+      propertyPath: price
+      value: 80
+      objectReference: {fileID: 0}
+    - target: {fileID: 9063090114959942105, guid: 8cd48f0baff9baa44a259a0910331ccd, type: 3}
       propertyPath: range
       value: 32
       objectReference: {fileID: 0}
@@ -76,6 +88,10 @@ PrefabInstance:
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 9063090114959942105, guid: 8cd48f0baff9baa44a259a0910331ccd, type: 3}
+      propertyPath: rotationSpeed
+      value: 72
+      objectReference: {fileID: 0}
+    - target: {fileID: 9063090114959942105, guid: 8cd48f0baff9baa44a259a0910331ccd, type: 3}
       propertyPath: projectileSpeed
       value: 3
       objectReference: {fileID: 0}
@@ -83,6 +99,10 @@ PrefabInstance:
       propertyPath: otherStats.Array.size
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 9063090114959942105, guid: 8cd48f0baff9baa44a259a0910331ccd, type: 3}
+      propertyPath: otherStats.Array.data[0].icon
+      value: 
+      objectReference: {fileID: 21300000, guid: 8ef02d1ad57512547a9e2ab23f8a3530, type: 3}
     - target: {fileID: 9063090114959942105, guid: 8cd48f0baff9baa44a259a0910331ccd, type: 3}
       propertyPath: otherStats.Array.data[0].name
       value: Splash Range
