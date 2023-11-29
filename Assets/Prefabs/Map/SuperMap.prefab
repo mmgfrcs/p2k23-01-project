@@ -56,6 +56,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startPosition: {x: -4, y: 1}
   mapConfig: {fileID: 0}
+  expansionConfig: {fileID: 11400000, guid: 8b69d0a7fbdb501429508274da3c6550, type: 2}
   checkpoints:
   - {x: -1, y: 1}
   - {x: -1, y: -10}
@@ -73,7 +74,6 @@ MonoBehaviour:
   - {x: 4, y: 5}
   - {x: 4, y: 3}
   - {x: 8, y: 3}
-  - {x: 19, y: 3}
   - {x: 19, y: 3}
   - {x: 19, y: 6}
   - {x: 10, y: 6}

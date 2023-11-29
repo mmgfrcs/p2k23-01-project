@@ -13,7 +13,43 @@ MonoBehaviour:
   m_Name: SupermapExpansionConfig
   m_EditorClassIdentifier: 
   expansionTimings:
-  - expandOnWave: 0
+  - expandOnWave: 11
+    expandSection: {fileID: 0}
+    newCheckpoints: []
+    newTowerSpots: []
+  - expandOnWave: 21
+    expandSection: {fileID: 0}
+    newCheckpoints: []
+    newTowerSpots: []
+  - expandOnWave: 31
+    expandSection: {fileID: 0}
+    newCheckpoints: []
+    newTowerSpots: []
+  - expandOnWave: 41
+    expandSection: {fileID: 0}
+    newCheckpoints: []
+    newTowerSpots: []
+  - expandOnWave: 51
+    expandSection: {fileID: 0}
+    newCheckpoints: []
+    newTowerSpots: []
+  - expandOnWave: 61
+    expandSection: {fileID: 0}
+    newCheckpoints: []
+    newTowerSpots: []
+  - expandOnWave: 71
+    expandSection: {fileID: 0}
+    newCheckpoints: []
+    newTowerSpots: []
+  - expandOnWave: 81
+    expandSection: {fileID: 0}
+    newCheckpoints: []
+    newTowerSpots: []
+  - expandOnWave: 91
+    expandSection: {fileID: 0}
+    newCheckpoints: []
+    newTowerSpots: []
+  - expandOnWave: 101
     expandSection: {fileID: 0}
     newCheckpoints: []
     newTowerSpots: []
