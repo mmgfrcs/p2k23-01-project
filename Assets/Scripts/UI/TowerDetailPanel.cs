@@ -1,93 +1,56 @@
-﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class BuyPanel : MonoBehaviour
+public class TowerDetailPanel : MonoBehaviour
 {
     [Header("UI"), SerializeField] private TextMeshProUGUI towerNameText;
     [SerializeField] private Image towerIcon;
     [SerializeField] private TextMeshProUGUI priceText;
-    [SerializeField] private TowerBuyListItem[] towerList;
     [SerializeField] private TowerBuyStats[] statList;
-    [SerializeField] private Button buyBtn;
-
-    [Header("Default Icons"), SerializeField]
-    private Sprite damageStatIcon;
-
+    [SerializeField] private Button upgradeBtn;
+    
+    [Header("Default Icons"), SerializeField] private Sprite damageStatIcon;
     [SerializeField] private Sprite attackSpeedStatIcon;
     [SerializeField] private Sprite rangeStatIcon;
     [SerializeField] private Sprite bulletSpeedStatIcon;
     [SerializeField] private Sprite rotationSpeedStatIcon;
-
-    public event Action<Vector3, Tower> TowerBuy; 
-    public event Action<Vector3, Tower> TowerSell;
-
-    private Vector3 position;
-    private int selectedIdx = -1;
-
-    private void Start()
+    // Start is called before the first frame update
+    void Start()
     {
-        for (int i = 0; i < towerList.Length; i++)
-        {
-            if (i >= GameManager.Instance.TowerList.Count)
-            {
-                towerList[i].gameObject.SetActive(false);
-                continue;
-            }
-            var tower = GameManager.Instance.TowerList[i];
-            towerList[i].SetIcon(tower.Icon);
-            towerList[i].SetIndex(this, i);
-            
-        }
-        ResetPanel();
+        
     }
 
-    public void BuyTower()
+    // Update is called once per frame
+    void Update()
     {
-        var tower = GameManager.Instance.TowerList[selectedIdx];
-        var instTower = Instantiate(tower.gameObject, position, Quaternion.identity).GetComponent<Tower>();
-        GameManager.Instance.Purchase(tower.Price);
-        TowerBuy?.Invoke(position, instTower);
-        ClosePanel();
+        
     }
-
+    
+    
     public void ResetPanel()
     {
-        selectedIdx = -1;
-        buyBtn.gameObject.SetActive(false);
+        upgradeBtn.gameObject.SetActive(false);
         towerIcon.gameObject.SetActive(false);
-        towerNameText.text = "Buy Tower";
+        towerNameText.text = "";
         for (int i = 0; i < statList.Length; i++)
         {
             statList[i].gameObject.SetActive(false);
         }
     }
 
-    public void OpenPanel(Vector3 pos)
+    public void OpenPanel(Tower tower)
     {
         ResetPanel();
-        position = pos;
         gameObject.SetActive(true);
-    }
-    
-    public void ClosePanel()
-    {
-        gameObject.SetActive(false);
-    }
-
-    public void Select(int idx)
-    {
-        selectedIdx = idx;
-        buyBtn.gameObject.SetActive(true);
-        towerIcon.gameObject.SetActive(true);
-
-        var tower = GameManager.Instance.TowerList[idx];
+        
         towerIcon.sprite = tower.Icon;
         towerNameText.text = tower.Type.ToString();
         priceText.text = tower.Price.ToString("N0");
 
-        buyBtn.interactable = GameManager.Instance.Money >= tower.Price;
+        //upgradeBtn.interactable = GameManager.Instance.Money >= tower.Price;
 
         for (int i = 0; i < statList.Length; i++)
         {
@@ -115,5 +78,10 @@ public class BuyPanel : MonoBehaviour
                     break;
             }
         }
+    }
+    
+    public void ClosePanel()
+    {
+        gameObject.SetActive(false);
     }
 }

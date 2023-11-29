@@ -13,7 +13,8 @@ using UnityEngine.Serialization;
 public class Map : MonoBehaviour
 {
     [SerializeField] private Vector2Int startPosition;
-    [FormerlySerializedAs("spawnConfig")] [SerializeField] private MapConfig mapConfig;
+    [SerializeField] private MapConfig mapConfig;
+    [SerializeField] private ExpansionConfig expansionConfig;
     [SerializeField] private List<Vector2Int> checkpoints;
     [SerializeField] private List<Vector2Int> towerSpots;
     [SerializeField] private Sprite selectionBox;
@@ -23,6 +24,7 @@ public class Map : MonoBehaviour
     private Camera mainCam;
     private Grid _grid;
     private BuyPanel buyPanel;
+    private TowerDetailPanel detailPanel;
 
     private GameObject sBox;
     //private DetailPanel detailPanel;
@@ -33,6 +35,7 @@ public class Map : MonoBehaviour
         _grid = GetComponent<Grid>();
         mainCam = Camera.main;
         buyPanel = FindObjectOfType<BuyPanel>(true);
+        detailPanel = FindObjectOfType<TowerDetailPanel>(true);
     }
 
     private void Start()
@@ -61,6 +64,13 @@ public class Map : MonoBehaviour
                 })
             );
         }
+        
+        buyPanel.TowerBuy += BuyPanelOnTowerBuy;
+    }
+
+    private void BuyPanelOnTowerBuy(Vector3 arg1, Tower arg2)
+    {
+        towerDict.Add(_grid.WorldToCell(arg1).ToVector2Int(), arg2);
     }
 
     private void Update()
@@ -72,16 +82,16 @@ public class Map : MonoBehaviour
 
             if (towerSpots.Contains(cellLoc))
             {
-                if (towerDict.ContainsKey(cellLoc)) Debug.Log("Contains tower");
+                sBox.transform.position = _grid.GetCellCenterWorld(cellLoc.ToVector3Int());
+                sBox.gameObject.SetActive(true);
+                if (towerDict.TryGetValue(cellLoc, out var value))
+                    detailPanel.OpenPanel(value);
                 else
-                {
-                    sBox.transform.position = _grid.GetCellCenterWorld(cellLoc.ToVector3Int());
-                    sBox.gameObject.SetActive(true);
-                    buyPanel.OpenPanel();
-                }
+                    buyPanel.OpenPanel(sBox.transform.position);
             }
             else sBox.gameObject.SetActive(false);
         }
+        else if (Input.GetMouseButtonDown(0)) sBox.gameObject.SetActive(false);
     }
 
     /// <summary>
@@ -98,6 +108,19 @@ public class Map : MonoBehaviour
         }
         
         return mapConfig.spawnTimings[(int) (wave - 1)];
+    }
+
+    public bool ExpandThisWave(uint wave)
+    {
+        return expansionConfig.expTimingDict.ContainsKey(wave);
+    }
+
+    public void ExpandMap(uint wave)
+    {
+        if (!ExpandThisWave(wave)) return;
+        expansionConfig.expTimingDict[wave].expandSection.SetActive(true);
+        checkpoints.AddRange(expansionConfig.expTimingDict[wave].newCheckpoints);
+        towerSpots.AddRange(expansionConfig.expTimingDict[wave].newTowerSpots);
     }
 
     public IEnumerator SpawnEnemy(uint wave, System.Action<Enemy> onSpawn)

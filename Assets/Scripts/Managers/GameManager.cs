@@ -54,6 +54,8 @@ public class GameManager : MonoBehaviour
 
     private void EnemyOnDeath(Enemy e)
     {
+        Score += Mathf.CeilToInt(e.MaxHealth);
+        Money += Mathf.CeilToInt(e.Bounty);
         enemyList.Remove(e);
     }
 
@@ -116,7 +118,16 @@ public class GameManager : MonoBehaviour
         if (Math.Abs(WaveTimer - (-2)) < 0.001f) return;
         if (_enemyCo != null) StopCoroutine(_enemyCo);
         Wave++;
-        _enemyCo = StartCoroutine(StartEnemySpawn());
+        if (_map.ExpandThisWave(Wave))
+            _map.ExpandMap(Wave);
         
+        _enemyCo = StartCoroutine(StartEnemySpawn());
+    }
+
+    public bool Purchase(int amount)
+    {
+        if (Money < amount) return false;
+        Money -= amount;
+        return true;
     }
 }

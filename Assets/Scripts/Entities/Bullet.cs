@@ -37,7 +37,6 @@ public class Bullet : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D col)
     {
         if (!_isInitialized) return;
-        Debug.Log("Trigger!", this);
         Enemy e = col.GetComponent<Enemy>();
         if (e != null)
         {

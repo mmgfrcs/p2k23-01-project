@@ -77,4 +77,4 @@ crashlytics-build.properties
 # Sprites and Audios - these are distributed independently
 # /[Aa]ssets/[Ss]prites/*
 # /[Aa]ssets/[Aa]udio/*.ogg
-/[Aa]ssets/[Ss]prites/CleanFlatIcon/*
+/[Aa]ssets/[Ss]prites/CleanFlatIcon/**/*.png

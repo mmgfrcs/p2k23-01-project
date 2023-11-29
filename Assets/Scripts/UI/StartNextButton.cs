@@ -30,7 +30,7 @@ public class StartNextButton : MonoBehaviour
         else if (Math.Abs(GameManager.Instance.WaveTimer - (-1)) < 0.001f) timerText.text = "Start";
         else timerText.text = "";
 
-        _btn.interactable = GameManager.Instance.WaveTimer <= 0;
+        _btn.interactable = GameManager.Instance.WaveTimer > 0 || Math.Abs(GameManager.Instance.WaveTimer - (-1)) < 0.001f;
 
     }
 }

@@ -55,8 +55,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startPosition: {x: -4, y: 1}
-  spawnConfig: {fileID: 0}
-  expansionTimings: []
+  mapConfig: {fileID: 0}
   checkpoints:
   - {x: -1, y: 1}
   - {x: -1, y: -10}
@@ -210,6 +209,7 @@ MonoBehaviour:
   - {x: 48, y: 57}
   - {x: 50, y: 54}
   - {x: 52, y: 50}
+  selectionBox: {fileID: 0}
 --- !u!1 &3259980710782405627
 GameObject:
   m_ObjectHideFlags: 0
@@ -1105,6 +1105,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Map#2
       objectReference: {fileID: 0}
+    - target: {fileID: 8668374618808235816, guid: 18feccb388befdc48ac69c320c8ee11d, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 18feccb388befdc48ac69c320c8ee11d, type: 3}
 --- !u!4 &3335586433153093616 stripped
@@ -1440,6 +1444,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Map#3
       objectReference: {fileID: 0}
+    - target: {fileID: 8503617684061419209, guid: 97effa1b21c48ec4b9bc9c0cd8e527f1, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 97effa1b21c48ec4b9bc9c0cd8e527f1, type: 3}
 --- !u!4 &5028981093496323949 stripped
@@ -1663,6 +1671,10 @@ PrefabInstance:
     - target: {fileID: 702598015919650066, guid: 68739e1e73038c447948ac9bebf492c5, type: 3}
       propertyPath: m_Name
       value: Map#1
+      objectReference: {fileID: 0}
+    - target: {fileID: 702598015919650066, guid: 68739e1e73038c447948ac9bebf492c5, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6963293421124889749, guid: 68739e1e73038c447948ac9bebf492c5, type: 3}
       propertyPath: m_RootOrder

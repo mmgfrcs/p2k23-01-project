@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class RangeCircle : MonoBehaviour
 {
@@ -6,8 +7,8 @@ public class RangeCircle : MonoBehaviour
     [SerializeField] private float radius = 1f;
     
     private LineRenderer line;
-       
-    private void Start()
+
+    private void Awake()
     {
         line = gameObject.GetComponent<LineRenderer>();
         Gradient whiteGrad = new Gradient();
@@ -23,7 +24,6 @@ public class RangeCircle : MonoBehaviour
         line.widthCurve = AnimationCurve.Constant(0f, 1f, 0.04f);
         line.colorGradient = whiteGrad;
     }
-    
     
     private void CreatePoints()
     {

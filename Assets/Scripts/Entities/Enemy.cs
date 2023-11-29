@@ -4,16 +4,18 @@ using UnityEngine;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
+[RequireComponent(typeof(SpriteRenderer))]
 public class Enemy : MonoBehaviour, IComparable<Enemy>, IEquatable<Enemy>
 {
     [SerializeField] private EnemyType type;
     [SerializeField] private float speed = 1;
     [SerializeField] private int lifeCost = 1;
-    [SerializeField] private Slider hpBar;
+    //[SerializeField] private Slider hpBar;
 
     public EnemyType Type => type;
     public string EnemyID { get; private set; }
     public float Health { get; private set; } = 0;
+    public float MaxHealth { get; private set; } = 0;
     public float Bounty { get; private set; } = 0;
     public float Distance { get; private set; } = 0;
     
@@ -26,18 +28,23 @@ public class Enemy : MonoBehaviour, IComparable<Enemy>, IEquatable<Enemy>
     private bool _isInitialized;
     private Vector2Int[] _checkpoints;
     private int _checkpointIdx;
-    
+    private SpriteRenderer renderer;
+
+    private void Awake()
+    {
+        renderer = GetComponent<SpriteRenderer>();
+    }
+
     public void Initialize(Grid grid, Vector2Int[] checkpoints, float health, float bounty)
     {
         _parentGrid = grid;
+        MaxHealth = health;
         Health = health;
         Bounty = bounty;
         _isInitialized = true;
         _checkpoints = checkpoints;
         _checkpointIdx = 0;
         EnemyID = Guid.NewGuid().ToString();
-        hpBar.maxValue = health;
-        hpBar.value = health;
 
         Distance = 0;
         var lastPos = transform.position;
@@ -61,7 +68,8 @@ public class Enemy : MonoBehaviour, IComparable<Enemy>, IEquatable<Enemy>
 
         var dest = _parentGrid.GetCellCenterWorld(_checkpoints[_checkpointIdx].ToVector3Int());
         var dir = (dest - transform.position).normalized;
-        transform.Translate(dir * (speed * Time.deltaTime));
+        transform.rotation = Quaternion.LookRotation(Vector3.forward, dir) * Quaternion.Euler(0f, 0f, 90f);
+        transform.Translate(Vector3.right * (speed * Time.deltaTime));
 
         Distance -= speed * Time.deltaTime;
 
@@ -80,8 +88,9 @@ public class Enemy : MonoBehaviour, IComparable<Enemy>, IEquatable<Enemy>
 
     public void Damage(float amount)
     {
+        renderer.color = new Color(1,1,1,0.5f);
+        renderer.DOColor(Color.white, 0.6f);
         Health -= amount;
-        hpBar.DOValue(Health, 0.4f);
     }
 
     public void Kill()
