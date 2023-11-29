@@ -15,41 +15,191 @@ MonoBehaviour:
   expansionTimings:
   - expandOnWave: 11
     expandSection: {fileID: 0}
-    newCheckpoints: []
-    newTowerSpots: []
+    newCheckpoints:
+    - {x: -1, y: 1}
+    - {x: -1, y: -10}
+    - {x: 3, y: -10}
+    - {x: 3, y: -6}
+    - {x: 7, y: -6}
+    - {x: 7, y: 0}
+    - {x: 2, y: 0}
+    - {x: 2, y: 1}
+    newTowerSpots:
+    - {x: -2, y: 0}
+    - {x: 0, y: -9}
+    - {x: 2, y: -9}
+    - {x: 6, y: -5}
+    - {x: 2, y: -3}
+    - {x: 6, y: -1}
   - expandOnWave: 21
     expandSection: {fileID: 0}
-    newCheckpoints: []
-    newTowerSpots: []
+    newCheckpoints:
+    - {x: 2, y: 4}
+    - {x: 0, y: 4}
+    - {x: 0, y: 12}
+    - {x: 8, y: 12}
+    - {x: 8, y: 5}
+    - {x: 4, y: 5}
+    - {x: 4, y: 3}
+    - {x: 8, y: 3}
+    newTowerSpots:
+    - {x: 3, y: 4}
+    - {x: 1, y: 5}
+    - {x: 1, y: 11}
+    - {x: 7, y: 11}
+    - {x: 7, y: 6}
+    - {x: 5, y: 4}
   - expandOnWave: 31
     expandSection: {fileID: 0}
-    newCheckpoints: []
-    newTowerSpots: []
+    newCheckpoints:
+    - {x: 19, y: 3}
+    - {x: 19, y: 6}
+    - {x: 10, y: 6}
+    - {x: 10, y: 8}
+    - {x: 16, y: 8}
+    - {x: 16, y: 11}
+    - {x: 12, y: 11}
+    - {x: 12, y: 12}
+    - {x: 10, y: 12}
+    - {x: 10, y: 13}
+    newTowerSpots:
+    - {x: 11, y: 4}
+    - {x: 18, y: 5}
+    - {x: 14, y: 5}
+    - {x: 11, y: 7}
+    - {x: 15, y: 9}
+    - {x: 11, y: 13}
   - expandOnWave: 41
     expandSection: {fileID: 0}
-    newCheckpoints: []
-    newTowerSpots: []
+    newCheckpoints:
+    - {x: 10, y: 24}
+    - {x: 12, y: 24}
+    - {x: 12, y: 16}
+    - {x: 15, y: 16}
+    - {x: 15, y: 23}
+    - {x: 17, y: 23}
+    - {x: 17, y: 20}
+    - {x: 20, y: 20}
+    newTowerSpots:
+    - {x: 11, y: 13}
+    - {x: 11, y: 16}
+    - {x: 13, y: 17}
+    - {x: 16, y: 16}
+    - {x: 16, y: 22}
+    - {x: 16, y: 19}
   - expandOnWave: 51
     expandSection: {fileID: 0}
-    newCheckpoints: []
-    newTowerSpots: []
+    newCheckpoints:
+    - {x: 25, y: 20}
+    - {x: 25, y: 14}
+    - {x: 32, y: 14}
+    - {x: 32, y: 21}
+    - {x: 26, y: 21}
+    - {x: 26, y: 24}
+    - {x: 21, y: 24}
+    - {x: 21, y: 25}
+    newTowerSpots:
+    - {x: 22, y: 22}
+    - {x: 24, y: 22}
+    - {x: 26, y: 20}
+    - {x: 31, y: 20}
+    - {x: 31, y: 15}
+    - {x: 26, y: 15}
   - expandOnWave: 61
     expandSection: {fileID: 0}
-    newCheckpoints: []
-    newTowerSpots: []
+    newCheckpoints:
+    - {x: 21, y: 29}
+    - {x: 25, y: 29}
+    - {x: 25, y: 32}
+    - {x: 23, y: 32}
+    - {x: 23, y: 35}
+    - {x: 27, y: 35}
+    - {x: 27, y: 31}
+    - {x: 30, y: 31}
+    - {x: 30, y: 26}
+    - {x: 32, y: 26}
+    newTowerSpots:
+    - {x: 22, y: 28}
+    - {x: 27, y: 28}
+    - {x: 24, y: 30}
+    - {x: 24, y: 33}
+    - {x: 26, y: 34}
+    - {x: 29, y: 30}
   - expandOnWave: 71
     expandSection: {fileID: 0}
-    newCheckpoints: []
-    newTowerSpots: []
+    newCheckpoints:
+    - {x: 44, y: 26}
+    - {x: 44, y: 36}
+    - {x: 38, y: 36}
+    - {x: 38, y: 30}
+    - {x: 36, y: 30}
+    - {x: 36, y: 36}
+    - {x: 34, y: 36}
+    - {x: 34, y: 37}
+    newTowerSpots:
+    - {x: 35, y: 35}
+    - {x: 37, y: 29}
+    - {x: 39, y: 27}
+    - {x: 43, y: 27}
+    - {x: 43, y: 35}
+    - {x: 39, y: 35}
   - expandOnWave: 81
     expandSection: {fileID: 0}
-    newCheckpoints: []
-    newTowerSpots: []
+    newCheckpoints:
+    - {x: 34, y: 39}
+    - {x: 43, y: 39}
+    - {x: 43, y: 44}
+    - {x: 33, y: 44}
+    - {x: 33, y: 49}
+    - {x: 44, y: 45}
+    newTowerSpots:
+    - {x: 34, y: 40}
+    - {x: 42, y: 40}
+    - {x: 42, y: 43}
+    - {x: 42, y: 48}
+    - {x: 34, y: 48}
+    - {x: 34, y: 45}
   - expandOnWave: 91
     expandSection: {fileID: 0}
-    newCheckpoints: []
-    newTowerSpots: []
+    newCheckpoints:
+    - {x: 46, y: 49}
+    - {x: 46, y: 38}
+    - {x: 56, y: 38}
+    - {x: 56, y: 41}
+    - {x: 48, y: 41}
+    - {x: 48, y: 43}
+    - {x: 53, y: 43}
+    - {x: 53, y: 47}
+    - {x: 48, y: 47}
+    - {x: 48, y: 49}
+    newTowerSpots:
+    - {x: 47, y: 49}
+    - {x: 47, y: 43}
+    - {x: 47, y: 39}
+    - {x: 55, y: 40}
+    - {x: 49, y: 45}
+    - {x: 52, y: 45}
   - expandOnWave: 101
     expandSection: {fileID: 0}
-    newCheckpoints: []
-    newTowerSpots: []
+    newCheckpoints:
+    - {x: 48, y: 53}
+    - {x: 47, y: 53}
+    - {x: 47, y: 52}
+    - {x: 45, y: 52}
+    - {x: 45, y: 61}
+    - {x: 53, y: 61}
+    - {x: 53, y: 59}
+    - {x: 47, y: 59}
+    - {x: 47, y: 55}
+    - {x: 51, y: 55}
+    - {x: 51, y: 51}
+    - {x: 53, y: 51}
+    - {x: 53, y: 50}
+    - {x: 56, y: 50}
+    newTowerSpots:
+    - {x: 52, y: 50}
+    - {x: 50, y: 54}
+    - {x: 46, y: 53}
+    - {x: 46, y: 60}
+    - {x: 52, y: 60}
+    - {x: 48, y: 57}
