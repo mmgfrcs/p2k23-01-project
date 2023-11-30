@@ -6,13 +6,12 @@ using UnityEngine;
 public struct ExpansionTiming: IEquatable<ExpansionTiming>
 {
     public uint expandOnWave;
-    public GameObject expandSection;
     public Vector2Int[] newCheckpoints;
     public Vector2Int[] newTowerSpots;
 
     public bool Equals(ExpansionTiming other)
     {
-        return expandOnWave == other.expandOnWave && Equals(expandSection, other.expandSection) && Equals(newCheckpoints, other.newCheckpoints) && Equals(newTowerSpots, other.newTowerSpots);
+        return expandOnWave == other.expandOnWave  && Equals(newCheckpoints, other.newCheckpoints) && Equals(newTowerSpots, other.newTowerSpots);
     }
 
     public override bool Equals(object obj)
@@ -22,7 +21,7 @@ public struct ExpansionTiming: IEquatable<ExpansionTiming>
 
     public override int GetHashCode()
     {
-        return HashCode.Combine(expandOnWave, expandSection, newCheckpoints, newTowerSpots);
+        return HashCode.Combine(expandOnWave, newCheckpoints, newTowerSpots);
     }
 
     public static bool operator ==(ExpansionTiming left, ExpansionTiming right)

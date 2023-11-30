@@ -85,7 +85,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9063090114959942105, guid: 8cd48f0baff9baa44a259a0910331ccd, type: 3}
       propertyPath: attackSpeed
-      value: 3
+      value: 0.4
       objectReference: {fileID: 0}
     - target: {fileID: 9063090114959942105, guid: 8cd48f0baff9baa44a259a0910331ccd, type: 3}
       propertyPath: rotationSpeed
@@ -110,6 +110,10 @@ PrefabInstance:
     - target: {fileID: 9063090114959942105, guid: 8cd48f0baff9baa44a259a0910331ccd, type: 3}
       propertyPath: otherStats.Array.data[0].value
       value: 0.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 9063090114959942105, guid: 8cd48f0baff9baa44a259a0910331ccd, type: 3}
+      propertyPath: otherStats.Array.data[0].isDecimal
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9063090114959942105, guid: 8cd48f0baff9baa44a259a0910331ccd, type: 3}
       propertyPath: otherStats.Array.data[0].unitString

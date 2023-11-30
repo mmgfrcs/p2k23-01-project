@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -10,6 +11,11 @@ public class ExpansionConfig : ScriptableObject
     public IReadOnlyDictionary<uint, ExpansionTiming> expTimingDict;
 
     private void Awake()
+    {
+        expTimingDict = expansionTimings.ToDictionary(x => x.expandOnWave);
+    }
+
+    private void OnEnable()
     {
         expTimingDict = expansionTimings.ToDictionary(x => x.expandOnWave);
     }

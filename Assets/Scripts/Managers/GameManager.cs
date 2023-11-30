@@ -30,7 +30,7 @@ public class GameManager : MonoBehaviour
     private Map _map;
     private Coroutine _enemyCo;
     private Camera _sceneCamera;
-    private Vector3 mousePosInitial = Vector3.zero;
+    private Vector3 _mousePosInitial = Vector3.zero;
     
     // Start is called before the first frame update
     private void Start()
@@ -82,11 +82,11 @@ public class GameManager : MonoBehaviour
         else if (WaveTimer > -1) NextWave();
         
         if (Input.GetMouseButtonDown(1))
-            mousePosInitial = _sceneCamera.ScreenToWorldPoint(Input.mousePosition);
+            _mousePosInitial = _sceneCamera.ScreenToWorldPoint(Input.mousePosition);
 
         if (Input.GetMouseButton(1))
         {
-            var dir = mousePosInitial - _sceneCamera.ScreenToWorldPoint(Input.mousePosition);
+            var dir = _mousePosInitial - _sceneCamera.ScreenToWorldPoint(Input.mousePosition);
 
             _sceneCamera.transform.position += dir;
         }
@@ -109,7 +109,8 @@ public class GameManager : MonoBehaviour
     {
         WaveTimer = -2;
         yield return _map.SpawnEnemy(Wave, (e) => enemyList.Add(e));
-        WaveTimer = 8f;
+        
+        WaveTimer = _map.GetSpawnTiming(Wave).amount * _map.GetSpawnTiming(Wave).waitTimeMultiplier;
         _enemyCo = null;
     }
 

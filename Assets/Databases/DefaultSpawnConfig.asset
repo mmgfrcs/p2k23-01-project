@@ -14,30 +14,37 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnTimings:
   - enemyPrefab: {fileID: 2430315875821969293, guid: a1e0653dff072b6409b6af4e076c3257, type: 3}
+    waitTimeMultiplier: 1.05
     health: 20
     delay: 1.1
     amount: 14
   - enemyPrefab: {fileID: 343485718013981799, guid: 1cb9f16063476704fbcf1148e3dfb5c0, type: 3}
+    waitTimeMultiplier: 1.05
     health: 13
     delay: 1.1
     amount: 17
   - enemyPrefab: {fileID: 343485718013981799, guid: 1cb9f16063476704fbcf1148e3dfb5c0, type: 3}
+    waitTimeMultiplier: 0.9
     health: 14
     delay: 1.1
     amount: 19
   - enemyPrefab: {fileID: 2430315875821969293, guid: a1e0653dff072b6409b6af4e076c3257, type: 3}
+    waitTimeMultiplier: 0.9
     health: 26
     delay: 1.15
     amount: 19
   - enemyPrefab: {fileID: 2430315875821969293, guid: a1e0653dff072b6409b6af4e076c3257, type: 3}
+    waitTimeMultiplier: 1.1
     health: 38
     delay: 1.52
     amount: 12
   - enemyPrefab: {fileID: 2430315875821969293, guid: a1e0653dff072b6409b6af4e076c3257, type: 3}
+    waitTimeMultiplier: 0.8
     health: 27
     delay: 0.8
     amount: 31
   - enemyPrefab: {fileID: 2430315875821969293, guid: a1e0653dff072b6409b6af4e076c3257, type: 3}
+    waitTimeMultiplier: 0.85
     health: 30
     delay: 1.1
     amount: 24

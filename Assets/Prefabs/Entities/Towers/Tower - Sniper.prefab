@@ -29,7 +29,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 571297837848776075, guid: 31a7e0ba89e5acb40ae2ebab8dd4522f, type: 3}
       propertyPath: attackSpeed
-      value: 2.333
+      value: 0.33
       objectReference: {fileID: 0}
     - target: {fileID: 571297837848776075, guid: 31a7e0ba89e5acb40ae2ebab8dd4522f, type: 3}
       propertyPath: rotationSpeed

@@ -14,7 +14,13 @@ public class Tower : MonoBehaviour
         public string name;
         public Sprite icon;
         public float value;
+        public bool isDecimal;
         public string unitString;
+    }
+
+    public class TowerReport
+    {
+        private ulong kills;
     }
 
     [Header("Statistics"), SerializeField] private TowerType type;
@@ -44,25 +50,25 @@ public class Tower : MonoBehaviour
 
     public Enemy Target { get; private set; }
 
-    private RangeCircle rangeCircle;
-    private List<Collider2D> scanResult = new List<Collider2D>();
-    private ObjectPool<Bullet> bulletPool;
-    private float cooldown;
+    private RangeCircle _rangeCircle;
+    private List<Collider2D> _scanResult = new List<Collider2D>();
+    private ObjectPool<Bullet> _bulletPool;
+    private float _cooldown;
 
     // Start is called before the first frame update
     private void Start()
     {
         Enemy.Death += EnemyOnDeath;
         Enemy.ReachedBase += EnemyOnReachedBase;
-        bulletPool = new ObjectPool<Bullet>(() =>
+        _bulletPool = new ObjectPool<Bullet>(() =>
             Instantiate(bullet.gameObject, Vector3.zero, Quaternion.identity).GetComponent<Bullet>(),
             b => b.gameObject.SetActive(true),
             b => b.gameObject.SetActive(false),
             b => Destroy(b.gameObject));
 
-        rangeCircle = GetComponent<RangeCircle>();
-        rangeCircle.SetRadius(range);
-        rangeCircle.HideLine();
+        _rangeCircle = GetComponent<RangeCircle>();
+        _rangeCircle.SetRadius(range);
+        _rangeCircle.HideLine();
     }
 
     private void EnemyOnReachedBase(Enemy e, int lifecost)
@@ -78,7 +84,7 @@ public class Tower : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        if (cooldown > 0) cooldown -= Time.deltaTime;
+        if (_cooldown > 0) _cooldown -= Time.deltaTime;
         
         if (Target == null)
         {
@@ -86,9 +92,9 @@ public class Tower : MonoBehaviour
             var filter = new ContactFilter2D();
             filter.useTriggers = true;
             filter.SetLayerMask(LayerMask.GetMask("Enemy"));
-            if (Physics2D.OverlapCircle(transform.position, range, filter, scanResult) > 0)
+            if (Physics2D.OverlapCircle(transform.position, range, filter, _scanResult) > 0)
             {
-                var enemies = scanResult
+                var enemies = _scanResult
                     .Where(x => x.GetComponent<Enemy>() != null)
                     .Select(x => x.GetComponent<Enemy>())
                     .ToList();
@@ -109,20 +115,20 @@ public class Tower : MonoBehaviour
 
     private void Shoot()
     {
-        if (cooldown > 0)
+        if (_cooldown > 0)
             return;
         
-        Bullet b = bulletPool.Get();
+        Bullet b = _bulletPool.Get();
         b.transform.position = barrelTip.transform.position;
         b.transform.rotation = barrelTip.transform.rotation;
         b.Initialize(Target, damage, projectileSpeed);
         b.Hit += BulletOnHit;
-        cooldown = 1f / attackSpeed;
+        _cooldown = 1f / attackSpeed;
     }
 
     private void BulletOnHit(Bullet obj)
     {
         obj.Hit -= BulletOnHit;
-        bulletPool.Release(obj);
+        _bulletPool.Release(obj);
     }
 }

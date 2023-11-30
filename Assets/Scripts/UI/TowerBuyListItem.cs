@@ -12,7 +12,7 @@ public class TowerBuyListItem : MonoBehaviour
         btn = GetComponent<Button>();
     }
 
-    public void SetIndex(BuyPanel panel, int idx)
+    public void SetIndex(TowerBuyPanel panel, int idx)
     {
         btn.onClick.AddListener(delegate { panel.Select(idx); });
     }

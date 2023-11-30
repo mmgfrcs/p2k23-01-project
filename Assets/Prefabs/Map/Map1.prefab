@@ -522,7 +522,7 @@ TilemapRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1595475889
-  m_SortingLayer: 1
+  m_SortingLayer: -1
   m_SortingOrder: 0
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0.13999999, y: 0.13999999, z: 0}
@@ -593,6 +593,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startPosition: {x: -6, y: -5}
   mapConfig: {fileID: 11400000, guid: 6ae800597b7e86c45a42bf71fa4fdf6d, type: 2}
+  expansionConfig: {fileID: 11400000, guid: 8b69d0a7fbdb501429508274da3c6550, type: 2}
   checkpoints:
   - {x: 2, y: -5}
   - {x: 2, y: -2}
@@ -604,7 +605,6 @@ MonoBehaviour:
   - {x: -1, y: -4}
   - {x: -4, y: -6}
   - {x: -1, y: -6}
-  selectionBox: {fileID: 21300000, guid: 0576b6976a8b15e44a35b1d4469df373, type: 3}
 --- !u!1 &8908426071660050499
 GameObject:
   m_ObjectHideFlags: 0
@@ -749,7 +749,7 @@ TilemapRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1595475889
-  m_SortingLayer: 1
+  m_SortingLayer: -1
   m_SortingOrder: 1
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0.13999999, y: 0.13999999, z: 0}

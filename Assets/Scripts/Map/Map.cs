@@ -17,36 +17,30 @@ public class Map : MonoBehaviour
     [SerializeField] private ExpansionConfig expansionConfig;
     [SerializeField] private List<Vector2Int> checkpoints;
     [SerializeField] private List<Vector2Int> towerSpots;
-    [SerializeField] private Sprite selectionBox;
+    [SerializeField] private GameObject[] mapExpansions;
+    [SerializeField] private GameObject[] homeBases;
 
     private Dictionary<EnemyType, ObjectPool<Enemy>> _enemyPools = new();
-    private Dictionary<Vector2Int, Tower> towerDict = new();
-    private Camera mainCam;
+    private Dictionary<Vector2Int, Tower> _towerDict = new();
+    private Camera _mainCam;
     private Grid _grid;
-    private BuyPanel buyPanel;
-    private TowerDetailPanel detailPanel;
+    private TowerBuyPanel _buyPanel;
+    private TowerDetailPanel _detailPanel;
 
-    private GameObject sBox;
+    
     //private DetailPanel detailPanel;
     
     // Start is called before the first frame update
     private void Awake()
     {
         _grid = GetComponent<Grid>();
-        mainCam = Camera.main;
-        buyPanel = FindObjectOfType<BuyPanel>(true);
-        detailPanel = FindObjectOfType<TowerDetailPanel>(true);
+        _mainCam = Camera.main;
+        _buyPanel = FindObjectOfType<TowerBuyPanel>(true);
+        _detailPanel = FindObjectOfType<TowerDetailPanel>(true);
     }
 
     private void Start()
     {
-        sBox = new GameObject("SelectionBox");
-        var sr = sBox.AddComponent<SpriteRenderer>();
-        sr.sprite = selectionBox;
-        sr.sortingOrder = 999;
-        sBox.transform.localScale = Vector3.one * 1.2f;
-        sBox.gameObject.SetActive(false);
-        
         for (int i = 0; i < mapConfig.spawnTimings.Count; i++)
         {
             var idx = i;
@@ -65,33 +59,34 @@ public class Map : MonoBehaviour
             );
         }
         
-        buyPanel.TowerBuy += BuyPanelOnTowerBuy;
+        _buyPanel.TowerBuy += BuyPanelOnTowerBuy;
+
+        for (int i = 0; i < mapExpansions.Length; i++) mapExpansions[i].SetActive(false);
+        for (int i = 1; i < homeBases.Length; i++) homeBases[i].SetActive(false);
     }
 
     private void BuyPanelOnTowerBuy(Vector3 arg1, Tower arg2)
     {
-        towerDict.Add(_grid.WorldToCell(arg1).ToVector2Int(), arg2);
+        _towerDict.Add(_grid.WorldToCell(arg1).ToVector2Int(), arg2);
     }
 
     private void Update()
     {
-        if (Input.GetMouseButtonUp(0) && !EventSystem.current.IsPointerOverGameObject())
-        {
-            var loc = mainCam.ScreenToWorldPoint(Input.mousePosition);
-            var cellLoc = _grid.WorldToCell(loc).ToVector2Int();
+        if (!Input.GetMouseButtonUp(0) || EventSystem.current.IsPointerOverGameObject()) return;
+        
+        var loc = _mainCam.ScreenToWorldPoint(Input.mousePosition);
+        var cellLoc = _grid.WorldToCell(loc).ToVector2Int();
 
-            if (towerSpots.Contains(cellLoc))
-            {
-                sBox.transform.position = _grid.GetCellCenterWorld(cellLoc.ToVector3Int());
-                sBox.gameObject.SetActive(true);
-                if (towerDict.TryGetValue(cellLoc, out var value))
-                    detailPanel.OpenPanel(value);
-                else
-                    buyPanel.OpenPanel(sBox.transform.position);
-            }
-            else sBox.gameObject.SetActive(false);
-        }
-        else if (Input.GetMouseButtonDown(0)) sBox.gameObject.SetActive(false);
+        if (!towerSpots.Contains(cellLoc)) return;
+        
+        _detailPanel.ClosePanel();
+        _buyPanel.ClosePanel();
+        
+        var pos = _grid.GetCellCenterWorld(cellLoc.ToVector3Int());
+        if (_towerDict.TryGetValue(cellLoc, out var value))
+            _detailPanel.OpenPanel(pos, value);
+        else
+            _buyPanel.OpenPanel(pos);
     }
 
     /// <summary>
@@ -104,7 +99,7 @@ public class Map : MonoBehaviour
         if (wave > mapConfig.spawnTimings.Count) return mapConfig.spawnTimings[^1];
         if (wave == 0) { //Note that this is not possible and is a bug
             Debug.LogWarning("GetSpawnTiming called with wave 0. This is not possible!");
-            return mapConfig.spawnTimings[0]; 
+            return mapConfig.spawnTimings[0];
         }
         
         return mapConfig.spawnTimings[(int) (wave - 1)];
@@ -118,7 +113,10 @@ public class Map : MonoBehaviour
     public void ExpandMap(uint wave)
     {
         if (!ExpandThisWave(wave)) return;
-        expansionConfig.expTimingDict[wave].expandSection.SetActive(true);
+        var idx = expansionConfig.expansionTimings.IndexOf(expansionConfig.expTimingDict[wave]);
+        mapExpansions[idx].SetActive(true);
+        homeBases[idx+1].SetActive(true);
+        homeBases[idx].SetActive(false);
         checkpoints.AddRange(expansionConfig.expTimingDict[wave].newCheckpoints);
         towerSpots.AddRange(expansionConfig.expTimingDict[wave].newTowerSpots);
     }
