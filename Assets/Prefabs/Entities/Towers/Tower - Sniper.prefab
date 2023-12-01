@@ -43,6 +43,42 @@ PrefabInstance:
       propertyPath: otherStats.Array.size
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 571297837848776075, guid: 31a7e0ba89e5acb40ae2ebab8dd4522f, type: 3}
+      propertyPath: efficiencies.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 571297837848776075, guid: 31a7e0ba89e5acb40ae2ebab8dd4522f, type: 3}
+      propertyPath: efficiencies.Array.data[0].enemy
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 571297837848776075, guid: 31a7e0ba89e5acb40ae2ebab8dd4522f, type: 3}
+      propertyPath: efficiencies.Array.data[1].enemy
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 571297837848776075, guid: 31a7e0ba89e5acb40ae2ebab8dd4522f, type: 3}
+      propertyPath: efficiencies.Array.data[2].enemy
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 571297837848776075, guid: 31a7e0ba89e5acb40ae2ebab8dd4522f, type: 3}
+      propertyPath: efficiencies.Array.data[3].enemy
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 571297837848776075, guid: 31a7e0ba89e5acb40ae2ebab8dd4522f, type: 3}
+      propertyPath: efficiencies.Array.data[0].efficiency
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 571297837848776075, guid: 31a7e0ba89e5acb40ae2ebab8dd4522f, type: 3}
+      propertyPath: efficiencies.Array.data[1].efficiency
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 571297837848776075, guid: 31a7e0ba89e5acb40ae2ebab8dd4522f, type: 3}
+      propertyPath: efficiencies.Array.data[2].efficiency
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 571297837848776075, guid: 31a7e0ba89e5acb40ae2ebab8dd4522f, type: 3}
+      propertyPath: efficiencies.Array.data[3].efficiency
+      value: 1.5
+      objectReference: {fileID: 0}
     - target: {fileID: 1784048824223630283, guid: 31a7e0ba89e5acb40ae2ebab8dd4522f, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -99,5 +135,6 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: ebc7d4d7927eeb54390b1273f1cab284, type: 3}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 7144133953783528371, guid: 31a7e0ba89e5acb40ae2ebab8dd4522f, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 31a7e0ba89e5acb40ae2ebab8dd4522f, type: 3}

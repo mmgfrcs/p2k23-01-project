@@ -18,6 +18,7 @@ public class Enemy : MonoBehaviour, IComparable<Enemy>, IEquatable<Enemy>
     public float MaxHealth { get; private set; } = 0;
     public float Bounty { get; private set; } = 0;
     public float Distance { get; private set; } = 0;
+    public float SpeedMultiplier { get; private set; } = 0;
     
     public static event EnemyDeadEvent Death;
     public static event EnemyReachedBaseEvent ReachedBase;
@@ -28,11 +29,12 @@ public class Enemy : MonoBehaviour, IComparable<Enemy>, IEquatable<Enemy>
     private bool _isInitialized;
     private Vector2Int[] _checkpoints;
     private int _checkpointIdx;
-    private SpriteRenderer renderer;
+    private SpriteRenderer _renderer;
+    private float _speedMultCooldown;
 
     private void Awake()
     {
-        renderer = GetComponent<SpriteRenderer>();
+        _renderer = GetComponent<SpriteRenderer>();
     }
 
     public void Initialize(Grid grid, Vector2Int[] checkpoints, float health, float bounty)
@@ -54,8 +56,15 @@ public class Enemy : MonoBehaviour, IComparable<Enemy>, IEquatable<Enemy>
             Distance += Vector3.Distance(lastPos, chkpt);
             lastPos = chkpt;
         }
+        
+        GameManager.Instance.GameOver += OnGameOver;
     }
-    
+
+    private void OnGameOver()
+    {
+        DOTween.To(() => speed, value => speed = value, 0f, 1f).SetUpdate(true);
+    }
+
     private void Update()
     {
         if (!_isInitialized) return;
@@ -69,9 +78,9 @@ public class Enemy : MonoBehaviour, IComparable<Enemy>, IEquatable<Enemy>
         var dest = _parentGrid.GetCellCenterWorld(_checkpoints[_checkpointIdx].ToVector3Int());
         var dir = (dest - transform.position).normalized;
         transform.rotation = Quaternion.LookRotation(Vector3.forward, dir) * Quaternion.Euler(0f, 0f, 90f);
-        transform.Translate(Vector3.right * (speed * Time.deltaTime));
+        transform.Translate(Vector3.right * (speed * SpeedMultiplier * Time.deltaTime));
 
-        Distance -= speed * Time.deltaTime;
+        Distance -= speed * SpeedMultiplier * Time.deltaTime;
 
         if (Vector3.Distance(dest, transform.position) < 0.01f)
         {
@@ -84,12 +93,15 @@ public class Enemy : MonoBehaviour, IComparable<Enemy>, IEquatable<Enemy>
                 JourneyComplete?.Invoke(this);
             }
         }
+
+        if (_speedMultCooldown > 0) _speedMultCooldown -= Time.deltaTime;
+        else SpeedMultiplier = 1;
     }
 
     public void Damage(float amount)
     {
-        renderer.color = new Color(1,1,1,0.5f);
-        renderer.DOColor(Color.white, 0.6f);
+        _renderer.color = new Color(1,1,1,0.5f);
+        _renderer.DOColor(Color.white, 0.6f);
         Health -= amount;
     }
 
@@ -99,6 +111,7 @@ public class Enemy : MonoBehaviour, IComparable<Enemy>, IEquatable<Enemy>
         Death?.Invoke(this);
         _isInitialized = false;
         JourneyComplete?.Invoke(this);
+        GameManager.Instance.GameOver -= OnGameOver;
     }
 
     public int CompareTo(Enemy other)
@@ -112,5 +125,11 @@ public class Enemy : MonoBehaviour, IComparable<Enemy>, IEquatable<Enemy>
     public bool Equals(Enemy other)
     {
         return other != null && EnemyID == other.EnemyID;
+    }
+
+    public void SetSpeedMultiplier(float mult)
+    {
+        SpeedMultiplier = mult;
+        _speedMultCooldown = 0.5f;
     }
 }

@@ -107,6 +107,15 @@ MonoBehaviour:
   attackSpeed: 1.12
   range: 3.6
   otherStats: []
+  efficiencies:
+  - enemy: 0
+    efficiency: 1.5
+  - enemy: 2
+    efficiency: 0.5
+  - enemy: 4
+    efficiency: 0
+  - enemy: 5
+    efficiency: 0.75
   barrelCenter: {fileID: 2501040406914293020}
   barrelTip: {fileID: 268279840937502280}
   bullet: {fileID: 8342408202966505818, guid: 5c73690d925b45f4e92d0862cc612c29, type: 3}

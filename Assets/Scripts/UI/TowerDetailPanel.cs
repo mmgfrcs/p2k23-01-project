@@ -20,8 +20,9 @@ public class TowerDetailPanel : MonoBehaviour
     private Sprite _rotationSpeedStatIcon;
     
     private GameObject _sBox;
-    
-    // Start is called before the first frame update
+    private Tower _currTower;
+    private bool _isOpen;
+
     private void Awake()
     {
         _damageStatIcon = Resources.Load<Sprite>("UI/DamageIcon");
@@ -34,7 +35,21 @@ public class TowerDetailPanel : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (!_isOpen) return;
+        for (int i = 0; i < reportList.Length; i++)
+        {
+            reportList[i].gameObject.SetActive(true);
+            switch (i)
+            {
+                case 0:
+                    reportList[i].SetStat("Kills", _currTower.Reports.Kills, "", false, _damageStatIcon);
+                    break;
+                // TODO: More stats
+                default:
+                    reportList[i].gameObject.SetActive(false);
+                    break;
+            }
+        }
     }
     
     private void CreateSelectionBox()
@@ -44,7 +59,7 @@ public class TowerDetailPanel : MonoBehaviour
         var sr = _sBox.AddComponent<SpriteRenderer>();
         sr.sprite = Resources.Load<Sprite>("UI/SelectionBox");
         sr.sortingOrder = 999;
-        _sBox.transform.localScale = Vector3.one * 1.2f;
+        _sBox.transform.localScale = Vector3.one;
         _sBox.gameObject.SetActive(false);
     }
     
@@ -55,12 +70,16 @@ public class TowerDetailPanel : MonoBehaviour
         towerNameText.text = "";
         for (int i = 0; i < statList.Length; i++)
             statList[i].gameObject.SetActive(false);
+        for (int i = 0; i < reportList.Length; i++)
+            reportList[i].gameObject.SetActive(false);
     }
 
     public void OpenPanel(Vector3 loc, Tower tower)
     {
         ResetPanel();
         CreateSelectionBox();
+        _isOpen = true;
+        _currTower = tower;
         _sBox.gameObject.SetActive(true);
         _sBox.transform.position = loc;
         gameObject.SetActive(true);
@@ -97,34 +116,12 @@ public class TowerDetailPanel : MonoBehaviour
                     break;
             }
         }
-        
-        for (int i = 0; i < reportList.Length; i++)
-        {
-            reportList[i].gameObject.SetActive(true);
-            switch (i)
-            {
-                case 0:
-                    reportList[i].SetStat("Kills", tower.Damage, "", false, _damageStatIcon);
-                    break;
-                case 1:
-                    reportList[i].SetStat("Bullet Speed", tower.ProjectileSpeed, "m/s", false, _bulletSpeedStatIcon);
-                    break;
-                case 2:
-                    reportList[i].SetStat("Rotation Speed", tower.RotationSpeed, "deg/s", false, _rotationSpeedStatIcon);
-                    break;
-                case 3:
-                    reportList[i].SetStat("Attack Speed", tower.AttackSpeed, "p/s", true, _attackSpeedStatIcon);
-                    break;
-                case 4:
-                    reportList[i].SetStat("Range", tower.Range, "m", true, _rangeStatIcon);
-                    break;
-            }
-        }
     }
     
     public void ClosePanel()
     {
         CreateSelectionBox();
+        _isOpen = false;
         _sBox.gameObject.SetActive(false);
         gameObject.SetActive(false);
     }

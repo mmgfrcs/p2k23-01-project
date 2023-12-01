@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -10,6 +11,7 @@ public class TowerBuyPanel : MonoBehaviour
     [SerializeField] private TextMeshProUGUI priceText;
     [SerializeField] private TowerBuyListItem[] towerList;
     [SerializeField] private TowerBuyStats[] statList;
+    [SerializeField] private EfficiencyListItem[] efficiencyList;
     [SerializeField] private Button buyBtn;
     
     private Sprite _damageStatIcon;
@@ -79,9 +81,9 @@ public class TowerBuyPanel : MonoBehaviour
         towerIcon.gameObject.SetActive(false);
         towerNameText.text = "Buy Tower";
         for (int i = 0; i < statList.Length; i++)
-        {
             statList[i].gameObject.SetActive(false);
-        }
+        for (int i = 0; i < efficiencyList.Length; i++)
+            efficiencyList[i].gameObject.SetActive(false);
     }
 
     public void OpenPanel(Vector3 pos)
@@ -138,6 +140,18 @@ public class TowerBuyPanel : MonoBehaviour
                     if (i-5 >= tower.OtherStatistics.Length) statList[i].gameObject.SetActive(false);
                     else statList[i].SetStat(tower.OtherStatistics[i-5].name, tower.OtherStatistics[i-5].value, tower.OtherStatistics[i-5].unitString, tower.OtherStatistics[i-5].isDecimal, tower.OtherStatistics[i-5].icon);
                     break;
+            }
+        }
+
+        var enemyTypes = Enum.GetValues(typeof(EnemyType)).Cast<EnemyType>().ToList();
+
+        for (int i = 0; i < efficiencyList.Length; i++)
+        {
+            if (i >= enemyTypes.Count || Math.Abs(tower.GetEfficiency(enemyTypes[i]) - 1) < 0.0001f) efficiencyList[i].gameObject.SetActive(false);
+            else
+            {
+                efficiencyList[i].gameObject.SetActive(true);
+                efficiencyList[i].SetEfficiency(enemyTypes[i], tower.GetEfficiency(enemyTypes[i]));
             }
         }
     }

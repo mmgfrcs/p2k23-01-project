@@ -7,11 +7,10 @@ public class Bullet : MonoBehaviour
     [SerializeField] private float lifetime = 5f;
     public float Damage { get; private set; }
     public float Speed { get; private set; }
+    public Enemy Target => _target;
 
     public event Action<Bullet> Hit;
-
     private Enemy _target;
-
     private bool _isInitialized;
 
     public void Initialize(Enemy target, float damage, float speed)
@@ -31,14 +30,14 @@ public class Bullet : MonoBehaviour
             90 * Time.deltaTime);
         transform.Translate(Vector3.up * (Speed * Time.deltaTime));
         if (!_target.isActiveAndEnabled)
-            Kill();
+            lifetime /= 5;
     }
 
     private void OnTriggerEnter2D(Collider2D col)
     {
         if (!_isInitialized) return;
         Enemy e = col.GetComponent<Enemy>();
-        if (e != null)
+        if (e != null && e == Target)
         {
             e.Damage(Damage);
             Kill();
@@ -47,7 +46,11 @@ public class Bullet : MonoBehaviour
 
     private IEnumerator Lifetime()
     {
-        yield return new WaitForSeconds(lifetime);
+        while (lifetime > 0)
+        {
+            lifetime -= Time.deltaTime;
+            yield return null;
+        }
         Kill();
     }
 

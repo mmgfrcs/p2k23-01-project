@@ -95,5 +95,45 @@ PrefabInstance:
       propertyPath: projectileSpeed
       value: 9
       objectReference: {fileID: 0}
+    - target: {fileID: 8425668715043347752, guid: da6c8b15afa1e8343b6ec5d4952847a2, type: 3}
+      propertyPath: efficiencies.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8425668715043347752, guid: da6c8b15afa1e8343b6ec5d4952847a2, type: 3}
+      propertyPath: efficiencies.Array.data[1].enemy
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8425668715043347752, guid: da6c8b15afa1e8343b6ec5d4952847a2, type: 3}
+      propertyPath: efficiencies.Array.data[2].enemy
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8425668715043347752, guid: da6c8b15afa1e8343b6ec5d4952847a2, type: 3}
+      propertyPath: efficiencies.Array.data[3].enemy
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8425668715043347752, guid: da6c8b15afa1e8343b6ec5d4952847a2, type: 3}
+      propertyPath: efficiencies.Array.data[4].enemy
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8425668715043347752, guid: da6c8b15afa1e8343b6ec5d4952847a2, type: 3}
+      propertyPath: efficiencies.Array.data[0].efficiency
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8425668715043347752, guid: da6c8b15afa1e8343b6ec5d4952847a2, type: 3}
+      propertyPath: efficiencies.Array.data[1].efficiency
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8425668715043347752, guid: da6c8b15afa1e8343b6ec5d4952847a2, type: 3}
+      propertyPath: efficiencies.Array.data[2].efficiency
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8425668715043347752, guid: da6c8b15afa1e8343b6ec5d4952847a2, type: 3}
+      propertyPath: efficiencies.Array.data[3].efficiency
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8425668715043347752, guid: da6c8b15afa1e8343b6ec5d4952847a2, type: 3}
+      propertyPath: efficiencies.Array.data[4].efficiency
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: da6c8b15afa1e8343b6ec5d4952847a2, type: 3}

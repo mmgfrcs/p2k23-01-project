@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
+using DG.Tweening.Core;
 using UnityEngine;
 using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
@@ -11,6 +13,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] private int startingMoney = 150;
     [SerializeField] private Map[] maps;
     [SerializeField] private Tower[] towers;
+
+    [Header("UI"), SerializeField] private CanvasGroup mainUI;
+    [SerializeField] private CanvasGroup gameOverPanel;
 
     public int Score { get; private set; }
     public int Money { get; private set; }
@@ -31,6 +36,9 @@ public class GameManager : MonoBehaviour
     private Coroutine _enemyCo;
     private Camera _sceneCamera;
     private Vector3 _mousePosInitial = Vector3.zero;
+    private bool _isGameOver;
+
+    public event Action GameOver;
     
     // Start is called before the first frame update
     private void Start()
@@ -78,6 +86,23 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
+        if (_isGameOver) return;
+        if (Life <= 0)
+        {
+            //Game Over
+            GameOver?.Invoke();
+            mainUI.DOFade(0f, 1f).SetUpdate(true);
+            DOTween.To(() => Time.timeScale, value => Time.timeScale = value, 0.1f, 1f)
+                .SetUpdate(true).onComplete += () =>
+            {
+                Time.timeScale = 1;
+                gameOverPanel.blocksRaycasts = true;
+                gameOverPanel.DOFade(1f, 0.2f);
+            };
+            _isGameOver = true;
+            return; 
+        }
+        
         if (WaveTimer > 0) WaveTimer -= Time.deltaTime;
         else if (WaveTimer > -1) NextWave();
         
