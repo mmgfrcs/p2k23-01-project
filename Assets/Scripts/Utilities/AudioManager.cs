@@ -5,8 +5,10 @@ using DG.Tweening;
 using UnityEngine;
 
 [RequireComponent(typeof(AudioSource))]
-public class AudioGameOver : MonoBehaviour
+public class AudioManager : MonoBehaviour
 {
+    [SerializeField] private AudioClip[] bgmList;
+    
     private AudioSource _source;
     
     
@@ -19,6 +21,8 @@ public class AudioGameOver : MonoBehaviour
     private void Start()
     {
         GameManager.Instance.GameOver += OnGameOver;
+        _source.clip = bgmList.PickOne();
+        _source.Play();
     }
 
     private void OnGameOver()

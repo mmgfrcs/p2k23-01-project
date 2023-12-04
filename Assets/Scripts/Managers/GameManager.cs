@@ -9,17 +9,17 @@ using Random = UnityEngine.Random;
 
 public class GameManager : MonoBehaviour
 {
-    [Header("Configuration"), SerializeField] private int startingLife = 10;
-    [SerializeField] private int startingMoney = 150;
+    [Header("Configuration"), SerializeField] private uint startingLife = 10;
+    [SerializeField] private ulong startingMoney = 150;
     [SerializeField] private Map[] maps;
     [SerializeField] private Tower[] towers;
 
     [Header("UI"), SerializeField] private CanvasGroup mainUI;
     [SerializeField] private CanvasGroup gameOverPanel;
 
-    public int Score { get; private set; }
-    public int Money { get; private set; }
-    public int Life { get; private set; }
+    public ulong Score { get; private set; }
+    public ulong Money { get; private set; }
+    public uint Life { get; private set; }
     public uint Wave { get; private set; }
     public int EnemyAmount => enemyList.Count;
     public float WaveTimer { get; private set; } = -1;
@@ -62,12 +62,12 @@ public class GameManager : MonoBehaviour
 
     private void EnemyOnDeath(Enemy e)
     {
-        Score += Mathf.CeilToInt(e.MaxHealth);
-        Money += Mathf.CeilToInt(e.Bounty);
+        Score += Convert.ToUInt64(Mathf.CeilToInt(e.MaxHealth));
+        Money += Convert.ToUInt64(Mathf.CeilToInt(e.Bounty));
         enemyList.Remove(e);
     }
 
-    private void EnemyOnReachedBase(Enemy e, int lifecost)
+    private void EnemyOnReachedBase(Enemy e, uint lifecost)
     {
         Life -= lifecost;
         enemyList.Remove(e);
@@ -150,7 +150,7 @@ public class GameManager : MonoBehaviour
         _enemyCo = StartCoroutine(StartEnemySpawn());
     }
 
-    public bool Purchase(int amount)
+    public bool Purchase(uint amount)
     {
         if (Money < amount) return false;
         Money -= amount;

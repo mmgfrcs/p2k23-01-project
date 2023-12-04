@@ -9,7 +9,7 @@ public class Enemy : MonoBehaviour, IComparable<Enemy>, IEquatable<Enemy>
 {
     [SerializeField] private EnemyType type;
     [SerializeField] private float speed = 1;
-    [SerializeField] private int lifeCost = 1;
+    [SerializeField] private uint lifeCost = 1;
     //[SerializeField] private Slider hpBar;
 
     public EnemyType Type => type;

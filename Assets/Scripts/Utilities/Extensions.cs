@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
 
 public static class Extensions
 {
@@ -15,5 +17,15 @@ public static class Extensions
     public static Vector3 ToVector3(this Vector3Int v3)
     {
         return new Vector3(v3.x, v3.y, v3.z);
+    }
+
+    public static T PickOne<T>(this T[] arr)
+    {
+        return arr[Random.Range(0, arr.Length)];
+    }
+    
+    public static T PickOne<T>(this IList<T> arr)
+    {
+        return arr[Random.Range(0, arr.Count)];
     }
 }

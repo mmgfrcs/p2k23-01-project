@@ -27,7 +27,7 @@ public class Tower : MonoBehaviour
     }
 
     [Header("Statistics"), SerializeField] private TowerType type;
-    [SerializeField] private int price;
+    [SerializeField] private uint price;
     [SerializeField] private float damage;
     [SerializeField] private float projectileSpeed;
     [SerializeField] private float rotationSpeed;
@@ -46,7 +46,7 @@ public class Tower : MonoBehaviour
     private Dictionary<EnemyType, float> _efficiencyDict;
 
     public TowerType Type => type;
-    public int Price => price;
+    public uint Price => price;
     public float Damage => damage;
     public float ProjectileSpeed => projectileSpeed;
     public float RotationSpeed => rotationSpeed;
@@ -89,7 +89,7 @@ public class Tower : MonoBehaviour
         Target = null;
     }
 
-    private void EnemyOnReachedBase(Enemy e, int lifecost)
+    private void EnemyOnReachedBase(Enemy e, uint lifecost)
     {
         if (Target == e) Target = null;
     }
