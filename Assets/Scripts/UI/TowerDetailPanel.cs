@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -12,6 +13,8 @@ public class TowerDetailPanel : MonoBehaviour
     [SerializeField] private TowerBuyStats[] statList;
     [SerializeField] private TowerBuyStats[] reportList;
     [SerializeField] private Button upgradeBtn;
+    
+    public bool IsOpen { get; private set; }
     
     private Sprite _damageStatIcon;
     private Sprite _attackSpeedStatIcon;
@@ -72,6 +75,8 @@ public class TowerDetailPanel : MonoBehaviour
             statList[i].gameObject.SetActive(false);
         for (int i = 0; i < reportList.Length; i++)
             reportList[i].gameObject.SetActive(false);
+        
+        IsOpen = gameObject.activeInHierarchy;
     }
 
     public void OpenPanel(Vector3 loc, Tower tower)
@@ -116,13 +121,16 @@ public class TowerDetailPanel : MonoBehaviour
                     break;
             }
         }
+        tower.ShowRange();
     }
     
     public void ClosePanel()
     {
         CreateSelectionBox();
+        if(_isOpen) _currTower.HideLine();
         _isOpen = false;
         _sBox.gameObject.SetActive(false);
         gameObject.SetActive(false);
+        
     }
 }

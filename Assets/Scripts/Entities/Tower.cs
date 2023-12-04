@@ -58,6 +58,7 @@ public class Tower : MonoBehaviour
 
     public Enemy Target { get; private set; }
 
+    private bool _isLocked;
     private RangeCircle _rangeCircle;
     private List<Collider2D> _scanResult = new List<Collider2D>();
     private ObjectPool<Bullet> _bulletPool;
@@ -83,7 +84,7 @@ public class Tower : MonoBehaviour
         GameManager.Instance.GameOver += OnGameOver;
     }
 
-    private void OnGameOver()
+    private void OnGameOver(float delay)
     {
         _isGameOver = true;
         Target = null;
@@ -105,11 +106,15 @@ public class Tower : MonoBehaviour
         if (_isGameOver) return;
         
         if (_cooldown > 0) _cooldown -= Time.deltaTime;
+
+        ContactFilter2D filter = new ContactFilter2D();
+        filter.useTriggers = true;
+        filter.SetLayerMask(LayerMask.GetMask("Enemy"));
         
         if (Type == TowerType.Slow)
         {
             if (GameManager.Instance.EnemyAmount == 0) return;
-            var filter = new ContactFilter2D();
+            filter = new ContactFilter2D();
             filter.useTriggers = true;
             filter.SetLayerMask(LayerMask.GetMask("Enemy"));
             if (Physics2D.OverlapCircle(transform.position, range, filter, _scanResult) > 0)
@@ -123,26 +128,31 @@ public class Tower : MonoBehaviour
                     enemies[i].SetSpeedMultiplier(1 - (otherStats[0].value/100));
             }
         }
-        
-        if (Target == null)
+        else
         {
             if (GameManager.Instance.EnemyAmount == 0) return;
-            var filter = new ContactFilter2D();
-            filter.useTriggers = true;
-            filter.SetLayerMask(LayerMask.GetMask("Enemy"));
+    
             if (Physics2D.OverlapCircle(transform.position, range, filter, _scanResult) > 0)
             {
                 var enemies = _scanResult
                     .Where(x => x.GetComponent<Enemy>() != null)
                     .Select(x => x.GetComponent<Enemy>())
                     .ToList();
-
+    
                 enemies.Sort();
                 Target = enemies[0];
+                _isLocked = true;
             }
-            else return;
+            else
+            {
+                Target = null;
+                _isLocked = false;
+                return;
+            }
         }
 
+        if (!_isLocked) return;
+        
         Vector2 direction = Target.transform.position - transform.position;
         barrelCenter.rotation = Quaternion.RotateTowards(barrelCenter.rotation,
             Quaternion.FromToRotation(Vector3.up, direction), rotationSpeed * Time.deltaTime);
@@ -176,5 +186,15 @@ public class Tower : MonoBehaviour
         _efficiencyDict ??= efficiencies.ToDictionary(x => x.enemy, x => x.efficiency);
         if (_efficiencyDict.TryGetValue(enemy, out var eff)) return eff;
         return 1;
+    }
+
+    public void ShowRange()
+    {
+        _rangeCircle.ShowLine();
+    }
+
+    public void HideLine()
+    {
+        _rangeCircle.HideLine();
     }
 }

@@ -19,7 +19,6 @@ public class Bullet : MonoBehaviour
         Speed = speed;
         _target = target;
         _isInitialized = true;
-        StartCoroutine(Lifetime());
     }
 
     private void Update()
@@ -29,8 +28,12 @@ public class Bullet : MonoBehaviour
         transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.FromToRotation(Vector3.up, dir),
             90 * Time.deltaTime);
         transform.Translate(Vector3.up * (Speed * Time.deltaTime));
+        
         if (!_target.isActiveAndEnabled)
-            lifetime /= 5;
+            lifetime = 1;
+        
+        if (lifetime > 0) lifetime -= Time.deltaTime;
+        else Kill();
     }
 
     private void OnTriggerEnter2D(Collider2D col)
@@ -42,16 +45,6 @@ public class Bullet : MonoBehaviour
             e.Damage(Damage);
             Kill();
         }
-    }
-
-    private IEnumerator Lifetime()
-    {
-        while (lifetime > 0)
-        {
-            lifetime -= Time.deltaTime;
-            yield return null;
-        }
-        Kill();
     }
 
     private void Kill()

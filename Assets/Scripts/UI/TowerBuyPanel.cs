@@ -14,6 +14,8 @@ public class TowerBuyPanel : MonoBehaviour
     [SerializeField] private EfficiencyListItem[] efficiencyList;
     [SerializeField] private Button buyBtn;
     
+    public bool IsOpen { get; private set; }
+    
     private Sprite _damageStatIcon;
     private Sprite _attackSpeedStatIcon;
     private Sprite _rangeStatIcon;
@@ -27,6 +29,8 @@ public class TowerBuyPanel : MonoBehaviour
     private int _selectedIdx = -1;
     private GameObject _sBox;
 
+    private RangeCircle _circle;
+
     private void Awake()
     {
         _damageStatIcon = Resources.Load<Sprite>("UI/DamageIcon");
@@ -38,7 +42,7 @@ public class TowerBuyPanel : MonoBehaviour
 
     private void Start()
     {
-        CreateSelectionBox();
+        CreateBoxAndRangeCircle();
         for (int i = 0; i < towerList.Length; i++)
         {
             if (i >= GameManager.Instance.TowerList.Count)
@@ -54,15 +58,23 @@ public class TowerBuyPanel : MonoBehaviour
         ResetPanel();
     }
 
-    private void CreateSelectionBox()
+    private void CreateBoxAndRangeCircle()
     {
-        if (_sBox != null) return;
-        _sBox = new GameObject("SelectionBox");
-        var sr = _sBox.AddComponent<SpriteRenderer>();
-        sr.sprite = Resources.Load<Sprite>("UI/SelectionBox");
-        sr.sortingOrder = 999;
-        _sBox.transform.localScale = Vector3.one * 1.2f;
-        _sBox.gameObject.SetActive(false);
+        if (_sBox == null)
+        {
+            _sBox = new GameObject("SelectionBox");
+            var sr = _sBox.AddComponent<SpriteRenderer>();
+            sr.sprite = Resources.Load<Sprite>("UI/SelectionBox");
+            sr.sortingOrder = 999;
+            _sBox.transform.localScale = Vector3.one * 1.2f;
+            _sBox.gameObject.SetActive(false);
+        }
+
+        if (_circle == null)
+        {
+            _circle = new GameObject("BuyPanelRangeCircle", typeof(RangeCircle))
+                .GetComponent<RangeCircle>();
+        }
     }
 
     public void BuyTower()
@@ -79,18 +91,19 @@ public class TowerBuyPanel : MonoBehaviour
         _selectedIdx = -1;
         buyBtn.gameObject.SetActive(false);
         towerIcon.gameObject.SetActive(false);
-        towerNameText.text = "Buy Tower";
+        towerNameText.text = "";
         for (int i = 0; i < statList.Length; i++)
             statList[i].gameObject.SetActive(false);
         for (int i = 0; i < efficiencyList.Length; i++)
             efficiencyList[i].gameObject.SetActive(false);
+        IsOpen = gameObject.activeInHierarchy;
     }
 
     public void OpenPanel(Vector3 pos)
     {
         ResetPanel();
         _position = pos;
-        CreateSelectionBox();
+        CreateBoxAndRangeCircle();
         _sBox.gameObject.SetActive(true);
         _sBox.transform.position = pos;
         gameObject.SetActive(true);
@@ -98,9 +111,10 @@ public class TowerBuyPanel : MonoBehaviour
     
     public void ClosePanel()
     {
-        CreateSelectionBox();
+        CreateBoxAndRangeCircle();
         _sBox.gameObject.SetActive(false);
         gameObject.SetActive(false);
+        _circle.HideLine();
     }
 
     public void Select(int idx)
@@ -154,5 +168,9 @@ public class TowerBuyPanel : MonoBehaviour
                 efficiencyList[i].SetEfficiency(enemyTypes[i], tower.GetEfficiency(enemyTypes[i]));
             }
         }
+
+        _circle.transform.position = _position;
+        _circle.SetRadius(tower.Range);
+        _circle.ShowLine();
     }
 }

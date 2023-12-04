@@ -34,7 +34,9 @@ AudioMixerController:
   m_SuspendThreshold: -80
   m_EnableSuspend: 1
   m_UpdateMode: 0
-  m_ExposedParameters: []
+  m_ExposedParameters:
+  - guid: 301870ec2324103418fb92c549d9e7a9
+    name: MasterPitch
   m_AudioMixerGroupViews:
   - guids:
     - e9ea932fed610284281e05e761036054
@@ -88,10 +90,12 @@ AudioMixerSnapshotController:
   m_AudioMixer: {fileID: 24100000}
   m_SnapshotID: 2fd856f9f50cf1140872e067e7e96a7a
   m_FloatValues:
+    0c4222c29d22aa347bc90718fc5fab13: 0.5
     b75b51d271f6fe94fa706a09210eb534: 0.10800299
     542404767ca8b7c49b1f37052ee567fc: 2.7
     d0613bc6e13de2a40a591c3645c1a15c: 0.9
     8d570cc6a36b981419398326767f6507: 0.068
+    d54562e61b619f240918f21fc32d208c: 0.5
     751568477facb5641a031490ee7a2238: 4940
     670d8bc8f83c34041a8b0f9bb545ac95: 0.234
     6a9c13493acd09c4195a1371947bdb82: 298
@@ -99,7 +103,7 @@ AudioMixerSnapshotController:
     df53ae4a78763c549be118bdc47dd25a: 2.73
     c0ff81aa3a9260b4890f085ed9de159a: 0.57
     301870ec2324103418fb92c549d9e7a9: 1
-    6e7ca23e83be61b4c839a5a884a67a3d: -7.8940816
+    6e7ca23e83be61b4c839a5a884a67a3d: -8
     37e3438eec8c795489a9360aeea2436e: 0.597
   m_TransitionOverrides: {}
 --- !u!244 &3802688071840786553

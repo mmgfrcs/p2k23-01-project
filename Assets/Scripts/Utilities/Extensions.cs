@@ -21,6 +21,7 @@ public static class Extensions
 
     public static T PickOne<T>(this T[] arr)
     {
+        if (arr.Length == 0) return default;
         return arr[Random.Range(0, arr.Length)];
     }
     

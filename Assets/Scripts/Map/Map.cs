@@ -78,7 +78,7 @@ public class Map : MonoBehaviour
         var cellLoc = _grid.WorldToCell(loc).ToVector2Int();
 
         if (!towerSpots.Contains(cellLoc)) return;
-        
+
         _detailPanel.ClosePanel();
         _buyPanel.ClosePanel();
         

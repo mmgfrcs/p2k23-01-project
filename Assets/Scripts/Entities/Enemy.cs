@@ -60,9 +60,9 @@ public class Enemy : MonoBehaviour, IComparable<Enemy>, IEquatable<Enemy>
         GameManager.Instance.GameOver += OnGameOver;
     }
 
-    private void OnGameOver()
+    private void OnGameOver(float delay)
     {
-        DOTween.To(() => speed, value => speed = value, 0f, 1f).SetUpdate(true);
+        DOTween.To(() => speed, value => speed = value, 0f, delay).SetUpdate(true);
     }
 
     private void Update()

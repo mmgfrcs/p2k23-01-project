@@ -7,15 +7,16 @@ using UnityEngine;
 using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
-public class GameManager : MonoBehaviour
+public class GameManager : Singleton<GameManager>
 {
     [Header("Configuration"), SerializeField] private uint startingLife = 10;
     [SerializeField] private ulong startingMoney = 150;
     [SerializeField] private Map[] maps;
     [SerializeField] private Tower[] towers;
+    [SerializeField] private float gameOverDelay = 1f;
 
     [Header("UI"), SerializeField] private CanvasGroup mainUI;
-    [SerializeField] private CanvasGroup gameOverPanel;
+    [SerializeField] private GameOverPanel gameOverPanel;
 
     public ulong Score { get; private set; }
     public ulong Money { get; private set; }
@@ -30,20 +31,17 @@ public class GameManager : MonoBehaviour
 
     private List<Enemy> enemyList = new();
 
-    public static GameManager Instance { get; private set; }
-
     private Map _map;
     private Coroutine _enemyCo;
     private Camera _sceneCamera;
     private Vector3 _mousePosInitial = Vector3.zero;
     private bool _isGameOver;
 
-    public event Action GameOver;
+    public event Action<float> GameOver;
     
     // Start is called before the first frame update
     private void Start()
     {
-        AssignSingleton();
         Life = startingLife;
         Money = startingMoney;
         Score = 0;
@@ -73,16 +71,6 @@ public class GameManager : MonoBehaviour
         enemyList.Remove(e);
     }
 
-    private void OnDisable()
-    {
-        DeassignSingleton();
-    }
-
-    private void OnEnable()
-    {
-        AssignSingleton();
-    }
-
     // Update is called once per frame
     private void Update()
     {
@@ -90,14 +78,13 @@ public class GameManager : MonoBehaviour
         if (Life <= 0)
         {
             //Game Over
-            GameOver?.Invoke();
-            mainUI.DOFade(0f, 1f).SetUpdate(true);
-            DOTween.To(() => Time.timeScale, value => Time.timeScale = value, 0.1f, 1f)
+            GameOver?.Invoke(gameOverDelay);
+            mainUI.DOFade(0f, gameOverDelay).SetUpdate(true);
+            DOTween.To(() => Time.timeScale, value => Time.timeScale = value, 0.1f, gameOverDelay)
                 .SetUpdate(true).onComplete += () =>
             {
                 Time.timeScale = 1;
-                gameOverPanel.blocksRaycasts = true;
-                gameOverPanel.DOFade(1f, 0.2f);
+                gameOverPanel.ShowPanel(Score, Wave, 0, 0);
             };
             _isGameOver = true;
             return; 
@@ -117,17 +104,6 @@ public class GameManager : MonoBehaviour
         }
         
         enemyList.Sort();
-    }
-
-    private void AssignSingleton()
-    {
-        if (Instance == null) Instance = this;
-        else if (Instance != this) Destroy(this);
-    }
-    
-    private void DeassignSingleton()
-    {
-        Instance = null;
     }
 
     private IEnumerator StartEnemySpawn()
