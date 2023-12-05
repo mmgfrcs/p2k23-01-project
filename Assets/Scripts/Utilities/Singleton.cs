@@ -26,7 +26,6 @@ public class Singleton<T> : MonoBehaviour where T: Component
         {
             Instance = FindObjectOfType<T>();
             if (Instance == null) Instance = new GameObject(typeof(T).Name).AddComponent<T>();
-            DontDestroyOnLoad(gameObject);
         }
         else
         {

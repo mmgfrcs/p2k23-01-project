@@ -12,12 +12,14 @@ public class Bullet : MonoBehaviour
     public event Action<Bullet> Hit;
     private Enemy _target;
     private bool _isInitialized;
+    private float _lifetimeRemaining;
 
     public void Initialize(Enemy target, float damage, float speed)
     {
         Damage = damage;
         Speed = speed;
         _target = target;
+        _lifetimeRemaining = lifetime;
         _isInitialized = true;
     }
 
@@ -30,9 +32,9 @@ public class Bullet : MonoBehaviour
         transform.Translate(Vector3.up * (Speed * Time.deltaTime));
         
         if (!_target.isActiveAndEnabled)
-            lifetime = 1;
+            _lifetimeRemaining = 1;
         
-        if (lifetime > 0) lifetime -= Time.deltaTime;
+        if (_lifetimeRemaining > 0) _lifetimeRemaining -= Time.deltaTime;
         else Kill();
     }
 
