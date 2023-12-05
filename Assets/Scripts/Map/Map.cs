@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Pool;
 using UnityEngine.Serialization;
+using Random = UnityEngine.Random;
 
 /// <summary>
 /// Handles the Map coordinates and the actual spawning and tracking of enemies.
@@ -129,8 +130,9 @@ public class Map : MonoBehaviour
         while (amount > 0)
         {
             var enemy = _enemyPools[st.enemyPrefab.Type].Get();
-            enemy.transform.position = _grid.GetCellCenterWorld(startPosition.ToVector3Int());
-            enemy.Initialize(_grid, checkpoints.ToArray(), st.health, Mathf.Ceil((st.health-wave)/32));
+            var offset = new Vector3(Random.Range(-0.25f, 0.25f), Random.Range(-0.25f, 0.25f), 0);
+            enemy.transform.position = _grid.GetCellCenterWorld(startPosition.ToVector3Int()) + offset;
+            enemy.Initialize(_grid, checkpoints.ToArray(), offset, st.health, Mathf.Ceil((st.health-wave)/32));
             enemy.transform.localScale = Vector3.zero;
             enemy.transform.DOScale(1f, 0.6f).SetEase(Ease.OutCubic);
             enemy.JourneyComplete += EnemyOnJourneyComplete;
