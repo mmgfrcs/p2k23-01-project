@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -12,7 +13,9 @@ public class TowerDetailPanel : MonoBehaviour
     [SerializeField] private TextMeshProUGUI priceText;
     [SerializeField] private TowerBuyStats[] statList;
     [SerializeField] private TowerBuyStats[] reportList;
+    [SerializeField] private EfficiencyListItem[] efficiencyList;
     [SerializeField] private Button upgradeBtn;
+    [SerializeField]  private TextMeshProUGUI levelText;
     
     public bool IsOpen { get; private set; }
     
@@ -25,6 +28,7 @@ public class TowerDetailPanel : MonoBehaviour
     private GameObject _sBox;
     private Tower _currTower;
     private bool _isOpen;
+    private bool _isUpgrade;
 
     private void Awake()
     {
@@ -68,7 +72,6 @@ public class TowerDetailPanel : MonoBehaviour
     
     public void ResetPanel()
     {
-        upgradeBtn.gameObject.SetActive(false);
         towerIcon.gameObject.SetActive(false);
         towerNameText.text = "";
         for (int i = 0; i < statList.Length; i++)
@@ -87,13 +90,15 @@ public class TowerDetailPanel : MonoBehaviour
         _currTower = tower;
         _sBox.gameObject.SetActive(true);
         _sBox.transform.position = loc;
+        _isUpgrade = false;
         gameObject.SetActive(true);
         
         towerIcon.sprite = tower.Icon;
         towerNameText.text = tower.Type.ToString();
-        priceText.text = tower.Price.ToString("N0");
+        priceText.text = tower.GetUpgradePrice().ToString("N0");
+        levelText.text = $"L{tower.Level}";
 
-        //upgradeBtn.interactable = GameManager.Instance.Money >= tower.Price;
+        upgradeBtn.interactable = GameManager.Instance.Money >= tower.GetUpgradePrice();
 
         for (int i = 0; i < statList.Length; i++)
         {
@@ -121,16 +126,70 @@ public class TowerDetailPanel : MonoBehaviour
                     break;
             }
         }
+        
+        var enemyTypes = Enum.GetValues(typeof(EnemyType)).Cast<EnemyType>().ToList();
+
+        for (int i = 0; i < efficiencyList.Length; i++)
+        {
+            if (i >= enemyTypes.Count) efficiencyList[i].gameObject.SetActive(false);
+            else
+            {
+                efficiencyList[i].gameObject.SetActive(true);
+                efficiencyList[i].SetEfficiency(enemyTypes[i], tower.GetEfficiency(enemyTypes[i]));
+            }
+        }
+        
         tower.ShowRange();
     }
     
     public void ClosePanel()
     {
         CreateSelectionBox();
-        if(_isOpen) _currTower.HideLine();
+        if(_isOpen) _currTower.HideRange();
         _isOpen = false;
         _sBox.gameObject.SetActive(false);
         gameObject.SetActive(false);
         
+    }
+    
+    public void OnLevelUp()
+    {
+        if (_isUpgrade)
+        {
+            if (!GameManager.Instance.Purchase(Convert.ToUInt32(_currTower.GetUpgradePrice()))) return;
+            _currTower.LevelUp();
+            OpenPanel(_sBox.transform.position, _currTower);
+        }
+        else StartCoroutine(LevelUpConfirmDelay());
+    }
+
+    private IEnumerator LevelUpConfirmDelay()
+    {
+        _isUpgrade = true;
+        priceText.text = $"{_currTower.GetUpgradePrice()} (Confirm)";
+        for (int i = 0; i < Mathf.Min(statList.Length, 5); i++)
+        {
+            switch (i)
+            {
+                case 0:
+                    statList[i].SetUpgrade(_currTower.GetDamageLevelUpEffect());
+                    break;
+                case 1:
+                    statList[i].SetUpgrade(_currTower.GetProjectileSpeedLevelUpEffect());
+                    break;
+                case 2:
+                    statList[i].SetUpgrade(_currTower.GetRotationSpeedLevelUpEffect());
+                    break;
+                case 3:
+                    statList[i].SetUpgrade(_currTower.GetAttackSpeedLevelUpEffect());
+                    break;
+                case 4:
+                    statList[i].SetUpgrade(_currTower.GetRangeLevelUpEffect());
+                    break;
+            }
+        }
+        yield return new WaitForSeconds(2f);
+        if(_isOpen) OpenPanel(_sBox.transform.position, _currTower);
+        _isUpgrade = false;
     }
 }

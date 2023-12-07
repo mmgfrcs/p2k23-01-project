@@ -47,12 +47,18 @@ public class Tower : MonoBehaviour
 
     public TowerType Type => type;
     public uint Price => price;
-    public float Damage => damage;
-    public float ProjectileSpeed => projectileSpeed;
-    public float RotationSpeed => rotationSpeed;
-    public float AttackSpeed => attackSpeed;
-    public float Range => range;
+    public float BaseDamage => damage;
+    public float BaseProjectileSpeed => projectileSpeed;
+    public float BaseRotationSpeed => rotationSpeed;
+    public float BaseAttackSpeed => attackSpeed;
+    public float BaseRange => range;
+    public float Damage { get; private set; }
+    public float ProjectileSpeed { get; private set; }
+    public float RotationSpeed { get; private set; }
+    public float AttackSpeed { get; private set; }
+    public float Range { get; private set; }
     public Sprite Icon => icon;
+    public uint Level { get; private set; } = 1;
     public Stat[] OtherStatistics => otherStats;
     public TowerReport Reports => _towerReport;
 
@@ -82,6 +88,12 @@ public class Tower : MonoBehaviour
         _rangeCircle.SetRadius(range);
         _rangeCircle.HideLine();
         GameManager.Instance.GameOver += OnGameOver;
+
+        Damage = damage;
+        ProjectileSpeed = projectileSpeed;
+        RotationSpeed = rotationSpeed;
+        AttackSpeed = attackSpeed;
+        Range = range;
     }
 
     private void OnGameOver(float delay)
@@ -193,8 +205,24 @@ public class Tower : MonoBehaviour
         _rangeCircle.ShowLine();
     }
 
-    public void HideLine()
+    public void HideRange()
     {
         _rangeCircle.HideLine();
     }
+
+    public void LevelUp()
+    {
+        Level++;
+        Damage += damage * 0.1f;
+        RotationSpeed += rotationSpeed * 0.05f;
+        AttackSpeed += attackSpeed * 0.02f;
+        Range += range * 0.04f;
+    }
+
+    public float GetDamageLevelUpEffect() => damage * 0.1f;
+    public float GetRotationSpeedLevelUpEffect() => rotationSpeed * 0.05f;
+    public float GetAttackSpeedLevelUpEffect() => attackSpeed * 0.02f;
+    public float GetRangeLevelUpEffect() => range * 0.04f;
+    public float GetProjectileSpeedLevelUpEffect() => 0;
+    public float GetUpgradePrice() => Mathf.Ceil(Price / 4f + Level * 10 + Level * Level);
 }

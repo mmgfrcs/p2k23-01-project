@@ -80,8 +80,8 @@ public class TowerBuyPanel : MonoBehaviour
     public void BuyTower()
     {
         var tower = GameManager.Instance.TowerList[_selectedIdx];
+        if (!GameManager.Instance.Purchase(tower.Price)) return;
         var instTower = Instantiate(tower.gameObject, _position, Quaternion.identity).GetComponent<Tower>();
-        GameManager.Instance.Purchase(tower.Price);
         TowerBuy?.Invoke(_position, instTower);
         ClosePanel();
     }
@@ -136,19 +136,19 @@ public class TowerBuyPanel : MonoBehaviour
             switch (i)
             {
                 case 0:
-                    statList[i].SetStat("Damage", tower.Damage, "", false, _damageStatIcon);
+                    statList[i].SetStat("Damage", tower.BaseDamage, "", false, _damageStatIcon);
                     break;
                 case 1:
-                    statList[i].SetStat("Bullet Speed", tower.ProjectileSpeed, "m/s", false, _bulletSpeedStatIcon);
+                    statList[i].SetStat("Bullet Speed", tower.BaseProjectileSpeed, "m/s", false, _bulletSpeedStatIcon);
                     break;
                 case 2:
-                    statList[i].SetStat("Rotation Speed", tower.RotationSpeed, "deg/s", false, _rotationSpeedStatIcon);
+                    statList[i].SetStat("Rotation Speed", tower.BaseRotationSpeed, "deg/s", false, _rotationSpeedStatIcon);
                     break;
                 case 3:
-                    statList[i].SetStat("Attack Speed", tower.AttackSpeed, "p/s", true, _attackSpeedStatIcon);
+                    statList[i].SetStat("Attack Speed", tower.BaseAttackSpeed, "p/s", true, _attackSpeedStatIcon);
                     break;
                 case 4:
-                    statList[i].SetStat("Range", tower.Range, "m", true, _rangeStatIcon);
+                    statList[i].SetStat("Range", tower.BaseRange, "m", true, _rangeStatIcon);
                     break;
                 default:
                     if (i-5 >= tower.OtherStatistics.Length) statList[i].gameObject.SetActive(false);
@@ -161,7 +161,7 @@ public class TowerBuyPanel : MonoBehaviour
 
         for (int i = 0; i < efficiencyList.Length; i++)
         {
-            if (i >= enemyTypes.Count || Math.Abs(tower.GetEfficiency(enemyTypes[i]) - 1) < 0.0001f) efficiencyList[i].gameObject.SetActive(false);
+            if (i >= enemyTypes.Count) efficiencyList[i].gameObject.SetActive(false);
             else
             {
                 efficiencyList[i].gameObject.SetActive(true);
@@ -170,7 +170,7 @@ public class TowerBuyPanel : MonoBehaviour
         }
 
         _circle.transform.position = _position;
-        _circle.SetRadius(tower.Range);
+        _circle.SetRadius(tower.BaseRange);
         _circle.ShowLine();
     }
 }

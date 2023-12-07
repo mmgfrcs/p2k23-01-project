@@ -85,22 +85,26 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5346753884843245593, guid: 4b24e271f9d98474293a805675f2b8ae, type: 3}
       propertyPath: efficiencies.Array.data[0].enemy
-      value: 4
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5346753884843245593, guid: 4b24e271f9d98474293a805675f2b8ae, type: 3}
       propertyPath: efficiencies.Array.data[1].enemy
-      value: 4
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5346753884843245593, guid: 4b24e271f9d98474293a805675f2b8ae, type: 3}
       propertyPath: efficiencies.Array.data[2].enemy
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5346753884843245593, guid: 4b24e271f9d98474293a805675f2b8ae, type: 3}
       propertyPath: efficiencies.Array.data[3].enemy
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 5346753884843245593, guid: 4b24e271f9d98474293a805675f2b8ae, type: 3}
       propertyPath: efficiencies.Array.data[4].enemy
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5346753884843245593, guid: 4b24e271f9d98474293a805675f2b8ae, type: 3}
+      propertyPath: efficiencies.Array.data[5].enemy
       value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 5346753884843245593, guid: 4b24e271f9d98474293a805675f2b8ae, type: 3}
