@@ -15,7 +15,6 @@ jobs:
         targetPlatform:
           - StandaloneWindows64 # Build a Windows 64-bit standalone.
           - StandaloneLinux64 # Build a Linux 64-bit standalone.
-          - WebGL # WebGL.
     steps:
       # Checkout (without LFS)
       - name: Checkout repository
@@ -32,7 +31,8 @@ jobs:
           path: .git/lfs
           key: ${{ runner.os }}-lfs--${{ matrix.targetPlatform }}-${{ hashFiles('.lfs-assets-id') }}
 
-      - uses: de-vri-es/setup-git-credentials@v2
+      - name: Setup External Git LFS Credentials
+        uses: de-vri-es/setup-git-credentials@v2
         with:
           credentials: ${{secrets.LFS_CREDENTIAL}}
       - name: Git LFS Pull
@@ -40,8 +40,14 @@ jobs:
           git lfs pull
           git add .
           git reset --hard
+      - name: Download Icon
+        run: |
+          curl ${{ secrets.ICON_URL }} -o Icon.zip
+          unzip Icon.zip -d Assets/Sprites
+          rm Icon.zip
       # Cache
-      - uses: actions/cache@v3
+      - name: Cache Library
+        uses: actions/cache@v3
         with:
           path: Library
           key: Library-${{ matrix.targetPlatform }}-${{ hashFiles('Assets/**', 'Packages/**', 'ProjectSettings/**') }}
@@ -55,9 +61,12 @@ jobs:
           UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
           UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
         with:
+          buildName: AdInfinitum
           targetPlatform: ${{ matrix.targetPlatform }}
+          allowDirtyBuild: true
       # Output
-      - uses: actions/upload-artifact@v3
+      - name: Upload to GitHub
+        uses: actions/upload-artifact@v3
         with:
           name: Build-${{ matrix.targetPlatform }}
           path: build/${{ matrix.targetPlatform }}
