@@ -42,7 +42,7 @@ jobs:
           git reset --hard
       - name: Download Icon
         run: |
-          curl -o Icon.zip ${{ secrets.ICON_URL }}
+          curl -o Icon.zip "${{ secrets.ICON_URL }}"
           unzip Icon.zip -d Assets/Sprites
           rm Icon.zip
       # Cache
