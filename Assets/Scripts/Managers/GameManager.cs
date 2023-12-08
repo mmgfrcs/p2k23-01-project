@@ -79,6 +79,8 @@ public class GameManager : Singleton<GameManager>
         {
             //Game Over
             GameOver?.Invoke(gameOverDelay);
+            mainUI.interactable = false;
+            mainUI.blocksRaycasts = false;
             mainUI.DOFade(0f, gameOverDelay).SetUpdate(true);
             DOTween.To(() => Time.timeScale, value => Time.timeScale = value, 0.1f, gameOverDelay)
                 .SetUpdate(true).onComplete += () =>

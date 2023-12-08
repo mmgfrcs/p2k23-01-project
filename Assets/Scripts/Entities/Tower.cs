@@ -61,6 +61,7 @@ public class Tower : MonoBehaviour
     public uint Level { get; private set; } = 1;
     public Stat[] OtherStatistics => otherStats;
     public TowerReport Reports => _towerReport;
+    public ulong SellPrice { get; private set; }
 
     public Enemy Target { get; private set; }
 
@@ -94,6 +95,7 @@ public class Tower : MonoBehaviour
         RotationSpeed = rotationSpeed;
         AttackSpeed = attackSpeed;
         Range = range;
+        SellPrice = Price / 2;
     }
 
     private void OnGameOver(float delay)
@@ -212,6 +214,7 @@ public class Tower : MonoBehaviour
 
     public void LevelUp()
     {
+        SellPrice += Convert.ToUInt64(GetUpgradePrice() / 2);
         Level++;
         Damage += damage * 0.1f;
         RotationSpeed += rotationSpeed * 0.05f;

@@ -34,13 +34,13 @@ public class SceneFader : MonoBehaviour
         {
             _group.blocksRaycasts = true;
             onShown?.Invoke(); 
-        });
+        }).SetUpdate(true);
     }
 
     public void Hide(Action onHidden = null)
     {
         _group.alpha = 1;
         _group.blocksRaycasts = false;
-        _group.DOFade(0f, delay).OnComplete(() => onHidden?.Invoke());
+        _group.DOFade(0f, delay).OnComplete(() => onHidden?.Invoke()).SetUpdate(true);
     }
 }

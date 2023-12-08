@@ -66,8 +66,6 @@ public class Enemy : MonoBehaviour, IComparable<Enemy>, IEquatable<Enemy>
             lastPos = chkpt;
         }
         
-        Debug.Log($"{Distance} to {_distances.Peek()}");
-        
         GameManager.Instance.GameOver += OnGameOver;
     }
 
