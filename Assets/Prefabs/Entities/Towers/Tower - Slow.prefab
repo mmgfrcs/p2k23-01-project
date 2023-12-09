@@ -23,6 +23,10 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: 06e3ea7dd39a1d64aa5a9a6a97a9c26b, type: 3}
+    - target: {fileID: 4424679166825741177, guid: 4b24e271f9d98474293a805675f2b8ae, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5346753884843245593, guid: 4b24e271f9d98474293a805675f2b8ae, type: 3}
       propertyPath: icon
       value: 

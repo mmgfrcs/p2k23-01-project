@@ -13,11 +13,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1231452358687245608, guid: a1e0653dff072b6409b6af4e076c3257, type: 3}
       propertyPath: m_SpriteTilingProperty.border.x
-      value: 0.26953125
+      value: 0.20703125
       objectReference: {fileID: 0}
     - target: {fileID: 1231452358687245608, guid: a1e0653dff072b6409b6af4e076c3257, type: 3}
       propertyPath: m_SpriteTilingProperty.border.z
-      value: 0.14453125
+      value: 0.20703125
       objectReference: {fileID: 0}
     - target: {fileID: 2430315875821969293, guid: a1e0653dff072b6409b6af4e076c3257, type: 3}
       propertyPath: type
@@ -71,7 +71,15 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8309527948643759312, guid: a1e0653dff072b6409b6af4e076c3257, type: 3}
+    - target: {fileID: 7893896745640529787, guid: a1e0653dff072b6409b6af4e076c3257, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7893896745640529787, guid: a1e0653dff072b6409b6af4e076c3257, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9063064857489248236, guid: a1e0653dff072b6409b6af4e076c3257, type: 3}
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: 74e7ea2065f8915468c67821b230e066, type: 3}

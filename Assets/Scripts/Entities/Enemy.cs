@@ -1,17 +1,23 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
+using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
-[RequireComponent(typeof(SpriteRenderer))]
 public class Enemy : MonoBehaviour, IComparable<Enemy>, IEquatable<Enemy>
 {
+    [SerializeField] private SpriteRenderer spriteRenderer;
+    [SerializeField] private bool debugMode;
     [SerializeField] private EnemyType type;
     [SerializeField] private float speed = 1;
     [SerializeField] private uint lifeCost = 1;
-    //[SerializeField] private Slider hpBar;
+    [SerializeField] private Slider hpBar;
+    [SerializeField] private TextMeshProUGUI debugText;
 
     public EnemyType Type => type;
     public string EnemyID { get; private set; }
@@ -30,15 +36,15 @@ public class Enemy : MonoBehaviour, IComparable<Enemy>, IEquatable<Enemy>
     private bool _isInitialized;
     private Vector2Int[] _checkpoints;
     private int _checkpointIdx;
-    private SpriteRenderer _renderer;
     private float _speedMultCooldown;
     private float _distanceTraveled;
     private Queue<float> _distances = new();
     private Vector3 _offset;
+    private CanvasGroup _hpBarGroup;
 
     private void Awake()
     {
-        _renderer = GetComponent<SpriteRenderer>();
+        if (!debugMode) Destroy(debugText.gameObject);
     }
 
     public void Initialize(Grid grid, Vector2Int[] checkpoints, Vector3 offset, float health, float bounty)
@@ -56,6 +62,10 @@ public class Enemy : MonoBehaviour, IComparable<Enemy>, IEquatable<Enemy>
         _offset = offset;
         _distances.Clear();
         _distanceTraveled = 0;
+        hpBar.maxValue = health;
+        hpBar.value = health;
+        _hpBarGroup = hpBar.GetComponent<CanvasGroup>();
+        _hpBarGroup.alpha = 0;
         var lastPos = transform.position;
         for (int i = 0; i < _checkpoints.Length; i++)
         {
@@ -67,6 +77,7 @@ public class Enemy : MonoBehaviour, IComparable<Enemy>, IEquatable<Enemy>
         }
         
         GameManager.Instance.GameOver += OnGameOver;
+        AudioManager.Instance.PlayEnemySFX(transform.position, type, EntitySFXType.Deploy);
     }
 
     private void OnGameOver(float delay)
@@ -80,19 +91,23 @@ public class Enemy : MonoBehaviour, IComparable<Enemy>, IEquatable<Enemy>
 
         if (Health <= 0)
         {
+            AudioManager.Instance.PlayEnemySFX(transform.position, type, EntitySFXType.Destroy);
             Kill();
             return;
         }
 
+        if (debugMode)
+            debugText.text = $"C{_checkpointIdx+1} {_distanceTraveled:N2}/{_distances.Peek():N2} {Distance:N2}";
+
         var dest = _parentGrid.GetCellCenterWorld(_checkpoints[_checkpointIdx].ToVector3Int()) + _offset;
         var dir = (dest - transform.position).normalized;
-        transform.rotation = Quaternion.LookRotation(Vector3.forward, dir) * Quaternion.Euler(0f, 0f, 90f);
-        transform.Translate(Vector3.right * (speed * SpeedMultiplier * Time.deltaTime));
+        spriteRenderer.transform.rotation = Quaternion.LookRotation(Vector3.forward, dir) * Quaternion.Euler(0f, 0f, 90f);
+        transform.Translate(dir * (speed * SpeedMultiplier * Time.deltaTime));
 
         Distance -= speed * SpeedMultiplier * Time.deltaTime;
         _distanceTraveled += speed * SpeedMultiplier * Time.deltaTime;
 
-        if (_distanceTraveled >= _distances.Peek())
+        if (Vector3.Distance(transform.position, dest) <= 0.01f)
         {
             _checkpointIdx++;
             if (_checkpointIdx >= _checkpoints.Length)
@@ -111,9 +126,11 @@ public class Enemy : MonoBehaviour, IComparable<Enemy>, IEquatable<Enemy>
 
     public void Damage(float amount)
     {
-        _renderer.color = new Color(1,1,1,0.5f);
-        _renderer.DOColor(Color.white, 0.6f);
+        spriteRenderer.color = new Color(0.5f,0.5f,0.5f,0.75f);
+        spriteRenderer.DOColor(Color.white, 0.6f);
         Health -= amount;
+        _hpBarGroup.alpha = 1;
+        if(Health > 0) hpBar.DOValue(Health, 0.4f);
     }
 
     public void Kill()

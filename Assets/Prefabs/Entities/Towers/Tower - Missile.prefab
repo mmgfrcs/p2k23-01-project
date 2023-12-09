@@ -11,6 +11,10 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: e85bd32851835484aae8eb23b5a00edc, type: 3}
+    - target: {fileID: 761797073111030457, guid: 8cd48f0baff9baa44a259a0910331ccd, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.6
+      objectReference: {fileID: 0}
     - target: {fileID: 4044421677007753412, guid: 8cd48f0baff9baa44a259a0910331ccd, type: 3}
       propertyPath: m_Name
       value: Tower - Missile

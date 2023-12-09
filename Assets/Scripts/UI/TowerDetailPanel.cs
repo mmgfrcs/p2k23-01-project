@@ -10,11 +10,11 @@ public class TowerDetailPanel : MonoBehaviour
 {
     [Header("UI"), SerializeField] private TextMeshProUGUI towerNameText;
     [SerializeField] private Image towerIcon;
-    [SerializeField] private TextMeshProUGUI priceText;
+    [SerializeField] private TextMeshProUGUI priceText, sellPriceText;
     [SerializeField] private TowerBuyStats[] statList;
     [SerializeField] private TowerBuyStats[] reportList;
     [SerializeField] private EfficiencyListItem[] efficiencyList;
-    [SerializeField] private Button upgradeBtn;
+    [SerializeField] private Button upgradeBtn, sellBtn;
     [SerializeField]  private TextMeshProUGUI levelText;
     
     public bool IsOpen { get; private set; }
@@ -97,7 +97,8 @@ public class TowerDetailPanel : MonoBehaviour
         towerNameText.text = tower.Type.ToString();
         priceText.text = tower.GetUpgradePrice().ToString("N0");
         levelText.text = $"L{tower.Level}";
-
+        sellPriceText.text = tower.SellPrice.ToString();
+        
         upgradeBtn.interactable = GameManager.Instance.Money >= tower.GetUpgradePrice();
 
         for (int i = 0; i < statList.Length; i++)
@@ -140,6 +141,8 @@ public class TowerDetailPanel : MonoBehaviour
         }
         
         tower.ShowRange();
+        
+        
     }
     
     public void ClosePanel()
@@ -151,6 +154,12 @@ public class TowerDetailPanel : MonoBehaviour
         gameObject.SetActive(false);
         
     }
+
+    public void OnSell()
+    {
+        _currTower.Sell();
+        ClosePanel();
+    }
     
     public void OnLevelUp()
     {
@@ -158,6 +167,7 @@ public class TowerDetailPanel : MonoBehaviour
         {
             if (!GameManager.Instance.Purchase(Convert.ToUInt32(_currTower.GetUpgradePrice()))) return;
             _currTower.LevelUp();
+            StopCoroutine(LevelUpConfirmDelay());
             OpenPanel(_sBox.transform.position, _currTower);
         }
         else StartCoroutine(LevelUpConfirmDelay());

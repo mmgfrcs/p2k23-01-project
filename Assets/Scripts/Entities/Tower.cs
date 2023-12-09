@@ -96,6 +96,8 @@ public class Tower : MonoBehaviour
         AttackSpeed = attackSpeed;
         Range = range;
         SellPrice = Price / 2;
+        
+        AudioManager.Instance.PlayTowerSFX(transform.position, type, EntitySFXType.Deploy);
     }
 
     private void OnGameOver(float delay)
@@ -131,7 +133,7 @@ public class Tower : MonoBehaviour
             filter = new ContactFilter2D();
             filter.useTriggers = true;
             filter.SetLayerMask(LayerMask.GetMask("Enemy"));
-            if (Physics2D.OverlapCircle(transform.position, range, filter, _scanResult) > 0)
+            if (Physics2D.OverlapCircle(transform.position, Range, filter, _scanResult) > 0)
             {
                 var enemies = _scanResult
                     .Where(x => x.GetComponent<Enemy>() != null)
@@ -146,7 +148,7 @@ public class Tower : MonoBehaviour
         {
             if (GameManager.Instance.EnemyAmount == 0) return;
     
-            if (Physics2D.OverlapCircle(transform.position, range, filter, _scanResult) > 0)
+            if (Physics2D.OverlapCircle(transform.position, Range, filter, _scanResult) > 0)
             {
                 var enemies = _scanResult
                     .Where(x => x.GetComponent<Enemy>() != null)
@@ -169,7 +171,7 @@ public class Tower : MonoBehaviour
         
         Vector2 direction = Target.transform.position - transform.position;
         barrelCenter.rotation = Quaternion.RotateTowards(barrelCenter.rotation,
-            Quaternion.FromToRotation(Vector3.up, direction), rotationSpeed * Time.deltaTime);
+            Quaternion.FromToRotation(Vector3.up, direction), RotationSpeed * Time.deltaTime);
 
         if (Quaternion.Angle(barrelCenter.rotation, Quaternion.FromToRotation(Vector3.up, direction)) < 1f)
             Shoot();
@@ -183,9 +185,10 @@ public class Tower : MonoBehaviour
         Bullet b = _bulletPool.Get();
         b.transform.position = barrelTip.transform.position;
         b.transform.rotation = barrelTip.transform.rotation;
-        b.Initialize(Target, damage * GetEfficiency(Target.Type), projectileSpeed);
-        b.Hit += BulletOnHit; 
-        _cooldown = 1f / attackSpeed;
+        b.Initialize(Target, Damage * GetEfficiency(Target.Type), ProjectileSpeed);
+        b.Hit += BulletOnHit;
+        _cooldown = 1f / AttackSpeed;
+        AudioManager.Instance.PlayTowerSFX(transform.position, type, EntitySFXType.Shoot);
     }
 
     private void BulletOnHit(Bullet obj)
@@ -204,6 +207,7 @@ public class Tower : MonoBehaviour
 
     public void ShowRange()
     {
+        _rangeCircle.SetRadius(Range);
         _rangeCircle.ShowLine();
     }
 
@@ -222,10 +226,16 @@ public class Tower : MonoBehaviour
         Range += range * 0.04f;
     }
 
+    public void Sell()
+    {
+        GameManager.Instance.AddMoney(SellPrice);
+        Destroy(gameObject);
+    }
+
     public float GetDamageLevelUpEffect() => damage * 0.1f;
     public float GetRotationSpeedLevelUpEffect() => rotationSpeed * 0.05f;
     public float GetAttackSpeedLevelUpEffect() => attackSpeed * 0.02f;
-    public float GetRangeLevelUpEffect() => range * 0.04f;
+    public float GetRangeLevelUpEffect() => range * 0.02f;
     public float GetProjectileSpeedLevelUpEffect() => 0;
     public float GetUpgradePrice() => Mathf.Ceil(Price / 4f + Level * 10 + Level * Level);
 }

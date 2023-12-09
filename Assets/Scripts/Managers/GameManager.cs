@@ -128,10 +128,15 @@ public class GameManager : Singleton<GameManager>
         _enemyCo = StartCoroutine(StartEnemySpawn());
     }
 
-    public bool Purchase(uint amount)
+    public bool Purchase(ulong amount)
     {
         if (Money < amount) return false;
         Money -= amount;
         return true;
+    }
+    
+    public void AddMoney(ulong amount)
+    {
+        Money += amount;
     }
 }
