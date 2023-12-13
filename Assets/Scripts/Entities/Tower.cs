@@ -174,13 +174,18 @@ public class Tower : MonoBehaviour
                 enemies.Sort();
                 var idx = 0;
                 Target = enemies[idx];
-                while (GetEfficiency(Target.Type) <= 0 && idx < enemies.Count - 1)
+                while (GetEfficiency(Target.Type) <= 0)
                 {
                     idx++;
+                    if(idx >= enemies.Count) break;
                     Target = enemies[idx];
                 }
 
-                if (idx >= enemies.Count - 1) Target = null;
+                if (idx >= enemies.Count)
+                {
+                    Target = null;
+                    _isLocked = false;
+                }
                 else _isLocked = true;
             }
             else

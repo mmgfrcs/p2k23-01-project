@@ -13,26 +13,7 @@ MonoBehaviour:
   m_Name: SupermapExpansionConfig
   m_EditorClassIdentifier: 
   expansionTimings:
-  - expandOnWave: 11
-    expandSection: {fileID: 0}
-    newCheckpoints:
-    - {x: -1, y: 1}
-    - {x: -1, y: -10}
-    - {x: 3, y: -10}
-    - {x: 3, y: -6}
-    - {x: 7, y: -6}
-    - {x: 7, y: 0}
-    - {x: 2, y: 0}
-    - {x: 2, y: 1}
-    newTowerSpots:
-    - {x: -2, y: 0}
-    - {x: 0, y: -9}
-    - {x: 2, y: -9}
-    - {x: 6, y: -5}
-    - {x: 2, y: -3}
-    - {x: 6, y: -1}
-  - expandOnWave: 21
-    expandSection: {fileID: 0}
+  - expandOnWave: 2
     newCheckpoints:
     - {x: 2, y: 4}
     - {x: 0, y: 4}
@@ -49,8 +30,7 @@ MonoBehaviour:
     - {x: 7, y: 11}
     - {x: 7, y: 6}
     - {x: 5, y: 4}
-  - expandOnWave: 31
-    expandSection: {fileID: 0}
+  - expandOnWave: 21
     newCheckpoints:
     - {x: 19, y: 3}
     - {x: 19, y: 6}
@@ -69,8 +49,7 @@ MonoBehaviour:
     - {x: 11, y: 7}
     - {x: 15, y: 9}
     - {x: 11, y: 13}
-  - expandOnWave: 41
-    expandSection: {fileID: 0}
+  - expandOnWave: 31
     newCheckpoints:
     - {x: 10, y: 24}
     - {x: 12, y: 24}
@@ -87,8 +66,7 @@ MonoBehaviour:
     - {x: 16, y: 16}
     - {x: 16, y: 22}
     - {x: 16, y: 19}
-  - expandOnWave: 51
-    expandSection: {fileID: 0}
+  - expandOnWave: 41
     newCheckpoints:
     - {x: 25, y: 20}
     - {x: 25, y: 14}
@@ -105,8 +83,7 @@ MonoBehaviour:
     - {x: 31, y: 20}
     - {x: 31, y: 15}
     - {x: 26, y: 15}
-  - expandOnWave: 61
-    expandSection: {fileID: 0}
+  - expandOnWave: 51
     newCheckpoints:
     - {x: 21, y: 29}
     - {x: 25, y: 29}
@@ -125,8 +102,7 @@ MonoBehaviour:
     - {x: 24, y: 33}
     - {x: 26, y: 34}
     - {x: 29, y: 30}
-  - expandOnWave: 71
-    expandSection: {fileID: 0}
+  - expandOnWave: 61
     newCheckpoints:
     - {x: 44, y: 26}
     - {x: 44, y: 36}
@@ -143,8 +119,7 @@ MonoBehaviour:
     - {x: 43, y: 27}
     - {x: 43, y: 35}
     - {x: 39, y: 35}
-  - expandOnWave: 81
-    expandSection: {fileID: 0}
+  - expandOnWave: 71
     newCheckpoints:
     - {x: 34, y: 39}
     - {x: 43, y: 39}
@@ -159,8 +134,7 @@ MonoBehaviour:
     - {x: 42, y: 48}
     - {x: 34, y: 48}
     - {x: 34, y: 45}
-  - expandOnWave: 91
-    expandSection: {fileID: 0}
+  - expandOnWave: 81
     newCheckpoints:
     - {x: 46, y: 49}
     - {x: 46, y: 38}
@@ -179,8 +153,7 @@ MonoBehaviour:
     - {x: 55, y: 40}
     - {x: 49, y: 45}
     - {x: 52, y: 45}
-  - expandOnWave: 101
-    expandSection: {fileID: 0}
+  - expandOnWave: 91
     newCheckpoints:
     - {x: 48, y: 53}
     - {x: 47, y: 53}
