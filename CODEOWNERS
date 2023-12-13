@@ -2,12 +2,7 @@
 
 * @mmgfrcs
 
-# Lead is responsible for their respective files
-
-*.ogg @Zenphyllius
-*.png @RezaMaulana98
-
-# And also folders, but this time with fallback
+# Lead is responsible for their folders, with fallback
 
 /Assets/Audio/* @Zenphyllius @mmgfrcs
 /Assets/Sprites/* @RezaMaulana98 @mmgfrcs
@@ -15,3 +10,7 @@
 /Assets/Audio/** @Zenphyllius @mmgfrcs
 /Assets/Sprites/** @RezaMaulana98 @mmgfrcs
 
+# Lead is responsible for their respective files
+
+*.ogg @Zenphyllius
+*.png @RezaMaulana98
