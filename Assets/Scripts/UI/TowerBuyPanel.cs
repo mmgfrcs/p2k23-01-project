@@ -23,7 +23,6 @@ public class TowerBuyPanel : MonoBehaviour
     private Sprite _rotationSpeedStatIcon;
 
     public event Action<Vector3, Tower> TowerBuy; 
-    public event Action<Vector3, Tower> TowerSell;
 
     private Vector3 _position;
     private int _selectedIdx = -1;

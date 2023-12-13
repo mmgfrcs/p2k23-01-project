@@ -1,5 +1,5 @@
 ﻿
 public enum EntitySFXType
 {
-    Destroy, Shoot, Deploy
+    Destroy, Shoot, Deploy, Charge
 }

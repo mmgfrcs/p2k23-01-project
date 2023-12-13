@@ -23,14 +23,14 @@ public class GameManager : Singleton<GameManager>
     public ulong Money { get; private set; }
     public uint Life { get; private set; }
     public uint Wave { get; private set; }
-    public int EnemyAmount => enemyList.Count;
+    public int EnemyAmount => _enemyList.Count;
     public float WaveTimer { get; private set; } = -1;
 
     public IReadOnlyList<Map> MapList { get; private set; }
     public IReadOnlyList<Tower> TowerList { get; private set; }
     public IReadOnlyList<Enemy> EnemyList { get; private set; }
 
-    private List<Enemy> enemyList = new();
+    private List<Enemy> _enemyList = new();
 
     private Map _map;
     private Coroutine _enemyCo;
@@ -48,7 +48,7 @@ public class GameManager : Singleton<GameManager>
         Score = 0;
         Wave = 0;
         Highscore = ulong.Parse(PlayerPrefs.GetString("Highscore", "0"));
-        EnemyList = enemyList;
+        EnemyList = _enemyList;
         MapList = new List<Map>(maps);
         TowerList = new List<Tower>(towers);
         
@@ -64,13 +64,13 @@ public class GameManager : Singleton<GameManager>
     {
         Score += Convert.ToUInt64(Mathf.CeilToInt(e.MaxHealth));
         Money += Convert.ToUInt64(Mathf.CeilToInt(e.Bounty));
-        enemyList.Remove(e);
+        _enemyList.Remove(e);
     }
 
     private void EnemyOnReachedBase(Enemy e, uint lifecost)
     {
         Life -= lifecost;
-        enemyList.Remove(e);
+        _enemyList.Remove(e);
     }
 
     // Update is called once per frame
@@ -89,6 +89,7 @@ public class GameManager : Singleton<GameManager>
             {
                 Time.timeScale = 1;
                 gameOverPanel.ShowPanel(Score, Wave, 0, 0);
+                if (Score > Highscore) PlayerPrefs.SetString("Highscore", Score.ToString());
             };
             _isGameOver = true;
             return; 
@@ -107,13 +108,13 @@ public class GameManager : Singleton<GameManager>
             _sceneCamera.transform.position += dir;
         }
         
-        enemyList.Sort();
+        _enemyList.Sort();
     }
 
     private IEnumerator StartEnemySpawn()
     {
         WaveTimer = -2;
-        yield return _map.SpawnEnemy(Wave, (e) => enemyList.Add(e));
+        yield return _map.SpawnEnemy(Wave, (e) => _enemyList.Add(e));
         
         WaveTimer = _map.GetSpawnTiming(Wave).amount * _map.GetSpawnTiming(Wave).waitTimeMultiplier;
         _enemyCo = null;

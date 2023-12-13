@@ -61,9 +61,15 @@ public class Map : MonoBehaviour
         }
         
         _buyPanel.TowerBuy += BuyPanelOnTowerBuy;
+        _detailPanel.TowerSell += DetailPanelOnTowerSell;
 
         for (int i = 0; i < mapExpansions.Length; i++) mapExpansions[i].SetActive(false);
         for (int i = 1; i < homeBases.Length; i++) homeBases[i].SetActive(false);
+    }
+
+    private void DetailPanelOnTowerSell(Vector3 arg1, Tower arg2)
+    {
+        _towerDict.Remove(_grid.WorldToCell(arg1).ToVector2Int());
     }
 
     private void BuyPanelOnTowerBuy(Vector3 arg1, Tower arg2)

@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8425668715043347752}
   - component: {fileID: 8998686909634044030}
   m_Layer: 0
-  m_Name: Tower - Normal
+  m_Name: Normal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -106,6 +106,7 @@ MonoBehaviour:
   rotationSpeed: 90
   attackSpeed: 1.12
   range: 3.6
+  chargeTime: 0
   otherStats: []
   efficiencies:
   - enemy: 0
@@ -117,7 +118,8 @@ MonoBehaviour:
   - enemy: 5
     efficiency: 0.75
   barrelCenter: {fileID: 2501040406914293020}
-  barrelTip: {fileID: 268279840937502280}
+  barrelTip:
+  - {fileID: 268279840937502280}
   bullet: {fileID: 8342408202966505818, guid: 5c73690d925b45f4e92d0862cc612c29, type: 3}
   icon: {fileID: 21300000, guid: 5f19ef9848c9a4947a19d8907449abae, type: 3}
 --- !u!114 &8998686909634044030

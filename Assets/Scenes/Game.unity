@@ -13292,12 +13292,12 @@ MonoBehaviour:
   - {fileID: 5557127225583996851, guid: f28d5201d75336548a23edf79f4dfe68, type: 3}
   towers:
   - {fileID: 8425668715043347752, guid: da6c8b15afa1e8343b6ec5d4952847a2, type: 3}
-  - {fileID: 5139246429287268367, guid: 5f22019dd6a250f4397ac5647dba2cc5, type: 3}
-  - {fileID: 2704616549598358289, guid: 36a71ef0f8717244484e4a2f62082bb1, type: 3}
-  - {fileID: 9063090114959942105, guid: 8cd48f0baff9baa44a259a0910331ccd, type: 3}
-  - {fileID: 571297837848776075, guid: 31a7e0ba89e5acb40ae2ebab8dd4522f, type: 3}
-  - {fileID: 5346753884843245593, guid: 4b24e271f9d98474293a805675f2b8ae, type: 3}
-  gameOverDelay: 3
+  - {fileID: 6235496714247666610, guid: 36a71ef0f8717244484e4a2f62082bb1, type: 3}
+  - {fileID: 1600750409593976374, guid: 5f22019dd6a250f4397ac5647dba2cc5, type: 3}
+  - {fileID: 4121683168668324026, guid: 31a7e0ba89e5acb40ae2ebab8dd4522f, type: 3}
+  - {fileID: 1550703766885335409, guid: 0cbf37e25ad035e48b84143827151310, type: 3}
+  - {fileID: 4834633074774441192, guid: 4b24e271f9d98474293a805675f2b8ae, type: 3}
+  gameOverDelay: 2
   mainUI: {fileID: 297325469}
   gameOverPanel: {fileID: 1752302527}
 --- !u!4 &1078189427

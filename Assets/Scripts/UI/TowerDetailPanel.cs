@@ -29,6 +29,8 @@ public class TowerDetailPanel : MonoBehaviour
     private Tower _currTower;
     private bool _isOpen;
     private bool _isUpgrade;
+    
+    public event Action<Vector3, Tower> TowerSell;
 
     private void Awake()
     {
@@ -123,7 +125,22 @@ public class TowerDetailPanel : MonoBehaviour
                     break;
                 default:
                     if (i-5 >= tower.OtherStatistics.Length) statList[i].gameObject.SetActive(false);
-                    else statList[i].SetStat(tower.OtherStatistics[i-5].name, tower.OtherStatistics[i-5].value, tower.OtherStatistics[i-5].unitString, tower.OtherStatistics[i-5].isDecimal, tower.OtherStatistics[i-5].icon);
+                    else
+                    {
+                        var stat = tower.OtherStatistics[i - 5];
+                        switch (stat.type)
+                        {
+                            case Tower.StatType.Slow:
+                                statList[i].SetStat(stat.name, tower.Slow, stat.unitString, stat.isDecimal, stat.icon);
+                                break;
+                            case Tower.StatType.SplashRange:
+                                statList[i].SetStat(stat.name, tower.SplashRange, stat.unitString, stat.isDecimal, stat.icon);
+                                break;
+                            default:
+                                statList[i].SetStat(stat.name, stat.value, stat.unitString, stat.isDecimal, stat.icon);
+                                break;
+                        }
+                    }
                     break;
             }
         }
@@ -158,6 +175,7 @@ public class TowerDetailPanel : MonoBehaviour
     public void OnSell()
     {
         _currTower.Sell();
+        TowerSell?.Invoke(_sBox.transform.position, _currTower);
         ClosePanel();
     }
     
@@ -177,7 +195,7 @@ public class TowerDetailPanel : MonoBehaviour
     {
         _isUpgrade = true;
         priceText.text = $"{_currTower.GetUpgradePrice()} (Confirm)";
-        for (int i = 0; i < Mathf.Min(statList.Length, 5); i++)
+        for (int i = 0; i < statList.Length; i++)
         {
             switch (i)
             {
@@ -195,6 +213,18 @@ public class TowerDetailPanel : MonoBehaviour
                     break;
                 case 4:
                     statList[i].SetUpgrade(_currTower.GetRangeLevelUpEffect());
+                    break;
+                default:
+                    if (i-5 >= _currTower.OtherStatistics.Length) continue;
+                    switch (_currTower.OtherStatistics[i-5].type)
+                    {
+                        case Tower.StatType.Slow:
+                            statList[i].SetUpgrade(_currTower.GetSlowLevelUpEffect());
+                            break;
+                        case Tower.StatType.SplashRange:
+                            statList[i].SetUpgrade(_currTower.GetSplashRangeLevelUpEffect());
+                            break;
+                    }
                     break;
             }
         }

@@ -13,10 +13,16 @@ public class Tower : MonoBehaviour
     public struct Stat
     {
         public string name;
+        public StatType type;
         public Sprite icon;
         public float value;
         public bool isDecimal;
         public string unitString;
+    }
+
+    public enum StatType
+    {
+        Generic, Slow, SplashRange
     }
 
     public class TowerReport
@@ -33,11 +39,12 @@ public class Tower : MonoBehaviour
     [SerializeField] private float rotationSpeed;
     [SerializeField] private float attackSpeed;
     [SerializeField] private float range;
+    [SerializeField] private float chargeTime = 1;
     [SerializeField] private Stat[] otherStats;
     [SerializeField] private TowerEfficiency[] efficiencies;
 
     [Header("Prefabs"), SerializeField] private Transform barrelCenter;
-    [SerializeField] private Transform barrelTip;
+    [SerializeField] private Transform[] barrelTip;
     [SerializeField] private Bullet bullet;
     
     [Header("Visual"), SerializeField] private Sprite icon;
@@ -57,12 +64,14 @@ public class Tower : MonoBehaviour
     public float RotationSpeed { get; private set; }
     public float AttackSpeed { get; private set; }
     public float Range { get; private set; }
+    public float Slow { get; private set; }
+    public float SplashRange { get; private set; }
     public Sprite Icon => icon;
     public uint Level { get; private set; } = 1;
     public Stat[] OtherStatistics => otherStats;
     public TowerReport Reports => _towerReport;
     public ulong SellPrice { get; private set; }
-
+    
     public Enemy Target { get; private set; }
 
     private bool _isLocked;
@@ -71,6 +80,8 @@ public class Tower : MonoBehaviour
     private ObjectPool<Bullet> _bulletPool;
     private float _cooldown;
     private bool _isGameOver;
+    private int _tipIdx = 0;
+    private float _baseSlow, _baseSplashRange;
 
     // Start is called before the first frame update
     private void Start()
@@ -96,6 +107,10 @@ public class Tower : MonoBehaviour
         AttackSpeed = attackSpeed;
         Range = range;
         SellPrice = Price / 2;
+        _baseSlow = otherStats.FirstOrDefault(x => x.type == StatType.Slow).value;
+        _baseSplashRange = otherStats.FirstOrDefault(x => x.type == StatType.SplashRange).value;
+        Slow = _baseSlow;
+        SplashRange = _baseSplashRange;
         
         AudioManager.Instance.PlayTowerSFX(transform.position, type, EntitySFXType.Deploy);
     }
@@ -141,7 +156,7 @@ public class Tower : MonoBehaviour
                     .ToList();
 
                 for (int i = 0; i < enemies.Count; i++)
-                    enemies[i].SetSpeedMultiplier(1 - (otherStats[0].value/100));
+                    enemies[i].SetSpeedMultiplier(1 - otherStats.FirstOrDefault(x=>x.type == StatType.Slow).value/100);
             }
         }
         else
@@ -179,16 +194,21 @@ public class Tower : MonoBehaviour
 
     private void Shoot()
     {
+        if (chargeTime > 0 && _cooldown <= chargeTime) AudioManager.Instance.PlayTowerSFX(transform.position, type, EntitySFXType.Charge);
+        
         if (_cooldown > 0)
             return;
         
         Bullet b = _bulletPool.Get();
-        b.transform.position = barrelTip.transform.position;
-        b.transform.rotation = barrelTip.transform.rotation;
-        b.Initialize(Target, Damage * GetEfficiency(Target.Type), ProjectileSpeed);
+        b.transform.position = barrelTip[_tipIdx].transform.position;
+        b.transform.rotation = barrelTip[_tipIdx].transform.rotation;
+        b.Initialize(Target, Damage * GetEfficiency(Target.Type), ProjectileSpeed, otherStats.FirstOrDefault(x=>x.type == StatType.SplashRange).value);
         b.Hit += BulletOnHit;
         _cooldown = 1f / AttackSpeed;
         AudioManager.Instance.PlayTowerSFX(transform.position, type, EntitySFXType.Shoot);
+
+        _tipIdx++;
+        if (_tipIdx >= barrelTip.Length) _tipIdx = 0;
     }
 
     private void BulletOnHit(Bullet obj)
@@ -220,10 +240,13 @@ public class Tower : MonoBehaviour
     {
         SellPrice += Convert.ToUInt64(GetUpgradePrice() / 2);
         Level++;
-        Damage += damage * 0.1f;
-        RotationSpeed += rotationSpeed * 0.05f;
-        AttackSpeed += attackSpeed * 0.02f;
-        Range += range * 0.04f;
+        Damage += GetDamageLevelUpEffect();
+        RotationSpeed += GetRotationSpeedLevelUpEffect();
+        AttackSpeed += GetAttackSpeedLevelUpEffect();
+        Range += GetRangeLevelUpEffect();
+        Slow += GetSlowLevelUpEffect();
+        SplashRange += GetSplashRangeLevelUpEffect();
+        ProjectileSpeed += GetProjectileSpeedLevelUpEffect();
     }
 
     public void Sell()
@@ -236,6 +259,8 @@ public class Tower : MonoBehaviour
     public float GetRotationSpeedLevelUpEffect() => rotationSpeed * 0.05f;
     public float GetAttackSpeedLevelUpEffect() => attackSpeed * 0.02f;
     public float GetRangeLevelUpEffect() => range * 0.02f;
+    public float GetSlowLevelUpEffect() => _baseSlow * 0.075f;
+    public float GetSplashRangeLevelUpEffect() => 0;
     public float GetProjectileSpeedLevelUpEffect() => 0;
     public float GetUpgradePrice() => Mathf.Ceil(Price / 4f + Level * 10 + Level * Level);
 }
