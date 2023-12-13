@@ -82,6 +82,7 @@ public class Tower : MonoBehaviour
     private bool _isGameOver;
     private int _tipIdx = 0;
     private float _baseSlow, _baseSplashRange;
+    private bool _isCharging = true;
 
     // Start is called before the first frame update
     private void Start()
@@ -171,8 +172,16 @@ public class Tower : MonoBehaviour
                     .ToList();
     
                 enemies.Sort();
-                Target = enemies[0];
-                _isLocked = true;
+                var idx = 0;
+                Target = enemies[idx];
+                while (GetEfficiency(Target.Type) <= 0 && idx < enemies.Count - 1)
+                {
+                    idx++;
+                    Target = enemies[idx];
+                }
+
+                if (idx >= enemies.Count - 1) Target = null;
+                else _isLocked = true;
             }
             else
             {
@@ -194,7 +203,11 @@ public class Tower : MonoBehaviour
 
     private void Shoot()
     {
-        if (chargeTime > 0 && _cooldown <= chargeTime) AudioManager.Instance.PlayTowerSFX(transform.position, type, EntitySFXType.Charge);
+        if (chargeTime > 0 && _cooldown <= chargeTime && !_isCharging)
+        {
+            AudioManager.Instance.PlayTowerSFX(transform.position, type, EntitySFXType.Charge);
+            _isCharging = true;
+        }
         
         if (_cooldown > 0)
             return;
@@ -208,6 +221,7 @@ public class Tower : MonoBehaviour
         AudioManager.Instance.PlayTowerSFX(transform.position, type, EntitySFXType.Shoot);
 
         _tipIdx++;
+        _isCharging = false;
         if (_tipIdx >= barrelTip.Length) _tipIdx = 0;
     }
 

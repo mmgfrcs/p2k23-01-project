@@ -25,6 +25,7 @@ public class GameManager : Singleton<GameManager>
     public uint Wave { get; private set; }
     public int EnemyAmount => _enemyList.Count;
     public float WaveTimer { get; private set; } = -1;
+    public float EarlyWaveMoneyBonus => Mathf.Floor(Mathf.Max(WaveTimer / 2f, 0));
 
     public IReadOnlyList<Map> MapList { get; private set; }
     public IReadOnlyList<Tower> TowerList { get; private set; }
@@ -124,6 +125,7 @@ public class GameManager : Singleton<GameManager>
     {
         if (Math.Abs(WaveTimer - (-2)) < 0.001f) return;
         if (_enemyCo != null) StopCoroutine(_enemyCo);
+        Money += (ulong)Mathf.RoundToInt(EarlyWaveMoneyBonus);
         Wave++;
         if (_map.ExpandThisWave(Wave))
             _map.ExpandMap(Wave);
