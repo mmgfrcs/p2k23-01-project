@@ -34,15 +34,10 @@ MonoBehaviour:
     delay: 1.15
     amount: 19
   - enemyPrefab: {fileID: 326472150867902607, guid: 26ca950a5f8c8a24ebe24f330acf5eec, type: 3}
-    waitTimeMultiplier: 1.1
+    waitTimeMultiplier: 1
     health: 38
     delay: 1.52
     amount: 12
-  - enemyPrefab: {fileID: 2430315875821969293, guid: a1e0653dff072b6409b6af4e076c3257, type: 3}
-    waitTimeMultiplier: 0.8
-    health: 27
-    delay: 0.8
-    amount: 31
   - enemyPrefab: {fileID: 2430315875821969293, guid: a1e0653dff072b6409b6af4e076c3257, type: 3}
     waitTimeMultiplier: 0.85
     health: 30
@@ -53,38 +48,43 @@ MonoBehaviour:
     health: 32
     delay: 1.1
     amount: 25
-  - enemyPrefab: {fileID: 2430315875821969293, guid: a1e0653dff072b6409b6af4e076c3257, type: 3}
+  - enemyPrefab: {fileID: 343485718013981799, guid: 1cb9f16063476704fbcf1148e3dfb5c0, type: 3}
     waitTimeMultiplier: 0.8
+    health: 23
+    delay: 0.8
+    amount: 31
+  - enemyPrefab: {fileID: 2430315875821969293, guid: a1e0653dff072b6409b6af4e076c3257, type: 3}
+    waitTimeMultiplier: 0.775
     health: 34
     delay: 1.1
     amount: 26
   - enemyPrefab: {fileID: 2430315875821969293, guid: a1e0653dff072b6409b6af4e076c3257, type: 3}
-    waitTimeMultiplier: 0.8
+    waitTimeMultiplier: 0.75
     health: 36
     delay: 1.1
     amount: 27
   - enemyPrefab: {fileID: 2430315875821969293, guid: a1e0653dff072b6409b6af4e076c3257, type: 3}
-    waitTimeMultiplier: 0.8
+    waitTimeMultiplier: 0.725
     health: 39
     delay: 1.1
     amount: 28
   - enemyPrefab: {fileID: 2430315875821969293, guid: a1e0653dff072b6409b6af4e076c3257, type: 3}
-    waitTimeMultiplier: 0.8
+    waitTimeMultiplier: 0.7
     health: 42
     delay: 1.1
     amount: 29
   - enemyPrefab: {fileID: 2430315875821969293, guid: a1e0653dff072b6409b6af4e076c3257, type: 3}
-    waitTimeMultiplier: 0.8
+    waitTimeMultiplier: 0.68
     health: 45
     delay: 1.1
     amount: 30
-  - enemyPrefab: {fileID: 2430315875821969293, guid: a1e0653dff072b6409b6af4e076c3257, type: 3}
-    waitTimeMultiplier: 0.8
-    health: 48
-    delay: 1.1
-    amount: 31
-  - enemyPrefab: {fileID: 2430315875821969293, guid: a1e0653dff072b6409b6af4e076c3257, type: 3}
-    waitTimeMultiplier: 0.8
-    health: 52
-    delay: 1.1
-    amount: 33
+  - enemyPrefab: {fileID: 343485718013981799, guid: 1cb9f16063476704fbcf1148e3dfb5c0, type: 3}
+    waitTimeMultiplier: 0.66
+    health: 26
+    delay: 0.74
+    amount: 42
+  - enemyPrefab: {fileID: 343485718013981799, guid: 1cb9f16063476704fbcf1148e3dfb5c0, type: 3}
+    waitTimeMultiplier: 0.64
+    health: 35
+    delay: 1.08
+    amount: 34

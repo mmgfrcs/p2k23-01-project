@@ -29,7 +29,6 @@ public class Enemy : MonoBehaviour, IComparable<Enemy>, IEquatable<Enemy>
     
     public static event EnemyDeadEvent Death;
     public static event EnemyReachedBaseEvent ReachedBase;
-
     public event Action<Enemy> JourneyComplete;
     
     private Grid _parentGrid;

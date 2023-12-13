@@ -18,7 +18,8 @@ public class UILabel : MonoBehaviour
         Score,
         Wave,
         Money,
-        EnemyAmount
+        EnemyAmount,
+        Highscore
     }
     
     private void Awake()
@@ -46,6 +47,14 @@ public class UILabel : MonoBehaviour
                 break;
             case LabelType.EnemyAmount:
                 _text.text = GameManager.Instance.EnemyAmount.ToString("N0");
+                break;
+            case LabelType.Highscore:
+                if (GameManager.Instance.Score > GameManager.Instance.Highscore)
+                {
+                    _text.color = Color.green;
+                    _text.text = GameManager.Instance.Score.ToString("N0");
+                }
+                else _text.text = GameManager.Instance.Highscore.ToString("N0");
                 break;
         }
     }

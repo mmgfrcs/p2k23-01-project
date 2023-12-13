@@ -19,6 +19,7 @@ public class GameManager : Singleton<GameManager>
     [SerializeField] private GameOverPanel gameOverPanel;
 
     public ulong Score { get; private set; }
+    public ulong Highscore { get; private set; }
     public ulong Money { get; private set; }
     public uint Life { get; private set; }
     public uint Wave { get; private set; }
@@ -46,6 +47,7 @@ public class GameManager : Singleton<GameManager>
         Money = startingMoney;
         Score = 0;
         Wave = 0;
+        Highscore = ulong.Parse(PlayerPrefs.GetString("Highscore", "0"));
         EnemyList = enemyList;
         MapList = new List<Map>(maps);
         TowerList = new List<Tower>(towers);
