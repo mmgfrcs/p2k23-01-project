@@ -124,7 +124,7 @@ jobs:
         env:
           BUTLER_CREDENTIALS: ${{ secrets.BUTLER_CREDENTIALS }}
           CHANNEL: ${{ matrix.channel }}
-          ITCH_GAME: Ad-Infinitum
+          ITCH_GAME: ad-infinitum
           ITCH_USER: mmgfrcs
           PACKAGE: build/AdInfinitum-${{ matrix.targetPlatform }}
           VERSION: ${{ needs.build.outputs.version }}
