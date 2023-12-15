@@ -36,7 +36,7 @@ public class Bullet : MonoBehaviour
             90 * Time.deltaTime);
         transform.Translate(Vector3.up * (Speed * Time.deltaTime));
         
-        if (!_target.isActiveAndEnabled)
+        if (!_target.isActiveAndEnabled && _lifetimeRemaining > 1)
             _lifetimeRemaining = 1;
         
         if (_lifetimeRemaining > 0) _lifetimeRemaining -= Time.deltaTime;

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Net;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -29,6 +30,8 @@ public class TowerBuyPanel : MonoBehaviour
     private GameObject _sBox;
 
     private RangeCircle _circle;
+    private Tower _currTower;
+    private bool _isOpen;
 
     private void Awake()
     {
@@ -55,6 +58,12 @@ public class TowerBuyPanel : MonoBehaviour
             
         }
         ResetPanel();
+    }
+
+    private void Update()
+    {
+        if (!_isOpen || _selectedIdx < 0) return;
+        buyBtn.interactable = GameManager.Instance.Money >= _currTower.Price;
     }
 
     private void CreateBoxAndRangeCircle()
@@ -101,6 +110,7 @@ public class TowerBuyPanel : MonoBehaviour
     public void OpenPanel(Vector3 pos)
     {
         ResetPanel();
+        _isOpen = true;
         _position = pos;
         CreateBoxAndRangeCircle();
         _sBox.gameObject.SetActive(true);
@@ -111,6 +121,8 @@ public class TowerBuyPanel : MonoBehaviour
     public void ClosePanel()
     {
         CreateBoxAndRangeCircle();
+        _isOpen = false;
+        _currTower = null;
         _sBox.gameObject.SetActive(false);
         gameObject.SetActive(false);
         _circle.HideLine();
@@ -167,6 +179,8 @@ public class TowerBuyPanel : MonoBehaviour
                 efficiencyList[i].SetEfficiency(enemyTypes[i], tower.GetEfficiency(enemyTypes[i]));
             }
         }
+
+        _currTower = tower;
 
         _circle.transform.position = _position;
         _circle.SetRadius(tower.BaseRange);

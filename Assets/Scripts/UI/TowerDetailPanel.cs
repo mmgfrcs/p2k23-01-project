@@ -59,6 +59,8 @@ public class TowerDetailPanel : MonoBehaviour
                     break;
             }
         }
+        
+        upgradeBtn.interactable = GameManager.Instance.Money >= _currTower.GetUpgradePrice();
     }
     
     private void CreateSelectionBox()

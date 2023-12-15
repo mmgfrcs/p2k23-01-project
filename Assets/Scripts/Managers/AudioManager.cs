@@ -41,6 +41,10 @@ public class AudioManager : Singleton<AudioManager>
     private void OnGameOver(float delay)
     {
         _bgmSource.DOPitch(0f, delay).SetUpdate(true).onComplete += () => _bgmSource.Stop();
+        if (baseDestroyClip == null) return;
+        var aRet = _sfxSource.Get().GetComponent<AudioReturner>();
+        aRet.transform.position = transform.position;
+        aRet.PlayClip(this, baseDestroyClip, sfxGroup);
     }
 
     public void PlayTowerSFX(Vector3 loc, TowerType tower, EntitySFXType type)

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: SupermapExpansionConfig
   m_EditorClassIdentifier: 
   expansionTimings:
-  - expandOnWave: 2
+  - expandOnWave: 11
     newCheckpoints:
     - {x: 2, y: 4}
     - {x: 0, y: 4}

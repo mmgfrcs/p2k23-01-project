@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Pool;
 using UnityEngine.Serialization;
+using UnityEngine.Tilemaps;
 using Random = UnityEngine.Random;
 
 /// <summary>
@@ -27,7 +28,6 @@ public class Map : MonoBehaviour
     private Grid _grid;
     private TowerBuyPanel _buyPanel;
     private TowerDetailPanel _detailPanel;
-
     
     //private DetailPanel detailPanel;
     
