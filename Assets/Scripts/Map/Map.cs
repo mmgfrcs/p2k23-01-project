@@ -138,7 +138,7 @@ public class Map : MonoBehaviour
             var enemy = _enemyPools[st.enemyPrefab.Type].Get();
             var offset = new Vector3(Random.Range(-0.25f, 0.25f), Random.Range(-0.25f, 0.25f), 0);
             enemy.transform.position = _grid.GetCellCenterWorld(startPosition.ToVector3Int()) + offset;
-            enemy.Initialize(_grid, checkpoints.ToArray(), offset, st.health, Mathf.Ceil((st.health-wave)/32));
+            enemy.Initialize(_grid, checkpoints.ToArray(), offset, st.health, Mathf.Ceil((st.health-wave)/64));
             enemy.transform.localScale = Vector3.zero;
             enemy.transform.DOScale(1f, 0.6f).SetEase(Ease.OutCubic);
             enemy.JourneyComplete += EnemyOnJourneyComplete;
