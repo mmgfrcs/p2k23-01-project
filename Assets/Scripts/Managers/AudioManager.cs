@@ -51,26 +51,26 @@ public class AudioManager : Singleton<AudioManager>
     {
         var clip = sfxList.FirstOrDefault(x => x.name == $"tower_{tower.ToString().ToLower()}_{type.ToString().ToLower()}"); 
         if(clip == null) clip = sfxList.FirstOrDefault(x => x.name == $"tower_{type.ToString().ToLower()}");
-        if (clip != null)
+        if (clip == null && Application.isEditor) Debug.LogWarning($"Cannot play tower_{tower.ToString().ToLower()}_{type.ToString().ToLower()} SFX");
+        else
         {
             var aRet = _sfxSource.Get().GetComponent<AudioReturner>();
             aRet.transform.position = loc;
             aRet.PlayClip(this, clip, sfxGroup);
         }
-        else Debug.LogWarning($"Cannot play tower_{tower.ToString().ToLower()}_{type.ToString().ToLower()} SFX");
     }
     
     public void PlayEnemySFX(Vector3 loc, EnemyType enemy, EntitySFXType type)
     {
         var clip = sfxList.FirstOrDefault(x => x.name == $"enemy_{enemy.ToString().ToLower()}_{type.ToString().ToLower()}");
         if(clip == null) clip = sfxList.FirstOrDefault(x => x.name == $"enemy_{type.ToString().ToLower()}");
-        if (clip != null)
+        if (clip == null && Application.isEditor) Debug.LogWarning($"Cannot play enemy_{enemy.ToString().ToLower()}_{type.ToString().ToLower()} SFX");
+        else
         {
             var aRet = _sfxSource.Get().GetComponent<AudioReturner>();
             aRet.transform.position = loc;
             aRet.PlayClip(this, clip, sfxGroup);
         }
-        else Debug.LogWarning($"Cannot play enemy_{enemy.ToString().ToLower()}_{type.ToString().ToLower()} SFX");
     }
 
     public void ReleaseAudioSource(AudioSource source)

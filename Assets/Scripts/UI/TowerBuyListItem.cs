@@ -1,10 +1,12 @@
 ﻿using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class TowerBuyListItem : MonoBehaviour
 {
     [SerializeField] private Image icon;
+    [SerializeField] private TextMeshProUGUI priceText;
     private Button btn;
     
     private void Awake()
@@ -17,8 +19,9 @@ public class TowerBuyListItem : MonoBehaviour
         btn.onClick.AddListener(delegate { panel.Select(idx); });
     }
 
-    public void SetIcon(Sprite sprite)
+    public void SetValue(Sprite sprite, uint price)
     {
         icon.sprite = sprite;
+        priceText.text = price.ToString();
     }
 }

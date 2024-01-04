@@ -88,13 +88,6 @@ public class Enemy : MonoBehaviour, IComparable<Enemy>, IEquatable<Enemy>
     {
         if (!_isInitialized) return;
 
-        if (Health <= 0)
-        {
-            AudioManager.Instance.PlayEnemySFX(transform.position, type, EntitySFXType.Destroy);
-            Kill();
-            return;
-        }
-
         if (debugMode)
             debugText.text = $"C{_checkpointIdx+1} {_distanceTraveled:N2}/{_distances.Peek():N2} {Distance:N2}";
 
@@ -123,13 +116,19 @@ public class Enemy : MonoBehaviour, IComparable<Enemy>, IEquatable<Enemy>
         else SpeedMultiplier = 1;
     }
 
-    public void Damage(float amount)
+    public void Damage(Tower source, float amount)
     {
         spriteRenderer.color = new Color(0.5f,0.5f,0.5f,0.75f);
         spriteRenderer.DOColor(Color.white, 0.6f);
         Health -= amount;
         _hpBarGroup.alpha = 1;
         if(Health > 0) hpBar.DOValue(Health, 0.4f);
+        else
+        {
+            AudioManager.Instance.PlayEnemySFX(transform.position, type, EntitySFXType.Destroy);
+            source.Reports.AddKill();
+            Kill();
+        }
     }
 
     public void Kill()

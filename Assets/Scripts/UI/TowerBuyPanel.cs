@@ -53,7 +53,7 @@ public class TowerBuyPanel : MonoBehaviour
                 continue;
             }
             var tower = GameManager.Instance.TowerList[i];
-            towerList[i].SetIcon(tower.Icon);
+            towerList[i].SetValue(tower.Icon, tower.Price);
             towerList[i].SetIndex(this, i);
             
         }

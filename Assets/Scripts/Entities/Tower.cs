@@ -27,9 +27,10 @@ public class Tower : MonoBehaviour
 
     public class TowerReport
     {
-        private ulong kills;
-        public ulong Kills => kills;
-        public void AddKill() => kills++;
+        public ulong Kills { get; private set; }
+        public float DPS { get; set; }
+        
+        public void AddKill() => Kills++;
     }
 
     [Header("Statistics"), SerializeField] private TowerType type;
@@ -84,6 +85,9 @@ public class Tower : MonoBehaviour
     private float _baseSlow, _baseSplashRange;
     private bool _isCharging = true;
 
+    private float _dmg;
+    private int _hitAmt;
+
     // Start is called before the first frame update
     private void Start()
     {
@@ -114,6 +118,8 @@ public class Tower : MonoBehaviour
         SplashRange = _baseSplashRange;
         
         AudioManager.Instance.PlayTowerSFX(transform.position, type, EntitySFXType.Deploy);
+
+        StartCoroutine(UpdateDPS());
     }
 
     private void OnGameOver(float delay)
@@ -220,7 +226,7 @@ public class Tower : MonoBehaviour
         Bullet b = _bulletPool.Get();
         b.transform.position = barrelTip[_tipIdx].transform.position;
         b.transform.rotation = barrelTip[_tipIdx].transform.rotation;
-        b.Initialize(Target, Damage * GetEfficiency(Target.Type), ProjectileSpeed, otherStats.FirstOrDefault(x=>x.type == StatType.SplashRange).value);
+        b.Initialize(this, Target, Damage * GetEfficiency(Target.Type), ProjectileSpeed, otherStats.FirstOrDefault(x=>x.type == StatType.SplashRange).value);
         b.Hit += BulletOnHit;
         _cooldown = 1f / AttackSpeed;
         AudioManager.Instance.PlayTowerSFX(transform.position, type, EntitySFXType.Shoot);
@@ -230,11 +236,16 @@ public class Tower : MonoBehaviour
         if (_tipIdx >= barrelTip.Length) _tipIdx = 0;
     }
 
-    private void BulletOnHit(Bullet obj)
+    private void BulletOnHit(Bullet obj, int amt)
     {
         obj.Hit -= BulletOnHit;
-        _bulletPool.Release(obj);
-        if (obj.Target.Health <= 0) _towerReport.AddKill();
+        _hitAmt++;
+        _dmg += obj.Damage * amt;
+    }
+
+    public void ReleaseBullet(Bullet b)
+    {
+        _bulletPool.Release(b);
     }
 
     public float GetEfficiency(EnemyType enemy)
@@ -277,9 +288,25 @@ public class Tower : MonoBehaviour
     public float GetDamageLevelUpEffect() => damage * 0.1f;
     public float GetRotationSpeedLevelUpEffect() => rotationSpeed * 0.05f;
     public float GetAttackSpeedLevelUpEffect() => attackSpeed * 0.02f;
-    public float GetRangeLevelUpEffect() => range * 0.02f;
-    public float GetSlowLevelUpEffect() => _baseSlow * 0.075f;
+    public float GetRangeLevelUpEffect() => range * 0.05f;
+    public float GetSlowLevelUpEffect() => _baseSlow * 0.1f;
     public float GetSplashRangeLevelUpEffect() => 0;
     public float GetProjectileSpeedLevelUpEffect() => 0;
-    public float GetUpgradePrice() => Mathf.Ceil(Price / 4f + Level * 10 + Level * Level);
+    public float GetUpgradePrice() => Mathf.Ceil(Price / 6f + Level * 9 + Level * Level);
+
+    private IEnumerator UpdateDPS()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(1f);
+            if (_towerReport.DPS == 0) _towerReport.DPS = _hitAmt == 0 ? 0 : _dmg / _hitAmt;
+            else
+            {
+                _towerReport.DPS -= _towerReport.DPS / 50;
+                _towerReport.DPS += (_hitAmt == 0 ? 0 : _dmg / _hitAmt) / 50;
+            }
+            _dmg = 0;
+            _hitAmt = 0;
+        }
+    }
 }

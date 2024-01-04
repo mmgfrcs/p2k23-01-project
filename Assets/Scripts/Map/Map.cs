@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -28,6 +29,8 @@ public class Map : MonoBehaviour
     private Grid _grid;
     private TowerBuyPanel _buyPanel;
     private TowerDetailPanel _detailPanel;
+
+    public IReadOnlyCollection<KeyValuePair<Vector2Int, Tower>> SpawnedTowerList => _towerDict;
     
     //private DetailPanel detailPanel;
     
@@ -111,6 +114,11 @@ public class Map : MonoBehaviour
         
         return mapConfig.spawnTimings[(int) (wave - 1)];
     }
+    
+    public uint GetNextExpansionWave(uint wave)
+    {
+        return expansionConfig.expansionTimings.Min(x => x.expandOnWave <= wave ? uint.MaxValue : x.expandOnWave);
+    }
 
     public bool ExpandThisWave(uint wave)
     {
@@ -138,7 +146,7 @@ public class Map : MonoBehaviour
             var enemy = _enemyPools[st.enemyPrefab.Type].Get();
             var offset = new Vector3(Random.Range(-0.25f, 0.25f), Random.Range(-0.25f, 0.25f), 0);
             enemy.transform.position = _grid.GetCellCenterWorld(startPosition.ToVector3Int()) + offset;
-            enemy.Initialize(_grid, checkpoints.ToArray(), offset, st.health, Mathf.Ceil((st.health-wave)/64));
+            enemy.Initialize(_grid, checkpoints.ToArray(), offset, st.health, Mathf.Ceil((st.health-wave)/56));
             enemy.transform.localScale = Vector3.zero;
             enemy.transform.DOScale(1f, 0.6f).SetEase(Ease.OutCubic);
             enemy.JourneyComplete += EnemyOnJourneyComplete;

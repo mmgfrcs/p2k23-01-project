@@ -24,6 +24,8 @@ public class TowerDetailPanel : MonoBehaviour
     private Sprite _rangeStatIcon;
     private Sprite _bulletSpeedStatIcon;
     private Sprite _rotationSpeedStatIcon;
+    private Sprite _killsReportIcon;
+    private Sprite _dpsReportIcon;
     
     private GameObject _sBox;
     private Tower _currTower;
@@ -39,6 +41,8 @@ public class TowerDetailPanel : MonoBehaviour
         _rangeStatIcon = Resources.Load<Sprite>("UI/RangeIcon");
         _bulletSpeedStatIcon = Resources.Load<Sprite>("UI/BulletSpeedIcon");
         _rotationSpeedStatIcon = Resources.Load<Sprite>("UI/RotationSpeedIcon");
+        _killsReportIcon = Resources.Load<Sprite>("UI/KillsIcon");
+        _dpsReportIcon = Resources.Load<Sprite>("UI/DPSIcon");
     }
 
     // Update is called once per frame
@@ -51,7 +55,10 @@ public class TowerDetailPanel : MonoBehaviour
             switch (i)
             {
                 case 0:
-                    reportList[i].SetStat("Kills", _currTower.Reports.Kills, "", false, _damageStatIcon);
+                    reportList[i].SetStat("Kills", _currTower.Reports.Kills, "", false, _killsReportIcon);
+                    break;
+                case 1:
+                    reportList[i].SetStat("DPS", _currTower.Reports.DPS, "", true, _dpsReportIcon);
                     break;
                 // TODO: More stats
                 default:

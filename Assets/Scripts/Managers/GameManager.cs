@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using DG.Tweening;
 using DG.Tweening.Core;
 using UnityEngine;
@@ -27,9 +28,21 @@ public class GameManager : Singleton<GameManager>
     public float WaveTimer { get; private set; } = -1;
     public float EarlyWaveMoneyBonus => Mathf.Floor(Mathf.Max(WaveTimer / 2f, 0));
 
-    public IReadOnlyList<Map> MapList { get; private set; }
-    public IReadOnlyList<Tower> TowerList { get; private set; }
-    public IReadOnlyList<Enemy> EnemyList { get; private set; }
+    public float DPS => CurrentMap.SpawnedTowerList.Count != 0
+        ? CurrentMap.SpawnedTowerList
+            .Sum(x => x.Value.Reports.DPS)
+        : 0;
+
+    public ulong Kills => CurrentMap.SpawnedTowerList.Count != 0
+        ? CurrentMap.SpawnedTowerList
+            .Select(x => x.Value.Reports.Kills)
+            .Aggregate((x, y) => x + y)
+        : 0;
+
+    public IReadOnlyList<Map> MapList => maps;
+    public IReadOnlyList<Tower> TowerList => towers;
+    public IReadOnlyList<Enemy> EnemyList => _enemyList;
+    public Map CurrentMap => _map;
 
     private List<Enemy> _enemyList = new();
 
@@ -49,9 +62,6 @@ public class GameManager : Singleton<GameManager>
         Score = 0;
         Wave = 0;
         Highscore = ulong.Parse(PlayerPrefs.GetString("Highscore", "0"));
-        EnemyList = _enemyList;
-        MapList = new List<Map>(maps);
-        TowerList = new List<Tower>(towers);
         
         Enemy.Death += EnemyOnDeath;
         Enemy.ReachedBase += EnemyOnReachedBase;

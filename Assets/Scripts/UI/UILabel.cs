@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -19,7 +20,9 @@ public class UILabel : MonoBehaviour
         Wave,
         Money,
         EnemyAmount,
-        Highscore
+        Highscore,
+        DPS,
+        Kills
     }
     
     private void Awake()
@@ -55,6 +58,17 @@ public class UILabel : MonoBehaviour
                     _text.text = GameManager.Instance.Score.ToString("N0");
                 }
                 else _text.text = GameManager.Instance.Highscore.ToString("N0");
+                break;
+            case LabelType.DPS:
+                _text.text = GameManager.Instance.CurrentMap.SpawnedTowerList.Count != 0 ? 
+                    GameManager.Instance.CurrentMap.SpawnedTowerList
+                        .Sum(x=>x.Value.Reports.DPS).ToString("N1") : 0.ToString("N1");
+                break;
+            case LabelType.Kills:
+                _text.text = GameManager.Instance.CurrentMap.SpawnedTowerList.Count != 0 ? 
+                    GameManager.Instance.CurrentMap.SpawnedTowerList
+                        .Select(x => x.Value.Reports.Kills)
+                        .Aggregate((x, y) => x + y).ToString() : "0";
                 break;
         }
     }
