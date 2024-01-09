@@ -22,6 +22,13 @@ public class Bullet : MonoBehaviour
 
     private Vector3 _lastPos;
 
+    private TrailRenderer _trail;
+
+    private void Awake()
+    {
+        _trail = GetComponentInChildren<TrailRenderer>();
+    }
+
     public void Initialize(Tower parent, Enemy target, float damage, float speed, float splashRange)
     {
         Damage = damage;
@@ -31,6 +38,9 @@ public class Bullet : MonoBehaviour
         _lifetimeRemaining = lifetime;
         _isInitialized = true;
         _splashRange = splashRange;
+        _trail.transform.parent = transform;
+        _trail.transform.localPosition = Vector3.zero;
+        _trail.Clear();
     }
 
     private void Update()
@@ -109,6 +119,7 @@ public class Bullet : MonoBehaviour
     private void Kill(bool hit = false, int amt = 1)
     {
         StopAllCoroutines();
+        if (_trail != null) _trail.transform.parent = null;
         var splash = false;
         if (_lastPos != Vector3.zero && _splashRange > 0)
         {

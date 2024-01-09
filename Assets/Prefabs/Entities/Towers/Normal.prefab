@@ -120,7 +120,7 @@ MonoBehaviour:
   barrelCenter: {fileID: 2501040406914293020}
   barrelTip:
   - {fileID: 268279840937502280}
-  bullet: {fileID: 8342408202966505818, guid: 5c73690d925b45f4e92d0862cc612c29, type: 3}
+  bullet: {fileID: 6289088971284295104, guid: 069ee1aa9649a854799988ff4816f1ed, type: 3}
   icon: {fileID: 21300000, guid: 5f19ef9848c9a4947a19d8907449abae, type: 3}
 --- !u!114 &8998686909634044030
 MonoBehaviour:
