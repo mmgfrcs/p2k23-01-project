@@ -1,0 +1,39 @@
+version: 2
+mergeable:
+  - when: pull_request.*, pull_request_review.*
+    name: PR Review
+    filter:
+      - do: payload
+        pull_request:
+          draft:
+            boolean:
+              match: false
+    validate:
+      - do: approvals
+        min:
+          count: 1
+          message: A PR requires at least a single reviewer
+        required:
+          reviewers:
+            - mmgfrcs
+          owners: true
+          message: A PR is required to be reviewed, at least, by mmgfrcs. Please request a
+            review to mmgfrcs
+        block:
+          changes_requested: true
+          message: A reviewer require changes
+      - do: description
+        no_empty:
+          enabled: true
+          message: Description matter and should not be empty. Provide detail with
+            **what** was changed, **why** it was changed, and **how** it was
+            changed.
+    pass:
+      - do: checks
+        status: success
+        payload:
+          title: Mergeable Run have been Completed!
+          summary: |-
+            All the validators have returned 'pass'! 
+             Here are some stats of the run: 
+             {{validationCount}} validations were ran
