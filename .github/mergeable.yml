@@ -3,11 +3,20 @@ mergeable:
   - when: pull_request.*, pull_request_review.*
     name: PR Review
     filter:
-      - do: payload
-        pull_request:
-          draft:
-            boolean:
-              match: false
+      - do: author
+        must_exclude:
+            regex: 'mmgfrcs'
+            message: "No need to verify the repo's Owner"
+      - do: or
+        filter:
+          - do: title
+            must_exclude:
+              regex: "^Draft:"
+          - do: payload
+            pull_request:
+              draft:
+                boolean:
+                  match: false
     validate:
       - do: approvals
         min:
@@ -16,6 +25,7 @@ mergeable:
         required:
           reviewers:
             - mmgfrcs
+            - self-approval
           owners: true
           message: A PR is required to be reviewed, at least, by mmgfrcs. Please request a
             review to mmgfrcs
@@ -31,9 +41,6 @@ mergeable:
     pass:
       - do: checks
         status: success
-        payload:
-          title: Mergeable Run have been Completed!
-          summary: |-
-            All the validators have returned 'pass'! 
-             Here are some stats of the run: 
-             {{validationCount}} validations were ran
+      - do: comment
+        payload: >
+          PR Ready to merge!
