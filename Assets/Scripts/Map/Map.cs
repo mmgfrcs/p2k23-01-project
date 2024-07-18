@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,8 +5,6 @@ using DG.Tweening;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Pool;
-using UnityEngine.Serialization;
-using UnityEngine.Tilemaps;
 using Random = UnityEngine.Random;
 
 /// <summary>

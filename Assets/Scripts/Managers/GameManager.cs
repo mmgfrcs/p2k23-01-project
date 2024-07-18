@@ -3,9 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using DG.Tweening;
-using DG.Tweening.Core;
 using UnityEngine;
-using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 public class GameManager : Singleton<GameManager>
@@ -33,11 +31,7 @@ public class GameManager : Singleton<GameManager>
             .Sum(x => x.Value.Reports.DPS)
         : 0;
 
-    public ulong Kills => CurrentMap.SpawnedTowerList.Count != 0
-        ? CurrentMap.SpawnedTowerList
-            .Select(x => x.Value.Reports.Kills)
-            .Aggregate((x, y) => x + y)
-        : 0;
+    public ulong Kills { get; private set; }
 
     public IReadOnlyList<Map> MapList => maps;
     public IReadOnlyList<Tower> TowerList => towers;
@@ -75,6 +69,7 @@ public class GameManager : Singleton<GameManager>
     {
         Score += Convert.ToUInt64(Mathf.CeilToInt(e.MaxHealth));
         Money += Convert.ToUInt64(Mathf.CeilToInt(e.Bounty));
+        Kills++;
         _enemyList.Remove(e);
     }
 

@@ -3,11 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
-using Random = UnityEngine.Random;
 
 public class Enemy : MonoBehaviour, IComparable<Enemy>, IEquatable<Enemy>
 {
@@ -40,10 +37,12 @@ public class Enemy : MonoBehaviour, IComparable<Enemy>, IEquatable<Enemy>
     private Queue<float> _distances = new();
     private Vector3 _offset;
     private CanvasGroup _hpBarGroup;
+    private Animator _anim;
 
     private void Awake()
     {
         if (!debugMode) Destroy(debugText.gameObject);
+        _anim = spriteRenderer.GetComponent<Animator>();
     }
 
     public void Initialize(Grid grid, Vector2Int[] checkpoints, Vector3 offset, float health, float bounty)
@@ -74,6 +73,7 @@ public class Enemy : MonoBehaviour, IComparable<Enemy>, IEquatable<Enemy>
             _distances.Enqueue(Distance);
             lastPos = chkpt;
         }
+        _anim.Play("Idle");
         
         GameManager.Instance.GameOver += OnGameOver;
         AudioManager.Instance.PlayEnemySFX(transform.position, type, EntitySFXType.Deploy);
@@ -121,8 +121,12 @@ public class Enemy : MonoBehaviour, IComparable<Enemy>, IEquatable<Enemy>
         spriteRenderer.color = new Color(0.5f,0.5f,0.5f,0.75f);
         spriteRenderer.DOColor(Color.white, 0.6f);
         Health -= amount;
-        _hpBarGroup.alpha = 1;
-        if(Health > 0) hpBar.DOValue(Health, 0.4f);
+
+        if (Health > 0)
+        {
+            hpBar.DOValue(Health, 0.4f);
+            _hpBarGroup.alpha = 1;
+        }
         else
         {
             AudioManager.Instance.PlayEnemySFX(transform.position, type, EntitySFXType.Destroy);
@@ -134,10 +138,17 @@ public class Enemy : MonoBehaviour, IComparable<Enemy>, IEquatable<Enemy>
     public void Kill()
     {
         Health = 0;
+        _hpBarGroup.alpha = 0;
         Death?.Invoke(this);
         _isInitialized = false;
-        JourneyComplete?.Invoke(this);
         GameManager.Instance.GameOver -= OnGameOver;
+        _anim.Play("Death");
+        StartCoroutine(WaitForAnimation((() =>
+        {
+            JourneyComplete?.Invoke(this);
+
+        })));
+
     }
 
     public int CompareTo(Enemy other)
@@ -157,5 +168,13 @@ public class Enemy : MonoBehaviour, IComparable<Enemy>, IEquatable<Enemy>
     {
         SpeedMultiplier = mult;
         _speedMultCooldown = 0.5f;
+    }
+
+    private IEnumerator WaitForAnimation(Action wtd)
+    {
+        yield return new WaitForEndOfFrame();
+        yield return new WaitUntil(() => _anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f );
+        Debug.Log("Enemy anim complete");
+        wtd.Invoke();
     }
 }

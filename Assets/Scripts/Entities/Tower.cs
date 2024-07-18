@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Pool;
 
@@ -75,6 +74,9 @@ public class Tower : MonoBehaviour
     
     public Enemy Target { get; private set; }
 
+    /// <summary>
+    /// Is the <see cref="Tower"/> locked onto a target?
+    /// </summary>
     private bool _isLocked;
     private RangeCircle _rangeCircle;
     private List<Collider2D> _scanResult = new List<Collider2D>();
@@ -173,12 +175,23 @@ public class Tower : MonoBehaviour
             if (Physics2D.OverlapCircle(transform.position, Range, filter, _scanResult) > 0)
             {
                 var enemies = _scanResult
-                    .Where(x => x.GetComponent<Enemy>() != null)
+                    .Where(x =>
+                    {
+                        var en = x.GetComponent<Enemy>();
+                        return en != null && en.Health > 0;
+                    })
                     .Select(x => x.GetComponent<Enemy>())
                     .ToList();
     
                 enemies.Sort();
                 var idx = 0;
+
+                if (enemies.Count == 0)
+                {
+                    Target = null;
+                    _isLocked = false;
+                    return;
+                }
                 Target = enemies[idx];
                 while (GetEfficiency(Target.Type) <= 0)
                 {
