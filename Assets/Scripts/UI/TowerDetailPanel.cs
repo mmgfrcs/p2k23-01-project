@@ -66,7 +66,7 @@ public class TowerDetailPanel : MonoBehaviour
             }
         }
         
-        upgradeBtn.interactable = GameManager.Instance.Money >= _currTower.GetUpgradePrice();
+        upgradeBtn.interactable = GameManager.Instance.Money >= _currTower.UpgradePrice;
     }
     
     private void CreateSelectionBox()
@@ -105,11 +105,11 @@ public class TowerDetailPanel : MonoBehaviour
         
         towerIcon.sprite = tower.Icon;
         towerNameText.text = tower.Type.ToString();
-        priceText.text = tower.GetUpgradePrice().ToString("N0");
+        priceText.text = tower.UpgradePrice.ToString("N0");
         levelText.text = $"L{tower.Level}";
         sellPriceText.text = tower.SellPrice.ToString();
         
-        upgradeBtn.interactable = GameManager.Instance.Money >= tower.GetUpgradePrice();
+        upgradeBtn.interactable = GameManager.Instance.Money >= tower.UpgradePrice;
 
         for (int i = 0; i < statList.Length; i++)
         {
@@ -191,7 +191,7 @@ public class TowerDetailPanel : MonoBehaviour
     {
         if (_isUpgrade)
         {
-            if (!GameManager.Instance.Purchase(Convert.ToUInt32(_currTower.GetUpgradePrice()))) return;
+            if (!GameManager.Instance.Purchase(Convert.ToUInt32(_currTower.UpgradePrice))) return;
             _currTower.LevelUp();
             StopCoroutine(LevelUpConfirmDelay());
             OpenPanel(_sBox.transform.position, _currTower);
@@ -202,35 +202,35 @@ public class TowerDetailPanel : MonoBehaviour
     private IEnumerator LevelUpConfirmDelay()
     {
         _isUpgrade = true;
-        priceText.text = $"{_currTower.GetUpgradePrice()} (Confirm)";
+        priceText.text = $"{_currTower.UpgradePrice} (Confirm)";
         for (int i = 0; i < statList.Length; i++)
         {
             switch (i)
             {
                 case 0:
-                    statList[i].SetUpgrade(_currTower.GetDamageLevelUpEffect());
+                    statList[i].SetUpgrade(_currTower.DamageLevelUpEffect);
                     break;
                 case 1:
-                    statList[i].SetUpgrade(_currTower.GetProjectileSpeedLevelUpEffect());
+                    statList[i].SetUpgrade(_currTower.ProjectileSpeedLevelUpEffect);
                     break;
                 case 2:
-                    statList[i].SetUpgrade(_currTower.GetRotationSpeedLevelUpEffect());
+                    statList[i].SetUpgrade(_currTower.RotationSpeedLevelUpEffect);
                     break;
                 case 3:
-                    statList[i].SetUpgrade(_currTower.GetAttackSpeedLevelUpEffect());
+                    statList[i].SetUpgrade(_currTower.AttackSpeedLevelUpEffect);
                     break;
                 case 4:
-                    statList[i].SetUpgrade(_currTower.GetRangeLevelUpEffect());
+                    statList[i].SetUpgrade(_currTower.RangeLevelUpEffect);
                     break;
                 default:
                     if (i-5 >= _currTower.OtherStatistics.Length) continue;
                     switch (_currTower.OtherStatistics[i-5].type)
                     {
                         case Tower.StatType.Slow:
-                            statList[i].SetUpgrade(_currTower.GetSlowLevelUpEffect());
+                            statList[i].SetUpgrade(_currTower.SlowLevelUpEffect);
                             break;
                         case Tower.StatType.SplashRange:
-                            statList[i].SetUpgrade(_currTower.GetSplashRangeLevelUpEffect());
+                            statList[i].SetUpgrade(_currTower.SplashRangeLevelUpEffect);
                             break;
                     }
                     break;

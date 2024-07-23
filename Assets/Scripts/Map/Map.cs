@@ -27,6 +27,8 @@ public class Map : MonoBehaviour
     private TowerBuyPanel _buyPanel;
     private TowerDetailPanel _detailPanel;
 
+    public SpawnTiming CurrentSpawnTiming { get; private set; }
+    public uint EnemyRemaining { get; private set; }
     public IReadOnlyCollection<KeyValuePair<Vector2Int, Tower>> SpawnedTowerList => _towerDict;
     
     //private DetailPanel detailPanel;
@@ -136,21 +138,21 @@ public class Map : MonoBehaviour
     public IEnumerator SpawnEnemy(uint wave, System.Action<Enemy> onSpawn)
     {
         if (wave == 0) wave = 1;
-        var st = GetSpawnTiming(wave);
-        var amount = st.amount;
-        while (amount > 0)
+        CurrentSpawnTiming = GetSpawnTiming(wave);
+        EnemyRemaining = CurrentSpawnTiming.amount;
+        while (EnemyRemaining > 0)
         {
-            var enemy = _enemyPools[st.enemyPrefab.Type].Get();
+            var enemy = _enemyPools[CurrentSpawnTiming.enemyPrefab.Type].Get();
             var offset = new Vector3(Random.Range(-0.25f, 0.25f), Random.Range(-0.25f, 0.25f), 0);
             enemy.transform.position = _grid.GetCellCenterWorld(startPosition.ToVector3Int()) + offset;
-            enemy.Initialize(_grid, checkpoints.ToArray(), offset, st.health, Mathf.Ceil((st.health-wave)/56));
+            enemy.Initialize(_grid, checkpoints.ToArray(), offset, CurrentSpawnTiming.health, Mathf.Ceil((CurrentSpawnTiming.health-wave)/56));
             enemy.transform.localScale = Vector3.zero;
             enemy.transform.DOScale(1f, 0.6f).SetEase(Ease.OutCubic);
             enemy.JourneyComplete += EnemyOnJourneyComplete;
-            amount--;
+            EnemyRemaining--;
             onSpawn?.Invoke(enemy);
 
-            yield return new WaitForSeconds(st.delay);
+            yield return new WaitForSeconds(CurrentSpawnTiming.delay);
         }
     }
 

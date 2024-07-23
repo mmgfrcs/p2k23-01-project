@@ -108,8 +108,16 @@ PrefabInstance:
       value: 56
       objectReference: {fileID: 0}
     - target: {fileID: 8425668715043347752, guid: da6c8b15afa1e8343b6ec5d4952847a2, type: 3}
+      propertyPath: damageUpgradeRatio
+      value: 0.08
+      objectReference: {fileID: 0}
+    - target: {fileID: 8425668715043347752, guid: da6c8b15afa1e8343b6ec5d4952847a2, type: 3}
       propertyPath: otherStats.Array.size
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8425668715043347752, guid: da6c8b15afa1e8343b6ec5d4952847a2, type: 3}
+      propertyPath: attackSpeedUpgradeRatio
+      value: 0.02
       objectReference: {fileID: 0}
     - target: {fileID: 8425668715043347752, guid: da6c8b15afa1e8343b6ec5d4952847a2, type: 3}
       propertyPath: efficiencies.Array.size

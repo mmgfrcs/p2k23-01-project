@@ -64,8 +64,9 @@ public class Bullet : MonoBehaviour
         else if (_lastPos != Vector3.zero)
         {
             var dir = _lastPos - transform.position;
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.FromToRotation(Vector3.up, dir),
-                90 * Time.deltaTime);
+            if(Vector3.Distance(transform.position, _lastPos) > 1.2f)
+                transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.FromToRotation(Vector3.up, dir),
+                    90 * Speed * Time.deltaTime);
         }
 
         transform.Translate(Vector3.up * (Speed * Time.deltaTime));
@@ -73,7 +74,7 @@ public class Bullet : MonoBehaviour
         if(_lastPos != Vector3.zero && Vector3.Distance(_lastPos, transform.position) <= 0.01f) Kill(true);
         
         if (_lifetimeRemaining > 0) _lifetimeRemaining -= Time.deltaTime;
-        else if (_lastPos == Vector3.zero) Kill();
+        else Kill();
     }
 
     private void OnTriggerEnter2D(Collider2D col)

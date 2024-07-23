@@ -19,6 +19,14 @@ public class Tower : MonoBehaviour
         public string unitString;
     }
 
+    [Serializable]
+    public struct StatUpgrade
+    {
+        public string name;
+        public StatType type;
+        public float value;
+    }
+
     public enum StatType
     {
         Generic, Slow, SplashRange
@@ -42,6 +50,13 @@ public class Tower : MonoBehaviour
     [SerializeField] private float chargeTime = 1;
     [SerializeField] private Stat[] otherStats;
     [SerializeField] private TowerEfficiency[] efficiencies;
+
+    [Header("Upgrades"), SerializeField] private float damageUpgradeRatio = 0.1f;
+    [SerializeField] private float projectileSpeedUpgradeRatio;
+    [SerializeField] private float rotationSpeedUpgradeRatio = 0.05f;
+    [SerializeField] private float attackSpeedUpgradeRatio = 0.02f;
+    [SerializeField] private float rangeUpgradeRatio = 0.05f;
+    [SerializeField] private StatUpgrade[] otherStatsUpgradeRatio;
 
     [Header("Prefabs"), SerializeField] private Transform barrelCenter;
     [SerializeField] private Transform[] barrelTip;
@@ -281,15 +296,15 @@ public class Tower : MonoBehaviour
 
     public void LevelUp()
     {
-        SellPrice += Convert.ToUInt64(GetUpgradePrice() / 2);
+        SellPrice += Convert.ToUInt64(UpgradePrice / 2);
         Level++;
-        Damage += GetDamageLevelUpEffect();
-        RotationSpeed += GetRotationSpeedLevelUpEffect();
-        AttackSpeed += GetAttackSpeedLevelUpEffect();
-        Range += GetRangeLevelUpEffect();
-        Slow += GetSlowLevelUpEffect();
-        SplashRange += GetSplashRangeLevelUpEffect();
-        ProjectileSpeed += GetProjectileSpeedLevelUpEffect();
+        Damage += DamageLevelUpEffect;
+        RotationSpeed += RotationSpeedLevelUpEffect;
+        AttackSpeed += AttackSpeedLevelUpEffect;
+        Range += RangeLevelUpEffect;
+        Slow += SlowLevelUpEffect;
+        SplashRange += SplashRangeLevelUpEffect;
+        ProjectileSpeed += ProjectileSpeedLevelUpEffect;
     }
 
     public void Sell()
@@ -298,14 +313,33 @@ public class Tower : MonoBehaviour
         Destroy(gameObject);
     }
 
-    public float GetDamageLevelUpEffect() => damage * 0.1f;
-    public float GetRotationSpeedLevelUpEffect() => rotationSpeed * 0.05f;
-    public float GetAttackSpeedLevelUpEffect() => attackSpeed * 0.02f;
-    public float GetRangeLevelUpEffect() => range * 0.05f;
-    public float GetSlowLevelUpEffect() => _baseSlow * 0.1f;
-    public float GetSplashRangeLevelUpEffect() => 0;
-    public float GetProjectileSpeedLevelUpEffect() => 0;
-    public float GetUpgradePrice() => Mathf.Ceil(Price / 6f + Level * 9 + Level * Level);
+    public float DamageLevelUpEffect => damage * damageUpgradeRatio;
+    public float RotationSpeedLevelUpEffect => rotationSpeed * rotationSpeedUpgradeRatio;
+    public float AttackSpeedLevelUpEffect => attackSpeed * attackSpeedUpgradeRatio;
+    public float RangeLevelUpEffect => range * rangeUpgradeRatio;
+
+    private float _slowLvlUpEff = -1;
+    public float SlowLevelUpEffect
+    {
+        get
+        {
+            if (_slowLvlUpEff < 0)
+                _slowLvlUpEff = _baseSlow * otherStatsUpgradeRatio.FirstOrDefault(x => x.type == StatType.Slow).value;
+            return _slowLvlUpEff;
+        }
+    }
+    private float _splLvlUpEff = -1;
+    public float SplashRangeLevelUpEffect
+    {
+        get
+        {
+            if (_splLvlUpEff < 0)
+                _splLvlUpEff = _baseSplashRange * otherStatsUpgradeRatio.FirstOrDefault(x => x.type == StatType.SplashRange).value;
+            return _splLvlUpEff;
+        }
+    }
+    public float ProjectileSpeedLevelUpEffect => projectileSpeed * projectileSpeedUpgradeRatio;
+    public float UpgradePrice => Mathf.Ceil(Price / 6f + Level * 9 + Level * Level);
 
     private IEnumerator UpdateDPS()
     {

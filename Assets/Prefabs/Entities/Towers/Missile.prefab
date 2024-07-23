@@ -112,11 +112,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8425668715043347752, guid: da6c8b15afa1e8343b6ec5d4952847a2, type: 3}
       propertyPath: price
-      value: 80
+      value: 120
       objectReference: {fileID: 0}
     - target: {fileID: 8425668715043347752, guid: da6c8b15afa1e8343b6ec5d4952847a2, type: 3}
       propertyPath: range
-      value: 14.4
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 8425668715043347752, guid: da6c8b15afa1e8343b6ec5d4952847a2, type: 3}
       propertyPath: bullet
@@ -124,7 +124,7 @@ PrefabInstance:
       objectReference: {fileID: 7561437274430859941, guid: e1674e10c3e5a1c49b566a12a72baa32, type: 3}
     - target: {fileID: 8425668715043347752, guid: da6c8b15afa1e8343b6ec5d4952847a2, type: 3}
       propertyPath: damage
-      value: 20
+      value: 18
       objectReference: {fileID: 0}
     - target: {fileID: 8425668715043347752, guid: da6c8b15afa1e8343b6ec5d4952847a2, type: 3}
       propertyPath: attackSpeed
@@ -139,12 +139,24 @@ PrefabInstance:
       value: 3.2
       objectReference: {fileID: 0}
     - target: {fileID: 8425668715043347752, guid: da6c8b15afa1e8343b6ec5d4952847a2, type: 3}
+      propertyPath: rangeUpgradeRatio
+      value: 0.02
+      objectReference: {fileID: 0}
+    - target: {fileID: 8425668715043347752, guid: da6c8b15afa1e8343b6ec5d4952847a2, type: 3}
+      propertyPath: damageUpgradeRatio
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8425668715043347752, guid: da6c8b15afa1e8343b6ec5d4952847a2, type: 3}
       propertyPath: barrelTip.Array.size
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8425668715043347752, guid: da6c8b15afa1e8343b6ec5d4952847a2, type: 3}
       propertyPath: otherStats.Array.size
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8425668715043347752, guid: da6c8b15afa1e8343b6ec5d4952847a2, type: 3}
+      propertyPath: attackSpeedUpgradeRatio
+      value: 0.02
       objectReference: {fileID: 0}
     - target: {fileID: 8425668715043347752, guid: da6c8b15afa1e8343b6ec5d4952847a2, type: 3}
       propertyPath: barrelTip.Array.data[1]

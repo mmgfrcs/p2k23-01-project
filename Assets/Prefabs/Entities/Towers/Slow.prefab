@@ -100,11 +100,27 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8425668715043347752, guid: da6c8b15afa1e8343b6ec5d4952847a2, type: 3}
+      propertyPath: rangeUpgradeRatio
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8425668715043347752, guid: da6c8b15afa1e8343b6ec5d4952847a2, type: 3}
+      propertyPath: damageUpgradeRatio
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8425668715043347752, guid: da6c8b15afa1e8343b6ec5d4952847a2, type: 3}
       propertyPath: otherStats.Array.size
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8425668715043347752, guid: da6c8b15afa1e8343b6ec5d4952847a2, type: 3}
+      propertyPath: attackSpeedUpgradeRatio
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8425668715043347752, guid: da6c8b15afa1e8343b6ec5d4952847a2, type: 3}
       propertyPath: efficiencies.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8425668715043347752, guid: da6c8b15afa1e8343b6ec5d4952847a2, type: 3}
+      propertyPath: rotationSpeedUpgradeRatio
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8425668715043347752, guid: da6c8b15afa1e8343b6ec5d4952847a2, type: 3}
@@ -156,6 +172,14 @@ PrefabInstance:
       value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 8425668715043347752, guid: da6c8b15afa1e8343b6ec5d4952847a2, type: 3}
+      propertyPath: otherStatsUpgradeRatio.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8425668715043347752, guid: da6c8b15afa1e8343b6ec5d4952847a2, type: 3}
+      propertyPath: otherStats.Array.data[0].isDecimal
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8425668715043347752, guid: da6c8b15afa1e8343b6ec5d4952847a2, type: 3}
       propertyPath: otherStats.Array.data[0].unitString
       value: '%'
       objectReference: {fileID: 0}
@@ -182,6 +206,30 @@ PrefabInstance:
     - target: {fileID: 8425668715043347752, guid: da6c8b15afa1e8343b6ec5d4952847a2, type: 3}
       propertyPath: efficiencies.Array.data[4].efficiency
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8425668715043347752, guid: da6c8b15afa1e8343b6ec5d4952847a2, type: 3}
+      propertyPath: otherStatsUpgradeRatio.Array.data[0].icon
+      value: 
+      objectReference: {fileID: 21300000, guid: 73f9f12f569b63041bfeead11c882559, type: 3}
+    - target: {fileID: 8425668715043347752, guid: da6c8b15afa1e8343b6ec5d4952847a2, type: 3}
+      propertyPath: otherStatsUpgradeRatio.Array.data[0].name
+      value: Slow
+      objectReference: {fileID: 0}
+    - target: {fileID: 8425668715043347752, guid: da6c8b15afa1e8343b6ec5d4952847a2, type: 3}
+      propertyPath: otherStatsUpgradeRatio.Array.data[0].type
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8425668715043347752, guid: da6c8b15afa1e8343b6ec5d4952847a2, type: 3}
+      propertyPath: otherStatsUpgradeRatio.Array.data[0].value
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8425668715043347752, guid: da6c8b15afa1e8343b6ec5d4952847a2, type: 3}
+      propertyPath: otherStatsUpgradeRatio.Array.data[0].isDecimal
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8425668715043347752, guid: da6c8b15afa1e8343b6ec5d4952847a2, type: 3}
+      propertyPath: otherStatsUpgradeRatio.Array.data[0].unitString
+      value: '%'
       objectReference: {fileID: 0}
     - target: {fileID: 622254810386224948, guid: 4b24e271f9d98474293a805675f2b8ae, type: 3}
       propertyPath: m_Sprite

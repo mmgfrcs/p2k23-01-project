@@ -117,6 +117,12 @@ MonoBehaviour:
     efficiency: 0
   - enemy: 5
     efficiency: 0.75
+  damageUpgradeRatio: 0.125
+  projectileSpeedUpgradeRatio: 0
+  rotationSpeedUpgradeRatio: 0.05
+  attackSpeedUpgradeRatio: 0.03
+  rangeUpgradeRatio: 0.05
+  otherStatsUpgradeRatio: []
   barrelCenter: {fileID: 2501040406914293020}
   barrelTip:
   - {fileID: 268279840937502280}
