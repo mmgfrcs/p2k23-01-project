@@ -1,12 +1,15 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using AdInfinitum.Database;
+using AdInfinitum.Entities;
+using AdInfinitum.Utilities;
 using UnityEditor;
 using UnityEngine;
 using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
 
-namespace Editor
+namespace AdInfinitum.Editor
 {
     [CustomEditor(typeof(MapConfig))]
     public class MapConfigEditor : UnityEditor.Editor

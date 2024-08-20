@@ -1,23 +1,27 @@
-﻿using UnityEngine;
+﻿using AdInfinitum.Managers;
+using UnityEngine;
 
-public class WaveIndicatorGroup : MonoBehaviour
+namespace AdInfinitum.UI
 {
-    [SerializeField] private WaveIndicator[] indicators;
-    private Map _map;
-
-    private void Start()
+    public class WaveIndicatorGroup : MonoBehaviour
     {
-        _map = FindObjectOfType<Map>();
-    }
+        [SerializeField] private WaveIndicator[] indicators;
+        private Map.Map _map;
 
-    private void Update()
-    {
-        for (uint i = 0; i < indicators.Length; i++)
+        private void Start()
         {
-            var wave = GameManager.Instance.Wave + i + 1;
-            var timing = _map.GetSpawnTiming(wave);
+            _map = FindObjectOfType<Map.Map>();
+        }
+
+        private void Update()
+        {
+            for (uint i = 0; i < indicators.Length; i++)
+            {
+                var wave = GameManager.Instance.Wave + i + 1;
+                var timing = _map.GetSpawnTiming(wave);
             
-            indicators[i].Set(timing.enemyPrefab.Type, wave, timing.amount, GameManager.Instance.CurrentMap.ExpandThisWave(wave));
+                indicators[i].Set(timing.enemyPrefab.Type, wave, timing.amount, GameManager.Instance.CurrentMap.ExpandThisWave(wave));
+            }
         }
     }
 }

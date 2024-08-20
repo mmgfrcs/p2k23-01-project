@@ -1,36 +1,38 @@
-﻿
-using System;
+﻿using System;
 using UnityEngine;
 
-[Serializable]
-public struct ExpansionTiming: IEquatable<ExpansionTiming>
+namespace AdInfinitum.Utilities
 {
-    public uint expandOnWave;
-    public Vector2Int[] newCheckpoints;
-    public Vector2Int[] newTowerSpots;
-
-    public bool Equals(ExpansionTiming other)
+    [Serializable]
+    public struct ExpansionTiming: IEquatable<ExpansionTiming>
     {
-        return expandOnWave == other.expandOnWave  && Equals(newCheckpoints, other.newCheckpoints) && Equals(newTowerSpots, other.newTowerSpots);
-    }
+        public uint expandOnWave;
+        public Vector2Int[] newCheckpoints;
+        public Vector2Int[] newTowerSpots;
 
-    public override bool Equals(object obj)
-    {
-        return obj is ExpansionTiming other && Equals(other);
-    }
+        public bool Equals(ExpansionTiming other)
+        {
+            return expandOnWave == other.expandOnWave  && Equals(newCheckpoints, other.newCheckpoints) && Equals(newTowerSpots, other.newTowerSpots);
+        }
 
-    public override int GetHashCode()
-    {
-        return HashCode.Combine(expandOnWave, newCheckpoints, newTowerSpots);
-    }
+        public override bool Equals(object obj)
+        {
+            return obj is ExpansionTiming other && Equals(other);
+        }
 
-    public static bool operator ==(ExpansionTiming left, ExpansionTiming right)
-    {
-        return left.Equals(right);
-    }
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(expandOnWave, newCheckpoints, newTowerSpots);
+        }
 
-    public static bool operator !=(ExpansionTiming left, ExpansionTiming right)
-    {
-        return !left.Equals(right);
+        public static bool operator ==(ExpansionTiming left, ExpansionTiming right)
+        {
+            return left.Equals(right);
+        }
+
+        public static bool operator !=(ExpansionTiming left, ExpansionTiming right)
+        {
+            return !left.Equals(right);
+        }
     }
 }

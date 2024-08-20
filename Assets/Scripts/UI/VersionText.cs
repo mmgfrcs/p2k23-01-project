@@ -1,7 +1,7 @@
 using TMPro;
 using UnityEngine;
 
-namespace UI
+namespace AdInfinitum.UI
 {
     public class VersionText : MonoBehaviour
     {

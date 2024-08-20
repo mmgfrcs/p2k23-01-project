@@ -1,5 +1,8 @@
 ﻿
-public enum TowerType
+namespace AdInfinitum.Entities
 {
-    Normal, Cannon, Sniper, Air, Missile, Slow
+    public enum TowerType
+    {
+        Normal, Cannon, Sniper, Air, Missile, Slow
+    }
 }

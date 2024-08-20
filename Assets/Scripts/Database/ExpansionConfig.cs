@@ -1,21 +1,25 @@
 using System.Collections.Generic;
 using System.Linq;
+using AdInfinitum.Utilities;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "ExpansionConfig", menuName = "Expansion Config", order = 1)]
-public class ExpansionConfig : ScriptableObject
+namespace AdInfinitum.Database
 {
-    public List<ExpansionTiming> expansionTimings;
-
-    public IReadOnlyDictionary<uint, ExpansionTiming> expTimingDict;
-
-    private void Awake()
+    [CreateAssetMenu(fileName = "ExpansionConfig", menuName = "Expansion Config", order = 1)]
+    public class ExpansionConfig : ScriptableObject
     {
-        expTimingDict = expansionTimings.ToDictionary(x => x.expandOnWave);
-    }
+        public List<ExpansionTiming> expansionTimings;
 
-    private void OnEnable()
-    {
-        expTimingDict = expansionTimings.ToDictionary(x => x.expandOnWave);
+        public IReadOnlyDictionary<uint, ExpansionTiming> expTimingDict;
+
+        private void Awake()
+        {
+            expTimingDict = expansionTimings.ToDictionary(x => x.expandOnWave);
+        }
+
+        private void OnEnable()
+        {
+            expTimingDict = expansionTimings.ToDictionary(x => x.expandOnWave);
+        }
     }
 }

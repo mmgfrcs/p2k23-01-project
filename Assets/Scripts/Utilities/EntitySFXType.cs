@@ -1,5 +1,8 @@
 ﻿
-public enum EntitySFXType
+namespace AdInfinitum.Utilities
 {
-    Destroy, Shoot, Deploy, Charge
+    public enum EntitySFXType
+    {
+        Destroy, Shoot, Deploy, Charge
+    }
 }

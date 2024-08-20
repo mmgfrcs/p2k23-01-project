@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace UI
+namespace AdInfinitum.UI
 {
     public class TowerDetailReportItem : MonoBehaviour
     {

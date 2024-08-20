@@ -1,6 +1,11 @@
-﻿[System.Serializable]
-public struct TowerEfficiency
+﻿using AdInfinitum.Entities;
+
+namespace AdInfinitum.Utilities
 {
-    public EnemyType enemy;
-    public float efficiency;
+    [System.Serializable]
+    public struct TowerEfficiency
+    {
+        public EnemyType enemy;
+        public float efficiency;
+    }
 }
