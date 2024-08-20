@@ -25,13 +25,17 @@ mergeable:
         required:
           reviewers:
             - mmgfrcs
-            - self-approval
           owners: true
           message: A PR is required to be reviewed, at least, by mmgfrcs. Please request a
             review to mmgfrcs
         block:
           changes_requested: true
           message: A reviewer require changes
+        limit:
+          users: 
+            - mmgfrcs
+            - self-approval
+          owners: true
       - do: description
         no_empty:
           enabled: true
