@@ -1,33 +1,37 @@
 ﻿using System;
+using AdInfinitum.Entities;
 
-[Serializable]
-public struct SpawnTiming
+namespace AdInfinitum.Utilities
 {
-    public Enemy enemyPrefab;
-    public float waitTimeMultiplier;
-    public float health;
-    public float delay;
-    public uint amount;
-
-    public SpawnTimingYML ToYML()
+    [Serializable]
+    public struct SpawnTiming
     {
-        return new SpawnTimingYML()
-        {
-            enemyPrefab = enemyPrefab.Type,
-            amount = amount,
-            delay = delay,
-            health = health,
-            waitTimeMultiplier = waitTimeMultiplier
-        };
-    }
-}
+        public Enemy enemyPrefab;
+        public float waitTimeMultiplier;
+        public float health;
+        public float delay;
+        public uint amount;
 
-[Serializable]
-public struct SpawnTimingYML
-{
-    public EnemyType enemyPrefab;
-    public float waitTimeMultiplier;
-    public float health;
-    public float delay;
-    public uint amount;
+        public SpawnTimingYML ToYML()
+        {
+            return new SpawnTimingYML()
+            {
+                enemyPrefab = enemyPrefab.Type,
+                amount = amount,
+                delay = delay,
+                health = health,
+                waitTimeMultiplier = waitTimeMultiplier
+            };
+        }
+    }
+
+    [Serializable]
+    public struct SpawnTimingYML
+    {
+        public EnemyType enemyPrefab;
+        public float waitTimeMultiplier;
+        public float health;
+        public float delay;
+        public uint amount;
+    }
 }

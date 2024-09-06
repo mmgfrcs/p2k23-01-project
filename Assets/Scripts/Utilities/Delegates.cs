@@ -1,3 +1,8 @@
-﻿public delegate void EnemyDeadEvent(Enemy e);
+﻿using AdInfinitum.Entities;
 
-public delegate void EnemyReachedBaseEvent(Enemy e, uint lifeCost);
+namespace AdInfinitum.Utilities
+{
+    public delegate void EnemyDeadEvent(Enemy e);
+
+    public delegate void EnemyReachedBaseEvent(Enemy e, uint lifeCost);
+}

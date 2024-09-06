@@ -1,21 +1,25 @@
+using AdInfinitum.UI;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class MainMenuManager : MonoBehaviour
+namespace AdInfinitum.Managers
 {
-    private SceneFader _fader;
-    private void Awake()
+    public class MainMenuManager : MonoBehaviour
     {
-        _fader = FindObjectOfType<SceneFader>();
-    }
+        private SceneFader _fader;
+        private void Awake()
+        {
+            _fader = FindObjectOfType<SceneFader>();
+        }
 
-    public void OnStart()
-    {
-        _fader.Show(() => SceneManager.LoadScene("Game"));
-    }
+        public void OnStart()
+        {
+            _fader.Show(() => SceneManager.LoadScene("Game"));
+        }
     
-    public void OnExit()
-    {
-        Application.Quit();
+        public void OnExit()
+        {
+            Application.Quit();
+        }
     }
 }

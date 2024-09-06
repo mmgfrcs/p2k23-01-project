@@ -1,5 +1,8 @@
 ﻿
-public enum EnemyType
+namespace AdInfinitum.Entities
 {
-    Normal, Fast, Armored, Army, Jet, Boss
+    public enum EnemyType
+    {
+        Normal, Fast, Armored, Army, Jet, Boss
+    }
 }

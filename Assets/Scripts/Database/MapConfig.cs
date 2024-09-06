@@ -1,8 +1,12 @@
 ﻿using System.Collections.Generic;
+using AdInfinitum.Utilities;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "SpawnConfig", menuName = "Spawn Configuration", order = 0)]
-public class MapConfig : ScriptableObject
+namespace AdInfinitum.Database
 {
-    public List<SpawnTiming> spawnTimings;
+    [CreateAssetMenu(fileName = "SpawnConfig", menuName = "Spawn Configuration", order = 0)]
+    public class MapConfig : ScriptableObject
+    {
+        public List<SpawnTiming> spawnTimings;
+    }
 }
