@@ -52,7 +52,11 @@ namespace AdInfinitum.Managers
         {
             var clip = sfxList.FirstOrDefault(x => x.name == $"tower_{tower.ToString().ToLower()}_{type.ToString().ToLower()}");
             if(clip == null) clip = sfxList.FirstOrDefault(x => x.name == $"tower_{type.ToString().ToLower()}");
-            if (clip == null && Application.isEditor) Debug.LogWarning($"Cannot play tower_{tower.ToString().ToLower()}_{type.ToString().ToLower()} SFX");
+            if (clip == null)
+            {
+                if(Application.isEditor)
+                    Debug.LogWarning($"Cannot play tower_{tower.ToString().ToLower()}_{type.ToString().ToLower()} SFX");
+            }
             else
             {
                 var aRet = _sfxSource.Get().GetComponent<AudioReturner>();

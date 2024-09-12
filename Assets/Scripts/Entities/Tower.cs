@@ -312,6 +312,7 @@ namespace AdInfinitum.Entities
 
         public void ReleaseBullet(Bullet b)
         {
+            GameManager.Instance.SpawnExplosion(type, b.transform.position);
             _bulletPool.Release(b);
         }
 

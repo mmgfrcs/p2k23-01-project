@@ -7,6 +7,7 @@ using AdInfinitum.UI;
 using AdInfinitum.Utilities;
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.Pool;
 using Random = UnityEngine.Random;
 
 namespace AdInfinitum.Managers
@@ -18,9 +19,12 @@ namespace AdInfinitum.Managers
         [SerializeField] private Map.Map[] maps;
         [SerializeField] private Tower[] towers;
         [SerializeField] private float gameOverDelay = 1f;
+        [SerializeField] private VFXReturner cannonExplosion, missileExplosion;
 
         [Header("UI"), SerializeField] private CanvasGroup mainUI;
         [SerializeField] private GameOverPanel gameOverPanel;
+
+        private Dictionary<TowerType, ObjectPool<GameObject>> explosionPoolDict;
 
         public ulong Score { get; private set; }
         public ulong Highscore { get; private set; }
@@ -53,6 +57,23 @@ namespace AdInfinitum.Managers
 
         public event Action<float> GameOver;
 
+        private Func<GameObject> CreateExplosion(GameObject obj)
+        {
+            return () =>
+            {
+                GameObject o = Instantiate(obj);
+                o.SetActive(false);
+                return o;
+            };
+        }
+
+        private void GetExplosion(GameObject o)
+        {
+            o.SetActive(true);
+            o.GetComponent<Animator>().Play("Explosion");
+        }
+        
+        
         // Start is called before the first frame update
         private void Start()
         {
@@ -68,6 +89,23 @@ namespace AdInfinitum.Managers
             _sceneCamera = UnityEngine.Camera.main;
 
             _map = Instantiate(maps[Random.Range(0, maps.Length)].gameObject, Vector3.zero, Quaternion.identity).GetComponent<Map.Map>();
+            explosionPoolDict = new Dictionary<TowerType, ObjectPool<GameObject>>()
+            {
+                { 
+                    TowerType.Cannon, new ObjectPool<GameObject>(
+                        CreateExplosion(cannonExplosion.gameObject), 
+                        GetExplosion, 
+                        o => o.SetActive(false), 
+                        Destroy) 
+                },
+                { 
+                    TowerType.Missile, new ObjectPool<GameObject>(
+                        CreateExplosion(missileExplosion.gameObject), 
+                        GetExplosion, 
+                        o => o.SetActive(false), 
+                        Destroy) 
+                },
+            };
         }
 
         private void EnemyOnDeath(Enemy e)
@@ -120,6 +158,19 @@ namespace AdInfinitum.Managers
             }
 
             _enemyList.Sort();
+        }
+
+        public void SpawnExplosion(TowerType type, Vector3 loc)
+        {
+            if (type != TowerType.Cannon && type != TowerType.Missile) return;
+            var expObj = explosionPoolDict[type].Get();
+            expObj.transform.position = loc;
+            expObj.GetComponent<VFXReturner>().SetTargetType(type);
+        }
+
+        public void ReleaseExplosion(TowerType type, GameObject expObj)
+        {
+            explosionPoolDict[type].Release(expObj);
         }
 
         private IEnumerator StartEnemySpawn()
