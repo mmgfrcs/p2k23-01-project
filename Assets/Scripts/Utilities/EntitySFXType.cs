@@ -3,6 +3,6 @@ namespace AdInfinitum.Utilities
 {
     public enum EntitySFXType
     {
-        Destroy, Shoot, Deploy, Charge
+        Destroy, Shoot, Deploy, Charge, Hit
     }
 }

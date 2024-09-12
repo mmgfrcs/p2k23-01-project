@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using AdInfinitum.Managers;
+using AdInfinitum.Utilities;
 using UnityEngine;
 
 namespace AdInfinitum.Entities
@@ -85,7 +87,8 @@ namespace AdInfinitum.Entities
             Enemy e = col.GetComponent<Enemy>();
 
             if (e == null || e != Target) return;
-
+            
+            AudioManager.Instance.PlayTowerSFX(transform.position, _parent.Type, EntitySFXType.Hit);
             e.Damage(Owner, Damage);
 
             var amt = 1;

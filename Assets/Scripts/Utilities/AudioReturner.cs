@@ -28,6 +28,7 @@ namespace AdInfinitum.Utilities
         {
             _isPlayed = true;
             _parent = parent;
+            _source.volume = 1.0f;
             _source.clip = clip;
             _source.spatialBlend = 1f;
             _source.outputAudioMixerGroup = group;
