@@ -174,7 +174,7 @@ namespace AdInfinitum.Entities
 
         public void SetSpeedMultiplier(float mult)
         {
-            if(mult > SpeedMultiplier)
+            if(!Mathf.Approximately(mult, SpeedMultiplier))
                 SpeedMultiplier = mult;
             
             _speedMultCooldown = 0.5f;

@@ -33,6 +33,7 @@ namespace AdInfinitum.Utilities
             _source.spatialBlend = 1f;
             _source.outputAudioMixerGroup = group;
             _source.loop = false;
+            _source.maxDistance = 40.0f;
             _source.Play();
         }
     }

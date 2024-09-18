@@ -60,6 +60,7 @@ namespace AdInfinitum.Managers
             else
             {
                 var aRet = _sfxSource.Get().GetComponent<AudioReturner>();
+                loc.z = -10;
                 aRet.transform.position = loc;
                 aRet.PlayClip(this, clip, sfxGroup);
             }
@@ -73,6 +74,7 @@ namespace AdInfinitum.Managers
             else
             {
                 var aRet = _sfxSource.Get().GetComponent<AudioReturner>();
+                loc.z = -10;
                 aRet.transform.position = loc;
                 aRet.PlayClip(this, clip, sfxGroup);
             }
