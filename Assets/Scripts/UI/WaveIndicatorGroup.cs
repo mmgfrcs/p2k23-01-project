@@ -6,11 +6,11 @@ namespace AdInfinitum.UI
     public class WaveIndicatorGroup : MonoBehaviour
     {
         [SerializeField] private WaveIndicator[] indicators;
-        private Map.Map _map;
+        private MapManager _map;
 
         private void Start()
         {
-            _map = FindObjectOfType<Map.Map>();
+            _map = FindObjectOfType<MapManager>();
         }
 
         private void Update()

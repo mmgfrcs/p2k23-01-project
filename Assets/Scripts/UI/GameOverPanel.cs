@@ -39,7 +39,7 @@ namespace AdInfinitum.UI
             _fader.Show(() => SceneManager.LoadScene(0));
         }
     
-        public void ShowPanel(ulong score, uint waves, uint kills, float dps)
+        public void ShowPanel(ulong score, uint waves, ulong kills, float dps)
         {
             newRecordText.gameObject.SetActive(false);
             scoreText.text = "0";
@@ -48,10 +48,14 @@ namespace AdInfinitum.UI
             killsText.text = "0";
 
             _group.DOFade(1f, 1f).OnComplete(() => _group.blocksRaycasts = true);
-            DOTween.To(() => ulong.Parse(scoreText.text), value => scoreText.text = value.ToString(), score, 2f).SetDelay(1f);
-            DOTween.To(() => uint.Parse(wavesText.text), value => wavesText.text = value.ToString(), waves, 2f).SetDelay(1f);
-            DOTween.To(() => uint.Parse(killsText.text), value => killsText.text = value.ToString(), kills, 2f).SetDelay(1f);
-            DOTween.To(() => float.Parse(dpsText.text), value => dpsText.text = value.ToString("N0"), dps, 2f).SetDelay(1f);
+            DOTween.To(() => ulong.Parse(scoreText.text), value => scoreText.text = value.ToString("N0"), score, 2f).SetDelay(1f)
+                .OnComplete(() => scoreText.text = score.ToString("N0"));
+            DOTween.To(() => uint.Parse(wavesText.text), value => wavesText.text = value.ToString("N0"), waves, 2f).SetDelay(1f)
+                .OnComplete(() => wavesText.text = waves.ToString("N0"));;
+            DOTween.To(() => ulong.Parse(killsText.text), value => killsText.text = value.ToString("N0"), kills, 2f).SetDelay(1f)
+                .OnComplete(() => killsText.text = kills.ToString("N0"));;
+            DOTween.To(() => float.Parse(dpsText.text), value => dpsText.text = value.ToString("N1"), dps, 2f).SetDelay(1f)
+                .OnComplete(() => dpsText.text = dps.ToString("N1"));;
         }
     }
 }

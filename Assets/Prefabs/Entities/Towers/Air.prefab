@@ -124,11 +124,11 @@ PrefabInstance:
       objectReference: {fileID: 1863861703211192198, guid: e6cca28806ed6114c9ab1ba27d98070e, type: 3}
     - target: {fileID: 8425668715043347752, guid: da6c8b15afa1e8343b6ec5d4952847a2, type: 3}
       propertyPath: damage
-      value: 15
+      value: 16
       objectReference: {fileID: 0}
     - target: {fileID: 8425668715043347752, guid: da6c8b15afa1e8343b6ec5d4952847a2, type: 3}
       propertyPath: attackSpeed
-      value: 1.57
+      value: 1.6
       objectReference: {fileID: 0}
     - target: {fileID: 8425668715043347752, guid: da6c8b15afa1e8343b6ec5d4952847a2, type: 3}
       propertyPath: barrelCenter
@@ -144,7 +144,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8425668715043347752, guid: da6c8b15afa1e8343b6ec5d4952847a2, type: 3}
       propertyPath: damageUpgradeRatio
-      value: 0.1
+      value: 0.125
       objectReference: {fileID: 0}
     - target: {fileID: 8425668715043347752, guid: da6c8b15afa1e8343b6ec5d4952847a2, type: 3}
       propertyPath: barrelTip.Array.size
@@ -152,7 +152,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8425668715043347752, guid: da6c8b15afa1e8343b6ec5d4952847a2, type: 3}
       propertyPath: attackSpeedUpgradeRatio
-      value: 0.02
+      value: 0.0225
       objectReference: {fileID: 0}
     - target: {fileID: 8425668715043347752, guid: da6c8b15afa1e8343b6ec5d4952847a2, type: 3}
       propertyPath: barrelTip.Array.data[0]

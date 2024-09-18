@@ -59,15 +59,10 @@ namespace AdInfinitum.UI
                     else _text.text = GameManager.Instance.Highscore.ToString("N0");
                     break;
                 case LabelType.DPS:
-                    _text.text = GameManager.Instance.CurrentMap.SpawnedTowerList.Count != 0 ? 
-                        GameManager.Instance.CurrentMap.SpawnedTowerList
-                            .Sum(x=>x.Value.Reports.DPS).ToString("N1") : 0.ToString("N1");
+                    _text.text = GameManager.Instance.DPS.ToString("N1");
                     break;
                 case LabelType.Kills:
-                    _text.text = GameManager.Instance.CurrentMap.SpawnedTowerList.Count != 0 ? 
-                        GameManager.Instance.CurrentMap.SpawnedTowerList
-                            .Select(x => x.Value.Reports.Kills)
-                            .Aggregate((x, y) => x + y).ToString() : "0";
+                    _text.text = GameManager.Instance.Kills.ToString();
                     break;
             }
         }

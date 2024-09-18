@@ -16,7 +16,7 @@ namespace AdInfinitum.Managers
     {
         [Header("Configuration"), SerializeField] private uint startingLife = 10;
         [SerializeField] private ulong startingMoney = 150;
-        [SerializeField] private Map.Map[] maps;
+        [SerializeField] private MapManager[] maps;
         [SerializeField] private Tower[] towers;
         [SerializeField] private float gameOverDelay = 1f;
         [SerializeField] private VFXReturner cannonExplosion, missileExplosion;
@@ -35,22 +35,20 @@ namespace AdInfinitum.Managers
         public float WaveTimer { get; private set; } = -1;
         public float EarlyWaveMoneyBonus => Mathf.Floor(Mathf.Max(WaveTimer / 2f, 0));
 
-        public float DPS => CurrentMap.SpawnedTowerList.Count != 0
-            ? CurrentMap.SpawnedTowerList
-                .Sum(x => x.Value.Reports.DPS)
-            : 0;
+        // Stats
+        public float DPS { get; private set; }
 
         public ulong Kills { get; private set; }
 
-        public IReadOnlyList<Map.Map> MapList => maps;
+        public IReadOnlyList<MapManager> MapList => maps;
         public IReadOnlyList<Tower> TowerList => towers;
         public IReadOnlyList<Enemy> EnemyList => _enemyList;
-        public Map.Map CurrentMap => _map;
+        public MapManager CurrentMap => _map;
 
         private List<Enemy> _enemyList = new();
 
-        private Map.Map _map;
-        private Coroutine _enemyCo;
+        private MapManager _map;
+        private Coroutine _enemyCo, _dpsCo;
         private UnityEngine.Camera _sceneCamera;
         private Vector3 _mousePosInitial = Vector3.zero;
         private bool _isGameOver;
@@ -81,6 +79,7 @@ namespace AdInfinitum.Managers
             Money = startingMoney;
             Score = 0;
             Wave = 0;
+            Kills = 0;
             Highscore = ulong.Parse(PlayerPrefs.GetString("Highscore", "0"));
 
             Enemy.Death += EnemyOnDeath;
@@ -88,7 +87,7 @@ namespace AdInfinitum.Managers
 
             _sceneCamera = UnityEngine.Camera.main;
 
-            _map = Instantiate(maps[Random.Range(0, maps.Length)].gameObject, Vector3.zero, Quaternion.identity).GetComponent<Map.Map>();
+            _map = Instantiate(maps[Random.Range(0, maps.Length)].gameObject, Vector3.zero, Quaternion.identity).GetComponent<MapManager>();
             explosionPoolDict = new Dictionary<TowerType, ObjectPool<GameObject>>()
             {
                 { 
@@ -137,7 +136,7 @@ namespace AdInfinitum.Managers
                     .SetUpdate(true).onComplete += () =>
                 {
                     Time.timeScale = 1;
-                    gameOverPanel.ShowPanel(Score, Wave, 0, 0);
+                    gameOverPanel.ShowPanel(Score, Wave, Kills, DPS);
                     if (Score > Highscore) PlayerPrefs.SetString("Highscore", Score.ToString());
                 };
                 _isGameOver = true;
@@ -183,10 +182,30 @@ namespace AdInfinitum.Managers
             _enemyCo = null;
         }
 
+        /// <summary>
+        /// Get tower DPS every second. Runs indefinitely after the start of the first wave.
+        /// </summary>
+        /// <returns></returns>
+        private IEnumerator GetDPS()
+        {
+            while (true)
+            {
+                DPS = CurrentMap.SpawnedTowerList.Count != 0
+                    ? CurrentMap.SpawnedTowerList
+                        .Sum(x => x.Value.Reports.DPS)
+                    : 0;
+                
+                yield return new WaitForSeconds(1.0f);
+            }
+            
+        }
+
         public void NextWave()
         {
-            if (Math.Abs(WaveTimer - (-2)) < 0.001f) return;
+            if (Math.Abs(WaveTimer - (-2)) < 0.001f) return; // Wave timer is not -2 (expansion incoming wave)
             if (_enemyCo != null) StopCoroutine(_enemyCo);
+            _dpsCo ??= StartCoroutine(GetDPS());
+            
             Money += (ulong)Mathf.RoundToInt(EarlyWaveMoneyBonus);
             Wave++;
             if (_map.ExpandThisWave(Wave))
@@ -195,6 +214,11 @@ namespace AdInfinitum.Managers
             _enemyCo = StartCoroutine(StartEnemySpawn());
         }
 
+        /// <summary>
+        /// Purchase something with money
+        /// </summary>
+        /// <param name="amount">The price of the purchase</param>
+        /// <returns>Whether the player has enough money for the transaction. If false, the transaction is deemed aborted.</returns>
         public bool Purchase(ulong amount)
         {
             if (Money < amount) return false;
@@ -202,6 +226,11 @@ namespace AdInfinitum.Managers
             return true;
         }
 
+        /// <summary>
+        /// Add money to the player
+        /// </summary>
+        /// <param name="amount">The amount to add</param>
+        /// <remarks>Money addition has no limit. Make sure the money added is within ulong limits.</remarks>
         public void AddMoney(ulong amount)
         {
             Money += amount;

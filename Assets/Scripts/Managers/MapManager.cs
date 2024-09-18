@@ -11,12 +11,12 @@ using UnityEngine.EventSystems;
 using UnityEngine.Pool;
 using Random = UnityEngine.Random;
 
-namespace AdInfinitum.Map
+namespace AdInfinitum.Managers
 {
     /// <summary>
     /// Handles the Map coordinates and the actual spawning and tracking of enemies.
     /// </summary>
-    public class Map : MonoBehaviour
+    public class MapManager : MonoBehaviour
     {
         [SerializeField] private Vector2Int startPosition;
         [SerializeField] private MapConfig mapConfig;
@@ -158,7 +158,7 @@ namespace AdInfinitum.Map
                 EnemyRemaining--;
                 onSpawn?.Invoke(enemy);
 
-                yield return new WaitForSeconds(CurrentSpawnTiming.delay);
+                if(EnemyRemaining > 0) yield return new WaitForSeconds(CurrentSpawnTiming.delay);
             }
         }
 

@@ -88,7 +88,6 @@ namespace AdInfinitum.Entities
 
             if (e == null || e != Target) return;
             
-            AudioManager.Instance.PlayTowerSFX(transform.position, _parent.Type, EntitySFXType.Hit);
             e.Damage(Owner, Damage);
 
             var amt = 1;
@@ -135,6 +134,7 @@ namespace AdInfinitum.Entities
             _lastPos = Vector3.zero;
 
             if(hit || splash) Hit?.Invoke(this, amt);
+            AudioManager.Instance.PlayTowerSFX(transform.position, _parent.Type, EntitySFXType.Hit);
             _parent.ReleaseBullet(this);
             _parent = null;
             _target = null;

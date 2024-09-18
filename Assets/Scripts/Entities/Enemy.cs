@@ -32,13 +32,13 @@ namespace AdInfinitum.Entities
         public static event EnemyReachedBaseEvent ReachedBase;
         public event Action<Enemy> JourneyComplete;
 
+        private Collider2D _collider;
         private Grid _parentGrid;
         private bool _isInitialized;
-        private Vector2Int[] _checkpoints;
+        private Queue<Vector2Int> _checkpoints;
         private int _checkpointIdx;
         private float _speedMultCooldown;
         private float _distanceTraveled;
-        private Queue<float> _distances = new();
         private Vector3 _offset;
         private CanvasGroup _hpBarGroup;
         private Animator _anim;
@@ -47,6 +47,7 @@ namespace AdInfinitum.Entities
         {
             if (!debugMode) Destroy(debugText.gameObject);
             _anim = spriteRenderer.GetComponent<Animator>();
+            _collider = GetComponent<Collider2D>();
         }
 
         public void Initialize(Grid grid, Vector2Int[] checkpoints, Vector3 offset, float health, float bounty)
@@ -56,25 +57,24 @@ namespace AdInfinitum.Entities
             Health = health;
             Bounty = bounty;
             _isInitialized = true;
-            _checkpoints = checkpoints;
+            _collider.enabled = true;
+            _checkpoints = new Queue<Vector2Int>(checkpoints);
             _checkpointIdx = 0;
             EnemyID = Guid.NewGuid().ToString();
             _distanceTraveled = 0;
             Distance = 0;
             _offset = offset;
-            _distances.Clear();
             _distanceTraveled = 0;
             hpBar.maxValue = health;
             hpBar.value = health;
             _hpBarGroup = hpBar.GetComponent<CanvasGroup>();
             _hpBarGroup.alpha = 0;
             var lastPos = transform.position;
-            for (int i = 0; i < _checkpoints.Length; i++)
+            for (int i = 0; i < checkpoints.Length; i++)
             {
-                Vector3 chkpt = _parentGrid.GetCellCenterWorld(_checkpoints[i].ToVector3Int());
+                Vector3 chkpt = _parentGrid.GetCellCenterWorld(checkpoints[i].ToVector3Int());
 
                 Distance += Vector3.Distance(lastPos, chkpt);
-                _distances.Enqueue(Distance);
                 lastPos = chkpt;
             }
             _anim.Play("Idle");
@@ -93,11 +93,12 @@ namespace AdInfinitum.Entities
             if (!_isInitialized) return;
 
             if (debugMode)
-                debugText.text = $"C{_checkpointIdx+1} {_distanceTraveled:N2}/{_distances.Peek():N2} {Distance:N2}";
+                debugText.text = $"C{_checkpointIdx+1} T{_distanceTraveled:N2}m R{Distance:N2}m";
 
-            var dest = _parentGrid.GetCellCenterWorld(_checkpoints[_checkpointIdx].ToVector3Int()) + _offset;
+            var dest = _parentGrid.GetCellCenterWorld(_checkpoints.Peek().ToVector3Int()) + _offset;
             var dir = (dest - transform.position).normalized;
-            spriteRenderer.transform.rotation = Quaternion.LookRotation(Vector3.forward, dir) * Quaternion.Euler(0f, 0f, 90f);
+            if(type != EnemyType.Boss)
+                spriteRenderer.transform.rotation = Quaternion.LookRotation(Vector3.forward, dir) * Quaternion.Euler(0f, 0f, 90f);
             transform.Translate(dir * (speed * SpeedMultiplier * Time.deltaTime));
 
             Distance -= speed * SpeedMultiplier * Time.deltaTime;
@@ -106,14 +107,14 @@ namespace AdInfinitum.Entities
             if (Vector3.Distance(transform.position, dest) <= 0.01f)
             {
                 _checkpointIdx++;
-                if (_checkpointIdx >= _checkpoints.Length)
+                _checkpoints.Dequeue();
+                if (_checkpoints.Count == 0)
                 {
                     //Reached base... should be
                     ReachedBase?.Invoke(this, lifeCost);
                     _isInitialized = false;
                     JourneyComplete?.Invoke(this);
                 }
-                else _distances.Dequeue();
             }
 
             if (_speedMultCooldown > 0) _speedMultCooldown -= Time.deltaTime;
@@ -122,6 +123,7 @@ namespace AdInfinitum.Entities
 
         public void Damage(Tower source, float amount)
         {
+            spriteRenderer.DOKill();
             spriteRenderer.color = new Color(0.5f,0.5f,0.5f,0.75f);
             spriteRenderer.DOColor(Color.white, 0.6f);
             Health -= amount;
@@ -133,7 +135,6 @@ namespace AdInfinitum.Entities
             }
             else
             {
-                AudioManager.Instance.PlayEnemySFX(transform.position, type, EntitySFXType.Destroy);
                 source.Reports.AddKill();
                 Kill();
             }
@@ -147,6 +148,9 @@ namespace AdInfinitum.Entities
             _isInitialized = false;
             GameManager.Instance.GameOver -= OnGameOver;
             _anim.Play("Death");
+            AudioManager.Instance.PlayEnemySFX(transform.position, type, EntitySFXType.Destroy);
+            _collider.enabled = false;
+            
             StartCoroutine(WaitForAnimation((() =>
             {
                 JourneyComplete?.Invoke(this);
@@ -170,7 +174,9 @@ namespace AdInfinitum.Entities
 
         public void SetSpeedMultiplier(float mult)
         {
-            SpeedMultiplier = mult;
+            if(mult > SpeedMultiplier)
+                SpeedMultiplier = mult;
+            
             _speedMultCooldown = 0.5f;
         }
 
@@ -178,7 +184,6 @@ namespace AdInfinitum.Entities
         {
             yield return new WaitForEndOfFrame();
             yield return new WaitUntil(() => _anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f );
-            Debug.Log("Enemy anim complete");
             wtd.Invoke();
         }
     }

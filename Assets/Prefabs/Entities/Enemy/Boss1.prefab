@@ -35,6 +35,10 @@ PrefabInstance:
       propertyPath: speed
       value: 0.6
       objectReference: {fileID: 0}
+    - target: {fileID: 2430315875821969293, guid: a1e0653dff072b6409b6af4e076c3257, type: 3}
+      propertyPath: lifeCost
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 3442455034129542478, guid: a1e0653dff072b6409b6af4e076c3257, type: 3}
       propertyPath: m_RootOrder
       value: 0

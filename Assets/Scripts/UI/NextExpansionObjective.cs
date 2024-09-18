@@ -8,7 +8,7 @@ namespace AdInfinitum.UI
     public class NextExpansionObjective : MonoBehaviour
     {
         private TextMeshProUGUI _text;
-        private Map.Map _map;
+        private MapManager _map;
 
         private void Awake()
         {
@@ -17,7 +17,7 @@ namespace AdInfinitum.UI
 
         private void Start()
         {
-            _map = FindObjectOfType<Map.Map>();
+            _map = FindObjectOfType<MapManager>();
         }
 
         private void Update()

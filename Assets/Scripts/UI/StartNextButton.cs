@@ -57,8 +57,10 @@ namespace AdInfinitum.UI
                 }
             }
             else if (Mathf.Approximately(gameManager.WaveTimer, -3)) { // Next wave is expansion wave
-                timerText.text = gameManager.EnemyAmount + "\nRemaining";
-                iconImage.sprite = _enemyImgs[(int)gameManager.CurrentMap.CurrentSpawnTiming.enemyPrefab.Type];
+                timerText.text = gameManager.EnemyAmount == 0 ? 
+                    "Expand" : gameManager.EnemyAmount.ToString();
+                iconImage.sprite = gameManager.EnemyAmount == 0 ? 
+                    _originalImgs : _enemyImgs[(int)gameManager.CurrentMap.CurrentSpawnTiming.enemyPrefab.Type];
             }
             else if (Mathf.Approximately(gameManager.WaveTimer, -1)) //At start wave
                 timerText.text = "Start";
