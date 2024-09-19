@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace AdInfinitum.Utilities
 {
@@ -29,6 +31,17 @@ namespace AdInfinitum.Utilities
         public static T PickOne<T>(this IList<T> arr)
         {
             return arr[Random.Range(0, arr.Count)];
+        }
+
+        public static uint Sum<TSource>(
+            this IEnumerable<TSource> source, Func<TSource, uint> summer)
+        {
+            uint total = 0;
+
+            foreach(var item in source)
+                total += summer(item);
+
+            return total;
         }
     }
 }

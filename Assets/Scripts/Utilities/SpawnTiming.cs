@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using AdInfinitum.Entities;
 
 namespace AdInfinitum.Utilities
@@ -6,20 +7,22 @@ namespace AdInfinitum.Utilities
     [Serializable]
     public struct SpawnTiming
     {
-        public Enemy enemyPrefab;
+        public SpawnFormation[] formations;
         public float waitTimeMultiplier;
-        public float health;
-        public float delay;
-        public uint amount;
+
+        public uint TotalAmount => formations.Sum(x => x.amount);
 
         public SpawnTimingYML ToYML()
         {
             return new SpawnTimingYML()
             {
-                enemyPrefab = enemyPrefab.Type,
-                amount = amount,
-                delay = delay,
-                health = health,
+                formations = formations.Select(x=>new SpawnFormationYML()
+                {
+                    enemyPrefab = x.enemyPrefab.Type,
+                    amount = x.amount,
+                    delay = x.delay,
+                    health = x.health
+                }).ToArray(),
                 waitTimeMultiplier = waitTimeMultiplier
             };
         }
@@ -28,8 +31,23 @@ namespace AdInfinitum.Utilities
     [Serializable]
     public struct SpawnTimingYML
     {
-        public EnemyType enemyPrefab;
+        public SpawnFormationYML[] formations;
         public float waitTimeMultiplier;
+    }
+
+    [Serializable]
+    public struct SpawnFormation
+    {
+        public Enemy enemyPrefab;
+        public float health;
+        public float delay;
+        public uint amount;
+    }
+
+    [Serializable]
+    public struct SpawnFormationYML
+    {
+        public EnemyType enemyPrefab;
         public float health;
         public float delay;
         public uint amount;

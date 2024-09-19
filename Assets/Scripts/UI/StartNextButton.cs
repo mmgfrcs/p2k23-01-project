@@ -60,14 +60,14 @@ namespace AdInfinitum.UI
                 timerText.text = gameManager.EnemyAmount == 0 ? 
                     "Expand" : gameManager.EnemyAmount.ToString();
                 iconImage.sprite = gameManager.EnemyAmount == 0 ? 
-                    _originalImgs : _enemyImgs[(int)gameManager.CurrentMap.CurrentSpawnTiming.enemyPrefab.Type];
+                    _originalImgs : _enemyImgs[(int)gameManager.CurrentMap.CurrentSpawnTiming.formations[0].enemyPrefab.Type];
             }
             else if (Mathf.Approximately(gameManager.WaveTimer, -1)) //At start wave
                 timerText.text = "Start";
             else
             {
                 timerText.text = gameManager.CurrentMap.EnemyRemaining.ToString("N0");
-                iconImage.sprite = _enemyImgs[(int)gameManager.CurrentMap.CurrentSpawnTiming.enemyPrefab.Type];
+                iconImage.sprite = _enemyImgs[(int)gameManager.CurrentMap.CurrentSpawnTiming.formations[0].enemyPrefab.Type];
             }
 
             //Button is interactable (clickable) if:

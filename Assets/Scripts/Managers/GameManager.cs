@@ -178,7 +178,7 @@ namespace AdInfinitum.Managers
             yield return _map.SpawnEnemy(Wave, (e) => _enemyList.Add(e));
 
             if (_map.ExpandThisWave(Wave + 1)) WaveTimer = -3;
-            else WaveTimer = _map.GetSpawnTiming(Wave).amount * _map.GetSpawnTiming(Wave).waitTimeMultiplier;
+            else WaveTimer = _map.GetSpawnTiming(Wave).TotalAmount * _map.GetSpawnTiming(Wave).waitTimeMultiplier;
             _enemyCo = null;
         }
 

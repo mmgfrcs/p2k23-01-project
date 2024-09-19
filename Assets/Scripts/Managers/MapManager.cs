@@ -52,20 +52,24 @@ namespace AdInfinitum.Managers
         {
             for (int i = 0; i < mapConfig.spawnTimings.Count; i++)
             {
-                var idx = i;
-                _enemyPools.TryAdd(mapConfig.spawnTimings[i].enemyPrefab.Type, new ObjectPool<Enemy>(
-                    () => Instantiate(mapConfig.spawnTimings[idx].enemyPrefab.gameObject, Vector3.zero, Quaternion.identity).GetComponent<Enemy>(),
-                    enemy =>
-                    {
-                        enemy.gameObject.SetActive(true);
-                    }, enemy =>
-                    {
-                        enemy.gameObject.SetActive(false);
-                    }, enemy =>
-                    {
-                        Destroy(enemy.gameObject);
-                    })
-                );
+                for (int j = 0; j < mapConfig.spawnTimings[i].formations.Length; j++)
+                {
+                    var formation = mapConfig.spawnTimings[i].formations[j];
+                    _enemyPools.TryAdd(formation.enemyPrefab.Type, new ObjectPool<Enemy>(
+                        () => Instantiate(formation.enemyPrefab.gameObject, Vector3.zero, Quaternion.identity).GetComponent<Enemy>(),
+                        enemy =>
+                        {
+                            enemy.gameObject.SetActive(true);
+                        }, enemy =>
+                        {
+                            enemy.gameObject.SetActive(false);
+                        }, enemy =>
+                        {
+                            Destroy(enemy.gameObject);
+                        })
+                    );
+                }
+
             }
 
             _buyPanel.TowerBuy += BuyPanelOnTowerBuy;
@@ -112,8 +116,8 @@ namespace AdInfinitum.Managers
         public SpawnTiming GetSpawnTiming(uint wave)
         {
             if (wave > mapConfig.spawnTimings.Count) return mapConfig.spawnTimings[^1];
-            if (wave == 0) { //Note that this is not possible and is a bug
-                Debug.LogWarning("GetSpawnTiming called with wave 0. This is not possible!");
+            if (wave <= 0) { //Note that this is not possible and is a bug
+                Debug.LogError("GetSpawnTiming called with wave 0 or below. This is not possible!");
                 return mapConfig.spawnTimings[0];
             }
 
@@ -145,20 +149,30 @@ namespace AdInfinitum.Managers
         {
             if (wave == 0) wave = 1;
             CurrentSpawnTiming = GetSpawnTiming(wave);
-            EnemyRemaining = CurrentSpawnTiming.amount;
+
+            int formationIdx = 0;
+            EnemyRemaining = CurrentSpawnTiming.TotalAmount;
             while (EnemyRemaining > 0)
             {
-                var enemy = _enemyPools[CurrentSpawnTiming.enemyPrefab.Type].Get();
-                var offset = new Vector3(Random.Range(-0.25f, 0.25f), Random.Range(-0.25f, 0.25f), 0);
-                enemy.transform.position = _grid.GetCellCenterWorld(startPosition.ToVector3Int()) + offset;
-                enemy.Initialize(_grid, checkpoints.ToArray(), offset, CurrentSpawnTiming.health, Mathf.Ceil((CurrentSpawnTiming.health-wave)/56));
-                enemy.transform.localScale = Vector3.zero;
-                enemy.transform.DOScale(1f, 0.6f).SetEase(Ease.OutCubic);
-                enemy.JourneyComplete += EnemyOnJourneyComplete;
-                EnemyRemaining--;
-                onSpawn?.Invoke(enemy);
+                var currentFormation = CurrentSpawnTiming.formations[formationIdx];
+                var formationEnemyRemaining = currentFormation.amount;
+                while (formationEnemyRemaining > 0)
+                {
+                    var enemy = _enemyPools[currentFormation.enemyPrefab.Type].Get();
+                    var offset = new Vector3(Random.Range(-0.25f, 0.25f), Random.Range(-0.25f, 0.25f), 0);
+                    enemy.transform.position = _grid.GetCellCenterWorld(startPosition.ToVector3Int()) + offset;
+                    enemy.Initialize(_grid, checkpoints.ToArray(), offset, currentFormation.health, Mathf.Ceil((currentFormation.health-wave)/56));
+                    enemy.transform.localScale = Vector3.zero;
+                    enemy.transform.DOScale(1f, 0.6f).SetEase(Ease.OutCubic);
+                    enemy.JourneyComplete += EnemyOnJourneyComplete;
+                    EnemyRemaining--;
+                    formationEnemyRemaining--;
+                    onSpawn?.Invoke(enemy);
 
-                if(EnemyRemaining > 0) yield return new WaitForSeconds(CurrentSpawnTiming.delay);
+                    if(EnemyRemaining > 0) yield return new WaitForSeconds(currentFormation.delay);
+                }
+
+                formationIdx++;
             }
         }
 

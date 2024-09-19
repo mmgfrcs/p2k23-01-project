@@ -41,22 +41,31 @@ namespace AdInfinitum.Editor
                 var serialized = File.ReadAllText(path);
                 var deserialized = yamlDeserializer.Deserialize<List<SpawnTimingYML>>(serialized);
                 confObj.spawnTimings.Clear();
+
                 for (int i = 0; i < deserialized.Count; i++)
                 {
-                    var assetPaths = AssetDatabase.FindAssets($"{deserialized[i].enemyPrefab} l:Enemy");
-                    if (assetPaths.Length == 0)
+                    List<SpawnFormation> spawnFormations = new List<SpawnFormation>();
+                    for (int j = 0; j < deserialized[i].formations.Length; j++)
                     {
-                        Debug.LogError($"[Load Spawn Timings] ({path}) Cannot load prefab for enemy {deserialized[i].enemyPrefab} at timing {i+1}");
-                        continue;
+                        var assetPaths = AssetDatabase.FindAssets($"{deserialized[i].formations[j].enemyPrefab} l:Enemy");
+                        if (assetPaths.Length == 0)
+                        {
+                            Debug.LogError($"[Load Spawn Timings] ({path}) Cannot load prefab for enemy {deserialized[i].formations[j].enemyPrefab} at timing {i+1}");
+                            continue;
+                        }
+
+                        spawnFormations.Add(new SpawnFormation() {
+                            enemyPrefab =
+                                AssetDatabase.LoadAssetAtPath<Enemy>(AssetDatabase.GUIDToAssetPath(assetPaths[0])),
+                            amount = deserialized[i].formations[j].amount,
+                            delay = deserialized[i].formations[j].delay,
+                            health = deserialized[i].formations[j].health,
+                        });
                     }
 
-                    var st = new SpawnTiming()
-                    {
-                        enemyPrefab =
-                            AssetDatabase.LoadAssetAtPath<Enemy>(AssetDatabase.GUIDToAssetPath(assetPaths[0])),
-                        amount = deserialized[i].amount,
-                        delay = deserialized[i].delay,
-                        health = deserialized[i].health,
+
+                    var st = new SpawnTiming() {
+                        formations = spawnFormations.ToArray(),
                         waitTimeMultiplier = deserialized[i].waitTimeMultiplier
                     };
                     
