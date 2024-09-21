@@ -20,7 +20,7 @@ namespace AdInfinitum.UI
                 var wave = GameManager.Instance.Wave + i + 1;
                 var timing = _map.GetSpawnTiming(wave);
             
-                indicators[i].Set(timing.formations[0].enemyPrefab.Type, wave, timing.TotalAmount, GameManager.Instance.CurrentMap.ExpandThisWave(wave));
+                indicators[i].Set(wave, timing.formations, GameManager.Instance.CurrentMap.ExpandThisWave(wave));
             }
         }
     }

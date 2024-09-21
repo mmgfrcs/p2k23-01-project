@@ -7,11 +7,13 @@ namespace AdInfinitum.UI
     [RequireComponent(typeof(CanvasGroup))]
     public class PauseMenu : MonoBehaviour
     {
+        private OptionsPanel _optionsPanel;
         private SceneFader _fader;
         private CanvasGroup _group;
         private void Start()
         {
             _group = GetComponent<CanvasGroup>();
+            _optionsPanel = GetComponentInChildren<OptionsPanel>();
             _fader = FindObjectOfType<SceneFader>();
 
             _group.alpha = 0;
@@ -25,8 +27,14 @@ namespace AdInfinitum.UI
             _group.DOFade(1f, 1f).SetUpdate(true);
         }
 
+        public void OnOptions()
+        {
+            _optionsPanel.Open();
+        }
+
         public void OnResume()
         {
+            _optionsPanel.Close();
             _group.DOFade(0f, 1f).OnComplete(() =>
             {
                 _group.blocksRaycasts = false;

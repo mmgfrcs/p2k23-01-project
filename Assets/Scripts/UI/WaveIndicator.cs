@@ -1,20 +1,26 @@
-﻿using AdInfinitum.Entities;
+﻿using System.Collections.Generic;
+using System.Linq;
+using AdInfinitum.Entities;
+using AdInfinitum.Utilities;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace AdInfinitum.UI
 {
     public class WaveIndicator : MonoBehaviour
     {
-        [SerializeField] private Image enemyImage;
-        [SerializeField] private TextMeshProUGUI waveNumText, amountText;
+        [SerializeField] private Image[] enemyImages;
+        [SerializeField] private TextMeshProUGUI[] amountTexts;
+        [SerializeField] private TextMeshProUGUI waveNumText;
 
-        private Sprite[] enemyImages;
+        private Sprite[] enemySprites;
+        private string _setHash;
 
         private void Start()
         {
-            enemyImages = new[] //Normal, Fast, Armored, Army, Jet, Boss
+            enemySprites = new[] //Normal, Fast, Armored, Army, Jet, Boss
             {
                 Resources.Load<Sprite>("UI/Enemy - Normal"),
                 Resources.Load<Sprite>("UI/Enemy - Fast"),
@@ -25,11 +31,31 @@ namespace AdInfinitum.UI
             };
         }
 
-        public void Set(EnemyType enemy, uint wave, uint amount, bool expand)
+        public void Set(uint wave, SpawnFormation[] formations, bool expand)
         {
-            enemyImage.sprite = enemyImages[(int)enemy];
-            waveNumText.text = expand ? $"{wave}>" : wave.ToString();
-            amountText.text = $"x{amount}";
+            Dictionary<EnemyType, uint> formationDict = new Dictionary<EnemyType, uint>();
+
+            formationDict = formations.Aggregate(formationDict, (accumulate, formation) =>
+            {
+                if (!accumulate.TryAdd(formation.enemyPrefab.Type, formation.amount))
+                    accumulate[formation.enemyPrefab.Type] += formation.amount;
+
+                return accumulate;
+            });
+
+            int i = 0;
+            foreach (var formation in formationDict)
+            {
+                enemyImages[i].gameObject.SetActive(true);
+                enemyImages[i].sprite = enemySprites[(int)formation.Key];
+                waveNumText.text = expand ? $"{wave}>" : wave.ToString();
+                amountTexts[i].text = $"x{formation.Value}";
+                i++;
+            }
+            for (; i < Mathf.Min(enemyImages.Length, amountTexts.Length); i++)
+                enemyImages[i].gameObject.SetActive(false);
+
+            LayoutRebuilder.MarkLayoutForRebuild(transform as RectTransform);
         }
     }
 }

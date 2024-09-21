@@ -17,11 +17,19 @@ MonoBehaviour:
     - enemyPrefab: {fileID: 2430315875821969293, guid: a1e0653dff072b6409b6af4e076c3257, type: 3}
       health: 20
       delay: 1.1
-      amount: 7
+      amount: 5
     - enemyPrefab: {fileID: 343485718013981799, guid: 1cb9f16063476704fbcf1148e3dfb5c0, type: 3}
       health: 16
       delay: 0.86
-      amount: 7
+      amount: 5
+    - enemyPrefab: {fileID: 2430315875821969293, guid: a1e0653dff072b6409b6af4e076c3257, type: 3}
+      health: 20
+      delay: 1.1
+      amount: 3
+    - enemyPrefab: {fileID: 6225958171008753143, guid: 6210df154043f3047947eace1c6c8186, type: 3}
+      health: 40
+      delay: 0.86
+      amount: 1
     waitTimeMultiplier: 1.05
   - formations:
     - enemyPrefab: {fileID: 2430315875821969293, guid: a1e0653dff072b6409b6af4e076c3257, type: 3}
