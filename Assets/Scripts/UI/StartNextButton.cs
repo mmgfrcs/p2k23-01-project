@@ -1,4 +1,5 @@
 using AdInfinitum.Managers;
+using AdInfinitum.Utilities;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -10,7 +11,8 @@ namespace AdInfinitum.UI
     {
         [SerializeField] private TextMeshProUGUI timerText;
         [SerializeField] private TextMeshProUGUI earlyBonusText;
-        [SerializeField] private Image iconImage;
+        [SerializeField] private Image iconImage, iconNextImage;
+        [SerializeField] private GameObject iconSeparator;
         private Button _btn;
         private Sprite[] _enemyImgs;
         private Sprite _originalImgs;
@@ -31,6 +33,8 @@ namespace AdInfinitum.UI
                 Resources.Load<Sprite>("UI/Enemy - Jet"),
                 Resources.Load<Sprite>("UI/Enemy - Boss")
             };
+
+            SetIcon(_originalImgs);
         }
 
         private void OnClick()
@@ -59,15 +63,16 @@ namespace AdInfinitum.UI
             else if (Mathf.Approximately(gameManager.WaveTimer, -3)) { // Next wave is expansion wave
                 timerText.text = gameManager.EnemyAmount == 0 ? 
                     "Expand" : gameManager.EnemyAmount.ToString();
-                iconImage.sprite = gameManager.EnemyAmount == 0 ? 
-                    _originalImgs : _enemyImgs[(int)gameManager.CurrentMap.CurrentSpawnTiming.formations[0].enemyPrefab.Type];
+                if(gameManager.EnemyAmount == 0)
+                    SetIcon(_originalImgs);
+                else SetIcon(gameManager.CurrentMap.CurrentSpawnFormation, gameManager.CurrentMap.NextSpawnFormation);
             }
             else if (Mathf.Approximately(gameManager.WaveTimer, -1)) //At start wave
                 timerText.text = "Start";
             else
             {
                 timerText.text = gameManager.CurrentMap.EnemyRemaining.ToString("N0");
-                iconImage.sprite = _enemyImgs[(int)gameManager.CurrentMap.CurrentSpawnTiming.formations[0].enemyPrefab.Type];
+                SetIcon(gameManager.CurrentMap.CurrentSpawnFormation, gameManager.CurrentMap.NextSpawnFormation);
             }
 
             //Button is interactable (clickable) if:
@@ -80,6 +85,26 @@ namespace AdInfinitum.UI
                 Mathf.Approximately(gameManager.WaveTimer, -1) ||
                 Mathf.Approximately(gameManager.WaveTimer, -3) && gameManager.EnemyAmount == 0;
 
+        }
+
+        private void SetIcon(SpawnFormation currFormation, SpawnFormation? nextFormation = null)
+        {
+            Sprite sprite = nextFormation != null ? _enemyImgs[(int)nextFormation.Value.enemyPrefab.Type] : null;
+            SetIcon(_enemyImgs[(int)currFormation.enemyPrefab.Type], sprite);
+        }
+
+        private void SetIcon(Sprite currSprite, Sprite nextSprite = null)
+        {
+            iconImage.sprite = currSprite;
+            if (nextSprite == null)
+            {
+                iconNextImage.gameObject.SetActive(false);
+                iconSeparator.SetActive(false);
+                return;
+            }
+            iconSeparator.SetActive(true);
+            iconNextImage.gameObject.SetActive(true);
+            iconNextImage.sprite = nextSprite;
         }
     }
 }

@@ -17,19 +17,7 @@ MonoBehaviour:
     - enemyPrefab: {fileID: 2430315875821969293, guid: a1e0653dff072b6409b6af4e076c3257, type: 3}
       health: 20
       delay: 1.1
-      amount: 5
-    - enemyPrefab: {fileID: 343485718013981799, guid: 1cb9f16063476704fbcf1148e3dfb5c0, type: 3}
-      health: 16
-      delay: 0.86
-      amount: 5
-    - enemyPrefab: {fileID: 2430315875821969293, guid: a1e0653dff072b6409b6af4e076c3257, type: 3}
-      health: 20
-      delay: 1.1
-      amount: 3
-    - enemyPrefab: {fileID: 6225958171008753143, guid: 6210df154043f3047947eace1c6c8186, type: 3}
-      health: 40
-      delay: 0.86
-      amount: 1
+      amount: 14
     waitTimeMultiplier: 1.05
   - formations:
     - enemyPrefab: {fileID: 2430315875821969293, guid: a1e0653dff072b6409b6af4e076c3257, type: 3}
@@ -38,131 +26,235 @@ MonoBehaviour:
       amount: 17
     waitTimeMultiplier: 1.05
   - formations:
-    - enemyPrefab: {fileID: 2430315875821969293, guid: a1e0653dff072b6409b6af4e076c3257, type: 3}
-      health: 24
+    - enemyPrefab: {fileID: 343485718013981799, guid: 1cb9f16063476704fbcf1148e3dfb5c0, type: 3}
+      health: 19
       delay: 1.09
-      amount: 19
+      amount: 23
+    waitTimeMultiplier: 0.9
+  - formations:
+    - enemyPrefab: {fileID: 343485718013981799, guid: 1cb9f16063476704fbcf1148e3dfb5c0, type: 3}
+      health: 21
+      delay: 1.15
+      amount: 25
     waitTimeMultiplier: 0.9
   - formations:
     - enemyPrefab: {fileID: 2430315875821969293, guid: a1e0653dff072b6409b6af4e076c3257, type: 3}
-      health: 27
-      delay: 1.15
-      amount: 19
-    waitTimeMultiplier: 0.9
-  - formations:
-    - enemyPrefab: {fileID: 326472150867902607, guid: 26ca950a5f8c8a24ebe24f330acf5eec, type: 3}
-      health: 47
+      health: 28
       delay: 1.52
-      amount: 12
+      amount: 22
     waitTimeMultiplier: 1
   - formations:
     - enemyPrefab: {fileID: 2430315875821969293, guid: a1e0653dff072b6409b6af4e076c3257, type: 3}
-      health: 34
+      health: 31
       delay: 1.08
       amount: 24
     waitTimeMultiplier: 0.85
   - formations:
-    - enemyPrefab: {fileID: 2430315875821969293, guid: a1e0653dff072b6409b6af4e076c3257, type: 3}
-      health: 38
+    - enemyPrefab: {fileID: 343485718013981799, guid: 1cb9f16063476704fbcf1148e3dfb5c0, type: 3}
+      health: 27
       delay: 1.07
-      amount: 25
+      amount: 33
     waitTimeMultiplier: 0.82
   - formations:
     - enemyPrefab: {fileID: 2430315875821969293, guid: a1e0653dff072b6409b6af4e076c3257, type: 3}
-      health: 43
+      health: 37
       delay: 1.06
-      amount: 26
+      amount: 6
+    - enemyPrefab: {fileID: 343485718013981799, guid: 1cb9f16063476704fbcf1148e3dfb5c0, type: 3}
+      health: 30
+      delay: 0.85
+      amount: 11
+    - enemyPrefab: {fileID: 2430315875821969293, guid: a1e0653dff072b6409b6af4e076c3257, type: 3}
+      health: 37
+      delay: 1.06
+      amount: 6
+    - enemyPrefab: {fileID: 343485718013981799, guid: 1cb9f16063476704fbcf1148e3dfb5c0, type: 3}
+      health: 30
+      delay: 0.85
+      amount: 11
     waitTimeMultiplier: 0.8
   - formations:
-    - enemyPrefab: {fileID: 2430315875821969293, guid: a1e0653dff072b6409b6af4e076c3257, type: 3}
-      health: 48
+    - enemyPrefab: {fileID: 343485718013981799, guid: 1cb9f16063476704fbcf1148e3dfb5c0, type: 3}
+      health: 32
       delay: 1.05
-      amount: 26
+      amount: 38
     waitTimeMultiplier: 0.775
   - formations:
-    - enemyPrefab: {fileID: 2430315875821969293, guid: a1e0653dff072b6409b6af4e076c3257, type: 3}
-      health: 53
+    - enemyPrefab: {fileID: 326472150867902607, guid: 26ca950a5f8c8a24ebe24f330acf5eec, type: 3}
+      health: 86
       delay: 1.04
-      amount: 27
+      amount: 24
     waitTimeMultiplier: 0.75
   - formations:
     - enemyPrefab: {fileID: 2430315875821969293, guid: a1e0653dff072b6409b6af4e076c3257, type: 3}
-      health: 59
+      health: 48
       delay: 1.03
-      amount: 28
+      amount: 34
     waitTimeMultiplier: 0.725
   - formations:
-    - enemyPrefab: {fileID: 343485718013981799, guid: 1cb9f16063476704fbcf1148e3dfb5c0, type: 3}
-      health: 39
+    - enemyPrefab: {fileID: 2430315875821969293, guid: a1e0653dff072b6409b6af4e076c3257, type: 3}
+      health: 53
       delay: 1
-      amount: 39
+      amount: 36
     waitTimeMultiplier: 0.7
   - formations:
-    - enemyPrefab: {fileID: 343485718013981799, guid: 1cb9f16063476704fbcf1148e3dfb5c0, type: 3}
-      health: 43
+    - enemyPrefab: {fileID: 326472150867902607, guid: 26ca950a5f8c8a24ebe24f330acf5eec, type: 3}
+      health: 116
       delay: 0.74
-      amount: 40
+      amount: 29
     waitTimeMultiplier: 0.68
   - formations:
-    - enemyPrefab: {fileID: 343485718013981799, guid: 1cb9f16063476704fbcf1148e3dfb5c0, type: 3}
-      health: 47
+    - enemyPrefab: {fileID: 326472150867902607, guid: 26ca950a5f8c8a24ebe24f330acf5eec, type: 3}
+      health: 126
       delay: 1
-      amount: 42
+      amount: 30
     waitTimeMultiplier: 0.66
   - formations:
-    - enemyPrefab: {fileID: 343485718013981799, guid: 1cb9f16063476704fbcf1148e3dfb5c0, type: 3}
-      health: 52
+    - enemyPrefab: {fileID: 2430315875821969293, guid: a1e0653dff072b6409b6af4e076c3257, type: 3}
+      health: 68
       delay: 0.74
-      amount: 44
+      amount: 42
     waitTimeMultiplier: 0.64
   - formations:
-    - enemyPrefab: {fileID: 2430315875821969293, guid: a1e0653dff072b6409b6af4e076c3257, type: 3}
-      health: 95
+    - enemyPrefab: {fileID: 343485718013981799, guid: 1cb9f16063476704fbcf1148e3dfb5c0, type: 3}
+      health: 59
       delay: 1.02
-      amount: 36
+      amount: 55
     waitTimeMultiplier: 0.62
   - formations:
-    - enemyPrefab: {fileID: 2430315875821969293, guid: a1e0653dff072b6409b6af4e076c3257, type: 3}
-      health: 103
+    - enemyPrefab: {fileID: 343485718013981799, guid: 1cb9f16063476704fbcf1148e3dfb5c0, type: 3}
+      health: 64
       delay: 1.02
-      amount: 39
+      amount: 58
     waitTimeMultiplier: 0.6
   - formations:
     - enemyPrefab: {fileID: 2430315875821969293, guid: a1e0653dff072b6409b6af4e076c3257, type: 3}
-      health: 112
+      health: 86
       delay: 1.01
-      amount: 42
+      amount: 10
+    - enemyPrefab: {fileID: 343485718013981799, guid: 1cb9f16063476704fbcf1148e3dfb5c0, type: 3}
+      health: 69
+      delay: 0.68
+      amount: 20
+    - enemyPrefab: {fileID: 2430315875821969293, guid: a1e0653dff072b6409b6af4e076c3257, type: 3}
+      health: 86
+      delay: 1.01
+      amount: 10
+    - enemyPrefab: {fileID: 343485718013981799, guid: 1cb9f16063476704fbcf1148e3dfb5c0, type: 3}
+      health: 69
+      delay: 0.68
+      amount: 20
     waitTimeMultiplier: 0.58
   - formations:
+    - enemyPrefab: {fileID: 343485718013981799, guid: 1cb9f16063476704fbcf1148e3dfb5c0, type: 3}
+      health: 74
+      delay: 0.66
+      amount: 6
     - enemyPrefab: {fileID: 2430315875821969293, guid: a1e0653dff072b6409b6af4e076c3257, type: 3}
-      health: 121
+      health: 92
       delay: 1.01
-      amount: 45
+      amount: 12
+    - enemyPrefab: {fileID: 343485718013981799, guid: 1cb9f16063476704fbcf1148e3dfb5c0, type: 3}
+      health: 74
+      delay: 0.66
+      amount: 16
+    - enemyPrefab: {fileID: 2430315875821969293, guid: a1e0653dff072b6409b6af4e076c3257, type: 3}
+      health: 92
+      delay: 1.01
+      amount: 8
+    - enemyPrefab: {fileID: 343485718013981799, guid: 1cb9f16063476704fbcf1148e3dfb5c0, type: 3}
+      health: 74
+      delay: 0.66
+      amount: 16
+    - enemyPrefab: {fileID: 2430315875821969293, guid: a1e0653dff072b6409b6af4e076c3257, type: 3}
+      health: 92
+      delay: 1.01
+      amount: 6
     waitTimeMultiplier: 0.56
   - formations:
     - enemyPrefab: {fileID: 326472150867902607, guid: 26ca950a5f8c8a24ebe24f330acf5eec, type: 3}
-      health: 197
+      health: 196
       delay: 1.46
-      amount: 23
-    waitTimeMultiplier: 0.72
-  - formations:
+      amount: 6
+    - enemyPrefab: {fileID: 8946896375611810769, guid: 8effe9a26e757f743a5ab4fc97caca40, type: 3}
+      health: 196
+      delay: 0.55
+      amount: 21
     - enemyPrefab: {fileID: 326472150867902607, guid: 26ca950a5f8c8a24ebe24f330acf5eec, type: 3}
-      health: 212
-      delay: 1.45
-      amount: 24
+      health: 196
+      delay: 1.46
+      amount: 6
+    - enemyPrefab: {fileID: 8946896375611810769, guid: 8effe9a26e757f743a5ab4fc97caca40, type: 3}
+      health: 196
+      delay: 0.55
+      amount: 21
+    - enemyPrefab: {fileID: 326472150867902607, guid: 26ca950a5f8c8a24ebe24f330acf5eec, type: 3}
+      health: 196
+      delay: 1.46
+      amount: 6
+    - enemyPrefab: {fileID: 8946896375611810769, guid: 8effe9a26e757f743a5ab4fc97caca40, type: 3}
+      health: 196
+      delay: 0.55
+      amount: 21
+    waitTimeMultiplier: 0.6
+  - formations:
+    - enemyPrefab: {fileID: 6605585068724967467, guid: 8836f972f01a6274585915fb8b2d94ca, type: 3}
+      health: 69
+      delay: 1
+      amount: 65
     waitTimeMultiplier: 0.7
   - formations:
-    - enemyPrefab: {fileID: 2430315875821969293, guid: a1e0653dff072b6409b6af4e076c3257, type: 3}
-      health: 152
-      delay: 1
-      amount: 48
+    - enemyPrefab: {fileID: 326472150867902607, guid: 26ca950a5f8c8a24ebe24f330acf5eec, type: 3}
+      health: 228
+      delay: 1.33
+      amount: 5
+    - enemyPrefab: {fileID: 6605585068724967467, guid: 8836f972f01a6274585915fb8b2d94ca, type: 3}
+      health: 74
+      delay: 0.9
+      amount: 15
+    - enemyPrefab: {fileID: 326472150867902607, guid: 26ca950a5f8c8a24ebe24f330acf5eec, type: 3}
+      health: 228
+      delay: 1.33
+      amount: 5
+    - enemyPrefab: {fileID: 6605585068724967467, guid: 8836f972f01a6274585915fb8b2d94ca, type: 3}
+      health: 74
+      delay: 0.9
+      amount: 15
+    - enemyPrefab: {fileID: 326472150867902607, guid: 26ca950a5f8c8a24ebe24f330acf5eec, type: 3}
+      health: 228
+      delay: 1.33
+      amount: 5
+    - enemyPrefab: {fileID: 6605585068724967467, guid: 8836f972f01a6274585915fb8b2d94ca, type: 3}
+      health: 74
+      delay: 0.9
+      amount: 15
+    - enemyPrefab: {fileID: 326472150867902607, guid: 26ca950a5f8c8a24ebe24f330acf5eec, type: 3}
+      health: 228
+      delay: 1.33
+      amount: 5
+    - enemyPrefab: {fileID: 6605585068724967467, guid: 8836f972f01a6274585915fb8b2d94ca, type: 3}
+      health: 74
+      delay: 0.9
+      amount: 15
     waitTimeMultiplier: 0.54
   - formations:
+    - enemyPrefab: {fileID: 326472150867902607, guid: 26ca950a5f8c8a24ebe24f330acf5eec, type: 3}
+      health: 244
+      delay: 1.31
+      amount: 11
     - enemyPrefab: {fileID: 2430315875821969293, guid: a1e0653dff072b6409b6af4e076c3257, type: 3}
-      health: 163
-      delay: 1
-      amount: 51
-    waitTimeMultiplier: 0.52
+      health: 122
+      delay: 0.9
+      amount: 29
+    - enemyPrefab: {fileID: 326472150867902607, guid: 26ca950a5f8c8a24ebe24f330acf5eec, type: 3}
+      health: 244
+      delay: 1.31
+      amount: 11
+    - enemyPrefab: {fileID: 2430315875821969293, guid: a1e0653dff072b6409b6af4e076c3257, type: 3}
+      health: 122
+      delay: 0.9
+      amount: 29
+    waitTimeMultiplier: 0.49
   - formations:
     - enemyPrefab: {fileID: 6605585068724967467, guid: 8836f972f01a6274585915fb8b2d94ca, type: 3}
       health: 139

@@ -34,6 +34,8 @@ namespace AdInfinitum.Managers
         private TowerDetailPanel _detailPanel;
 
         public SpawnTiming CurrentSpawnTiming { get; private set; }
+        public SpawnFormation CurrentSpawnFormation { get; private set; }
+        public SpawnFormation? NextSpawnFormation { get; private set; }
         public uint EnemyRemaining { get; private set; }
         public IReadOnlyCollection<KeyValuePair<Vector2Int, Tower>> SpawnedTowerList => _towerDict;
 
@@ -154,14 +156,15 @@ namespace AdInfinitum.Managers
             EnemyRemaining = CurrentSpawnTiming.TotalAmount;
             while (EnemyRemaining > 0)
             {
-                var currentFormation = CurrentSpawnTiming.formations[formationIdx];
-                var formationEnemyRemaining = currentFormation.amount;
+                CurrentSpawnFormation = CurrentSpawnTiming.formations[formationIdx];
+                var formationEnemyRemaining = CurrentSpawnFormation.amount;
+                NextSpawnFormation = null;
                 while (formationEnemyRemaining > 0)
                 {
-                    var enemy = _enemyPools[currentFormation.enemyPrefab.Type].Get();
+                    var enemy = _enemyPools[CurrentSpawnFormation.enemyPrefab.Type].Get();
                     var offset = new Vector3(Random.Range(-0.25f, 0.25f), Random.Range(-0.25f, 0.25f), 0);
                     enemy.transform.position = _grid.GetCellCenterWorld(startPosition.ToVector3Int()) + offset;
-                    enemy.Initialize(_grid, checkpoints.ToArray(), offset, currentFormation.health, Mathf.Ceil((currentFormation.health-wave)/56));
+                    enemy.Initialize(_grid, checkpoints.ToArray(), offset, CurrentSpawnFormation.health, Mathf.Ceil((CurrentSpawnFormation.health-wave)/56));
                     enemy.transform.localScale = Vector3.zero;
                     enemy.transform.DOScale(1f, 0.6f).SetEase(Ease.OutCubic);
                     enemy.JourneyComplete += EnemyOnJourneyComplete;
@@ -169,7 +172,9 @@ namespace AdInfinitum.Managers
                     formationEnemyRemaining--;
                     onSpawn?.Invoke(enemy);
 
-                    if(EnemyRemaining > 0) yield return new WaitForSeconds(currentFormation.delay);
+                    if(formationEnemyRemaining == 0 && EnemyRemaining > 1) NextSpawnFormation = CurrentSpawnTiming.formations[formationIdx+1];
+                    if(EnemyRemaining > 0) yield return new WaitForSeconds(CurrentSpawnFormation.delay);
+
                 }
 
                 formationIdx++;
